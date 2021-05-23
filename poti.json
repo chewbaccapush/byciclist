@@ -1,0 +1,42 @@
+[
+  {
+    "zacetnaTocka": "Bovec",
+    "koncnaTocka": "Mangart",
+    "tip": "Cestno kolo",
+    "profil": "Gorski",
+    "razdalja": 52,
+    "vzpon": 2665,
+    "spust": 2668,
+    "tezavnost": 5
+  },
+  {
+    "zacetnaTocka": "Maribor",
+    "koncnaTocka": "Hoče",
+    "tip": "Cestno kolo",
+    "profil": "Ravninski",
+    "razdalja": 7,
+    "vzpon": 28,
+    "spust": 13,
+    "tezavnost": 1
+  },
+  {
+    "zacetnaTocka": "Nova Gorica",
+    "koncnaTocka": "Gornje Cerovo",
+    "tip": "Cestno kolo",
+    "profil": "Hribovit",
+    "razdalja": 11,
+    "vzpon": 710,
+    "spust": 123,
+    "tezavnost": 3
+  },
+  {
+    "zacetnaTocka": "Kranjska Gora",
+    "koncnaTocka": "Bled",
+    "tip": "Cestno kolo",
+    "profil": "Hribovit",
+    "razdalja": 91,
+    "vzpon": 1469,
+    "spust": 1783,
+    "tezavnost": 4
+  }
+]
