@@ -49,11 +49,12 @@
 <div class="container" >
     <div class="wrapper forumMain wrapper-content animated fadeInRight" id="routesContainer">
         <div class="row">
-            <div class="col-lg-8">
-                <input type="text" class="form-control" Name="isciPot" id="isciPot" placeholder="Vnesi iskalni niz" style="width: 100%" onkeyup="preisciIme()">
+
+            <div class="col-lg-5">
+                <input type="text" class="form-control" Name="isciPot" id="textSearch" placeholder="Vnesi iskalni niz" style="width: 100%">
             </div>
-            <div class="col-md-2">
-                <select class="form-control" name="profil" id="profilSearch" onchange="preisciProfil()">
+            <div class="col-lg-2">
+                <select class="form-control" name="profil" id="profilSearch">
                     <option value="vse">Vsi profili</option>
                     <option value="Ravninski">Ravninski</option>
                     <option value="Gricevnat">Gričevnat</option>
@@ -61,13 +62,26 @@
                     <option value="Gorski">Gorski</option>
                 </select>
             </div>
-            <div class="col-md-2">
-                <select class="form-control" name="tip" id="tipSearch" onchange="preisciTip()">
+            <div class="col-lg-2">
+                <select class="form-control" name="tip" id="tipSearch">
                     <option value="vse">Vsi tipi</option>
                     <option value="Cestno kolo">Cestno kolo</option>
                     <option value="Gorsko kolo">Gorsko kolo</option>
                 </select>
             </div>
+            <div class="col-lg-2">
+                <select class="form-control" name="profil" id="tezavnostSearch">
+                    <option value="vse">Vse težavnosti</option>
+                    <option value="1">1 - zelo lahka</option>
+                    <option value="2">2 - lahka</option>
+                    <option value="3">3 - srednja</option>
+                    <option value="4">4 - težka</option>
+                    <option value="5">5 - zelo težka</option>
+                </select>
+            </div>
+            <button class="btn col-lg-1 isci-1" type="submit" onclick="preisci()">ISCI</button>
+        </div>
+        <div id="recentItems">
         </div>
 
 
