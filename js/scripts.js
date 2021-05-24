@@ -53,3 +53,25 @@
     // Collapse the navbar when page is scrolled
     $(window).scroll(navbarCollapse);
 })(jQuery); // End of use strict
+
+async function pridobiHotele() {
+    const odgovor = await fetch("hoteli.json");
+    var rawPodatki = await odgovor.text();
+    localStorage.setItem("hoteli", rawPodatki)
+    rawPodatki = JSON.parse(rawPodatki)
+    const tabela = document.getElementById("tabela-hoteli");
+    for (const hoteli of rawPodatki) {
+        let vrstica = tabela.insertRow(-1);
+        let id = vrstica.insertCell(-1);
+        id.innerHTML = hoteli.id;
+        let naziv = vrstica.insertCell(-1);
+        naziv.innerHTML = hoteli.naziv;
+        let naslov = vrstica.insertCell(-1);
+        naslov.innerHTML = hoteli.naslov;
+        let email = vrstica.insertCell(-1);
+        email.innerHTML = hoteli.email;
+        let telefon = vrstica.insertCell(-1);
+        telefon.innerHTML = hoteli.telefon;
+        console.log(hoteli)
+    }
+}
