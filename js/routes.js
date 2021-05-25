@@ -30,7 +30,7 @@ function prikazJson(poti) {
 
     potElement = `
 <br>
-        <div class="media align-items-lg-center flex-column flex-lg-row pr-3 border-bottom roundedt" style="background-color: rgba(255, 255, 255, 0.7)">
+        <div class="potMain media align-items-lg-center flex-column flex-lg-row pr-3 border-bottom roundedt" style="background-color: rgba(255, 255, 255, 0.7)">
             <div class="media-body order-2 order-lg-1">
               <h3 class="mt-0 font-weight-bold mb-2">${poti.zacetnaTocka} - ${poti.koncnaTocka}</h3>     
               <h6>Profil: <b>${poti.profil}</b> &nbsp;&nbsp;&nbsp; Tip: <b>${poti.tip}</b></h6>   
@@ -80,6 +80,9 @@ function preisci() {
                 console.log(data[i]);
                 prikazJson(data[i]);
             }
+        },
+        error: function (err) {
+            console.log(err);
         }
     });
 }
