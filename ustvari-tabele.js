@@ -1,14 +1,14 @@
+//DB CONNECTION (CHANGE THIS FOR YOUR LOCAL SERVER)
 var knex = require('knex')({
     client: 'mysql',
     connection: {
-        //host: '192.168.0.1',
-        port: 3307,
+        host: '127.0.0.1',
         user: 'root',
-        password: 'kolesarji',
         database: 'kolesarskepoti'
     }
 });
 
+//DROP TABLES
 async function napolniBazo() {
     knex.schema.dropTableIfExists('hoteli_na_poti').catch((err) => {
         console.log(err);
@@ -38,8 +38,8 @@ async function napolniBazo() {
         console.log(err);
         throw err
     });
-    // UPORABNIK
 
+    //TIP_UPORABNIK
     await knex.schema.createTable('tip_uporabnika', (table) => {
         table.increments('id');
         table.enu('tip_uporabnika', ['Registriran uporabnik', 'Strokovnjak', 'Administrator']).notNullable();
@@ -49,6 +49,7 @@ async function napolniBazo() {
             console.log(err); throw err
         });
 
+    //UPORABNIK
     await knex.schema.createTable('uporabnik', (table) => {
         table.increments('id');
         table.string('uporabnisko_ime').notNullable();
@@ -59,13 +60,14 @@ async function napolniBazo() {
         table.integer('spol').notNullable();
         table.integer('visina');
         table.integer('teza');
-        table.integer('tip_uporabnika_id').references('id').inTable('tip_uporabnika');
+        //table.integer('tip_uporabnika_id').references('id').inTable('tip_uporabnika');
     }).then(() =>
         console.log("Tabela 'uporabnik' ustvarjena."))
         .catch((err) => {
             console.log(err); throw err
         });
 
+    //POTI
     await knex.schema.createTable('poti', (table) => {
         table.increments('id');
         table.string('zacetnaTocka').notNullable();
@@ -96,11 +98,6 @@ async function napolniBazo() {
         });
 
     //VPRASANJA
-
-    knex.schema.dropTableIfExists('vprasanja').catch((err) => {
-        console.log(err);
-        throw err
-    });
     await knex.schema.createTable('vprasanja', (table) => {
         table.increments('ID_vprasanja');
         table.string('vprasanje').notNullable();
@@ -113,24 +110,20 @@ async function napolniBazo() {
 
     const vprasanja = require('./nodejs/questions.json');
 
-    await knex('vprasanje').insert(vprasanje)
+    await knex('vprasanja').insert(vprasanja)
         .then(() => {
-            console.log("Vprasanje vstavljene");
+            console.log("Vprasanja vstavljene");
         })
         .catch((err) => {
             console.log(err);
             throw err
         });
+    
     // ODGOVORI
-
-    knex.schema.dropTableIfExists('odgovori').catch((err) => {
-        console.log(err);
-        throw err
-    });
     await knex.schema.createTable('odgovori', (table) => {
         table.increments('ID_odgovori');
         table.string('odgovor').notNullable();
-        table.integer('ID_TK_vprasanja').references('ID_vprasanja');
+        table.integer('ID_TK_vprasanja').unsigned().references('ID_vprasanja').inTable('vprasanja');
     }).then(() =>
         console.log("Tabela 'odgovori' ustvarjena."))
         .catch((err) => {
@@ -138,17 +131,18 @@ async function napolniBazo() {
             throw err
         });
 
-    const vprasanja = require('./nodejs/anwsers.json');
+    const odgovori = require('./nodejs/odgovori.json');
 
-    await knex('vprasanje').insert(vprasanje)
+    await knex('odgovori').insert(odgovori)
         .then(() => {
-            console.log("Vprasanje vstavljene");
+            console.log("Odgovori vstavljene");
         })
         .catch((err) => {
             console.log(err);
             throw err
         });
 
+    //HOTELI
     await knex.schema.createTable('hoteli', (table) => {
         table.increments('id');
         table.string('naziv').notNullable();
@@ -156,16 +150,17 @@ async function napolniBazo() {
         table.string('email').notNullable();
         table.string('telefon').notNullable();
     }).then(() =>
-        console.log("Tabela 'uporabnik' ustvarjena."))
+        console.log("Tabela hoteli ustvarjena."))
         .catch((err) => {
             console.log(err); throw err
         });
-
+    
+    //HOTELI_NA_POTI
     await knex.schema.createTable('hoteli_na_poti', (table) => {
-        table.integer('poti_id').references('id').inTable('poti');
-        table.integer('hoteli_id').references('id').inTable('hoteli');
+        table.integer('poti_id').unsigned().references('id').inTable('poti');
+        table.integer('hoteli_id').unsigned().references('id').inTable('hoteli');
     }).then(() =>
-        console.log("Tabela 'uporabnik' ustvarjena."))
+        console.log("Tabela hoteli_na_poti ustvarjena."))
         .catch((err) => {
             console.log(err); throw err
         });
