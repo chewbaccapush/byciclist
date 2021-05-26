@@ -4,7 +4,7 @@ function prikazPoti() {
         dataType: "json",
         url: "http://localhost:3000/routes",
         async: false,
-        success: function (data) {
+        success: function(data) {
             poti = data;
         }
     });
@@ -73,7 +73,7 @@ function preisci() {
         url: "http://localhost:3000/routes",
         data: search,
         async: false,
-        success: function (data) {
+        success: function(data) {
             console.log(data.length)
             $("div.potMain").remove();
             for (let i = 0; i < data.length; i++) {
@@ -81,7 +81,7 @@ function preisci() {
                 prikazJson(data[i]);
             }
         },
-        error: function (err) {
+        error: function(err) {
             console.log(err);
         }
     });

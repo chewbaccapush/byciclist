@@ -30,10 +30,10 @@ var Poti = bookshelf.Model.extend({
 
 /* -----------------------------------USELESS----------------------------------- */
 
-app.use(bodyParser.urlencoded({extended: false}));
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-app.use(function (req, res, next) {
+app.use(function(req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     next();
@@ -42,7 +42,7 @@ app.use(function (req, res, next) {
 /* -----------------------------------LOGIKA----------------------------------- */
 
 /* -----NALAGANJE POTI----- */
-app.get('/routes',  async(req, res, next) => {
+app.get('/routes', async(req, res, next) => {
     try {
         let poti = await new Poti().fetchAll();
         res.json(poti.toJSON());
@@ -74,8 +74,8 @@ app.post('/routes', async(req, res, next) => {
         else
             tezavnost = req.body.tezavnosti;
         for (let i = 0; i < potiJson.length; i++) {
-            if ((potiJson[i].zacetnaTocka.toUpperCase().includes(req.body.niz) || potiJson[i].koncnaTocka.toUpperCase().includes(req.body.niz))
-                && potiJson[i].profil.includes(profil) && potiJson[i].tip.includes(tip) && potiJson[i].tezavnost.includes(tezavnost)) {
+            if ((potiJson[i].zacetnaTocka.toUpperCase().includes(req.body.niz) || potiJson[i].koncnaTocka.toUpperCase().includes(req.body.niz)) &&
+                potiJson[i].profil.includes(profil) && potiJson[i].tip.includes(tip) && potiJson[i].tezavnost.includes(tezavnost)) {
                 responz.push(potiJson[i]);
             }
         }
@@ -86,25 +86,30 @@ app.post('/routes', async(req, res, next) => {
     }
 })
 
-app.get('/', function (req, res) {
+app.get('/', function(req, res) {
     res.json(questions);
 });
 
-app.post('/', function (req, res) {
-    if (!req.body.title){
+app.post('/', function(req, res) {
+    if (!req.body.title) {
 
         res.status(400);
         res.json({ message: "Bad Request" });
     } else {
+        let vprasanja = await new vprasanja().fetchAll();
+        vprasanjaJSON = vprasanja.toJSON();
+        console.log(vprasanjaJSON);
+
+
+
         let rawdata = fs.readFileSync('nodejs/questions.json');
-        let JSONdata = JSON.parse(rawdata);
+        let JSONdata = JSON.parse(vprasanjaJSON);
         var userInput = req.body.title;
         var count = JSONdata.length;
-        var title = {id: count+1, title: userInput};
+        var title = { id: count + 1, title: userInput };
         JSONdata.push(title);
         fs.writeFileSync('nodejs/questions.json', JSON.stringify(JSONdata));
     }
 });
 
 app.listen(port, () => console.log("port: " + port));
-
