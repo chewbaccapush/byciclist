@@ -86,30 +86,5 @@ app.post('/routes', async(req, res, next) => {
     }
 })
 
-app.get('/', function(req, res) {
-    res.json(questions);
-});
-
-app.post('/', function(req, res) {
-    if (!req.body.title) {
-
-        res.status(400);
-        res.json({ message: "Bad Request" });
-    } else {
-        let vprasanja = await new vprasanja().fetchAll();
-        vprasanjaJSON = vprasanja.toJSON();
-        console.log(vprasanjaJSON);
-
-
-
-        let rawdata = fs.readFileSync('nodejs/questions.json');
-        let JSONdata = JSON.parse(vprasanjaJSON);
-        var userInput = req.body.title;
-        var count = JSONdata.length;
-        var title = { id: count + 1, title: userInput };
-        JSONdata.push(title);
-        fs.writeFileSync('nodejs/questions.json', JSON.stringify(JSONdata));
-    }
-});
 
 app.listen(port, () => console.log("port: " + port));
