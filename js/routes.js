@@ -50,6 +50,10 @@ function prikazJson(poti) {
                 tabindex="0">
         </iframe></div><!--TU SLIKA-->
           </div>
+        <div class="potBrisi media align-items-lg-center flex-column flex-lg-row pr-3 border-bottom roundedt" style="background-color: rgba(255, 255, 255, 0.7)">
+        <button class="btn btn-danger brisiPotGumb" id="brisiPot${poti.id}" onclick="brisiPot(this.id)">Izbriši</button>
+        <button class="btn btn-success urediPotGumb">Uredi</button>
+        </div>
     `
     $(telo).append(potElement);
 }
@@ -76,6 +80,28 @@ function preisci() {
         success: function(data) {
             console.log(data.length)
             $("div.potMain").remove();
+            $("div.potBrisi").remove();
+            for (let i = 0; i < data.length; i++) {
+                console.log(data[i]);
+                prikazJson(data[i]);
+            }
+        },
+        error: function(err) {
+            console.log(err);
+        }
+    });
+}
+
+function brisiPot (idBrisi) {
+    let id = idBrisi.slice(idBrisi.length - 1);
+
+    $.ajax({
+        type: "POST",
+        url: "http://localhost:3000/routesBrisi/" + id,
+        success: function(data) {
+            alert("Brisanje uspešno");
+            $("div.potMain").remove();
+            $("div.potBrisi").remove();
             for (let i = 0; i < data.length; i++) {
                 console.log(data[i]);
                 prikazJson(data[i]);

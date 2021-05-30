@@ -2,9 +2,12 @@
 var knex = require('knex')({
     client: 'mysql',
     connection: {
-        host: '127.0.0.1',
-        user: 'root',
-        database: 'kolesarskepoti'
+        //host: '192.168.0.1',
+        host: '5.153.252.199',
+        port: 3306,
+        user: 'bicyclist_user',
+        password: '*yO4p,R;-;1y',
+        database: 'bicyclist_db'
     }
 });
 

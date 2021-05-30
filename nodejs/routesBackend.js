@@ -9,14 +9,16 @@ const questions = require('./questions.json');
 
 
 /* -----------------------------------BAZA SETUP----------------------------------- */
+
 var knex = require('knex')({
     client: 'mysql',
     connection: {
         //host: '192.168.0.1',
-        port: 3307,
-        user: 'root',
-        password: 'kolesarji',
-        database: 'kolesarskepoti'
+        host: '5.153.252.199',
+        port: 3306,
+        user: 'bicyclist_user',
+        password: '*yO4p,R;-;1y',
+        database: 'bicyclist_db'
     }
 });
 
@@ -82,6 +84,27 @@ app.post('/routes', async(req, res, next) => {
         //res.send('jaja');
         res.json(responz);
     } catch (err) {
+        res.status(500).json(err);
+    }
+})
+
+/* -----BRISANJE POTI----- */
+app.post('/routesBrisi/:id', async(req, res, next) => {
+    try {
+        console.log(typeof req.params.id);
+        new Poti({id: req.params.id})
+            .destroy()
+            .then( async () => {
+                let poti = await new Poti().fetchAll();
+                res.json(poti.toJSON());
+            });
+        /*console.log(typeof req.body.id);
+        Poti.query().whereIn('id', parseInt(req.body.id)).del().then( async () => {
+            let poti = await new Poti().fetchAll();
+            res.send(poti.toJSON());
+        }).error()*/
+    } catch (err) {
+        console.log(err);
         res.status(500).json(err);
     }
 })
