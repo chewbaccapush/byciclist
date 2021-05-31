@@ -109,5 +109,8 @@ app.post('/routesBrisi/:id', async(req, res, next) => {
     }
 })
 
+//DODAJANJE OCENE
+
 
 app.listen(port, () => console.log("port: " + port));
+

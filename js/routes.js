@@ -30,7 +30,15 @@ function prikazJson(poti) {
 
     potElement = `
 <br>
-        <div class="potMain media align-items-lg-center flex-column flex-lg-row pr-3 border-bottom roundedt" style="background-color: rgba(255, 255, 255, 0.7)">
+<div style="color:#fff">Rate this route :) </div>
+<div id="divRating" class="rating">
+                <span id="spanRatingExcellent" title="Excellent">☆</span>
+                <span id="spanRatingGood" title="Good">☆</span>
+                <span id="spanRatingFair" title="Fair">☆</span>
+                <span id="spanRatingPoor" title="Poor">☆</span>
+                <span id="spanRatingAwful" title="Awful">☆</span>
+</div>
+<div class="potMain media align-items-lg-center flex-column flex-lg-row pr-3 border-bottom roundedt" style="background-color: rgba(255, 255, 255, 0.7)">
             <div class="media-body order-2 order-lg-1">
               <h3 class="mt-0 font-weight-bold mb-2">${poti.zacetnaTocka} - ${poti.koncnaTocka}</h3>     
               <h6>Profil: <b>${poti.profil}</b> &nbsp;&nbsp;&nbsp; Tip: <b>${poti.tip}</b></h6>   

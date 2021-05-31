@@ -401,3 +401,25 @@ body{
   display: inline;
   margin-left: 5px;
 }
+
+/*stars*/
+.rating {
+  unicode-bidi: bidi-override;
+  direction: rtl;
+  font-size: 28px;
+  margin-top: -11px;
+  color: #e8d04c;
+}
+.rating > span {
+  display: inline-block;
+  position: relative;
+  width: 0.7em;
+  cursor: pointer;
+}
+.rating > span:hover:before,
+.rating > span:hover ~ span:before,
+.rating > span.rated:before,
+.rating > span.rated ~ span:before {
+  content: "\2605";
+  position: absolute;
+}

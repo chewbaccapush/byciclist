@@ -14,9 +14,11 @@ app.use(function(req, res, next) {
 
 //DB CONNECTION (CHANGE THIS FOR YOUR LOCAL SERVER)
 var con = mysql.createConnection({
-    host: "127.0.0.1",
-    user: "root",
-    database: "kolesarskepoti"
+    host: "5.153.252.199",
+    port: "3306",
+    user: "bicyclist_user",
+    database: "bicyclist_db",
+    password: "*yO4p,R;-;1y"
 });
 con.connect(function(err) {
     if (err) throw err;
