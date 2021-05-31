@@ -88,6 +88,8 @@ async function napolniBazo() {
             table.integer('spust').notNullable();
             table.enu('tezavnost', ['1', '2', '3', '4', '5']).notNullable();
             table.string('mapa', [1000]);
+            table.float('povprecnaOcena').notNullable();
+            table.integer('stOcenov').notNullable();
         }).then(() =>
             console.log("Tabela 'poti' ustvarjena."))
         .catch((err) => {

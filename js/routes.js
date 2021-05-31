@@ -4,7 +4,7 @@ function prikazPoti() {
         dataType: "json",
         url: "http://localhost:3000/routes",
         async: false,
-        success: function(data) {
+        success: function (data) {
             poti = data;
         }
     });
@@ -13,7 +13,42 @@ function prikazPoti() {
     for (let i = 0; i < poti.length; i++) {
         prikazJson(poti[i]);
     }
-
+    //STARS
+    $(document).ready(function () {
+        $('.star').hover(function () {
+            if (!$(".voted")[0]) {
+                $(this).prevAll().andSelf().removeClass('fa-star-o').addClass('fa-star');
+            }
+        });
+        $('.star').mouseout(function () {
+            if (!$(".voted")[0]) {
+                $(this).prevAll().andSelf().removeClass('fa-star').addClass('fa-star-o');
+            }
+        });
+        $('.star').click(function (e) {
+            if (!$(".voted")[0]) {
+                const url = 'http://localhost:3000/ocena';
+                var ocena = $(this).prevAll().length + 1;
+                var ocenaId = e.target.parentNode.id;
+                $(this).prevAll().andSelf().removeClass('fa-star-o').addClass('voted');
+                var pOcena = new Object();
+                pOcena.ocena = ocena;
+                pOcena.ocenaId = ocenaId;
+                const data = JSON.stringify(pOcena);
+                console.log(data);
+                $.ajax({
+                    contentType: 'application/json',
+                    url: url,
+                    data: data,
+                    type: 'POST',
+                    success: function (data) {
+                        console.log(JSON.stringify(data));
+                    }
+                });
+            }
+        });
+    });
+    //STARS END
 }
 
 function prikazJson(poti) {
@@ -22,22 +57,27 @@ function prikazJson(poti) {
 
     for (let i = 1; i <= 5; i++) {
         if (i <= parseInt(poti.tezavnost)) {
-            tezavnost += '<li class="list-inline-item m-0"><i class="fas fa-star fa-lg text-success"></i></li>'
+            tezavnost += '<li class="list-inline-item m-0"><i class="fa fa-star fa-lg text-success"></i></li>'
         } else {
-            tezavnost += '<li class="list-inline-item m-0"><i class="fas fa-star fa-lg text-light"></i></li>'
+            tezavnost += '<li class="list-inline-item m-0"><i class="fa fa-star fa-lg text-light"></i></li>'
         }
     }
 
     potElement = `
 <br>
-<div style="color:#fff">Rate this route :) </div>
-<div id="divRating" class="rating">
-                <span id="spanRatingExcellent" title="Excellent">☆</span>
-                <span id="spanRatingGood" title="Good">☆</span>
-                <span id="spanRatingFair" title="Fair">☆</span>
-                <span id="spanRatingPoor" title="Poor">☆</span>
-                <span id="spanRatingAwful" title="Awful">☆</span>
-</div>
+<div style="color:#fff" class="rateClass">Rate this route :) </div>
+                <div id="${poti.id}" class="stars">
+                    <span class="fa fa-star-o star"></span>
+                    <span class="fa fa-star-o star"></span>
+                    <span class="fa fa-star-o star"></span>
+                    <span class="fa fa-star-o star"></span>
+                    <span class="fa fa-star-o star"></span>
+                    <span class="fa fa-star-o star"></span>
+                    <span class="fa fa-star-o star"></span>
+                    <span class="fa fa-star-o star"></span>
+                    <span class="fa fa-star-o star"></span>
+                    <span class="fa fa-star-o star"></span>
+                </div>
 <div class="potMain media align-items-lg-center flex-column flex-lg-row pr-3 border-bottom roundedt" style="background-color: rgba(255, 255, 255, 0.7)">
             <div class="media-body order-2 order-lg-1">
               <h3 class="mt-0 font-weight-bold mb-2">${poti.zacetnaTocka} - ${poti.koncnaTocka}</h3>     
@@ -85,7 +125,7 @@ function preisci() {
         url: "http://localhost:3000/routes",
         data: search,
         async: false,
-        success: function(data) {
+        success: function (data) {
             console.log(data.length)
             $("div.potMain").remove();
             $("div.potBrisi").remove();
@@ -94,28 +134,30 @@ function preisci() {
                 prikazJson(data[i]);
             }
         },
-        error: function(err) {
+        error: function (err) {
             console.log(err);
         }
     });
 }
 
-function brisiPot (idBrisi) {
+function brisiPot(idBrisi) {
     let id = idBrisi.slice(idBrisi.length - 1);
 
     $.ajax({
         type: "POST",
         url: "http://localhost:3000/routesBrisi/" + id,
-        success: function(data) {
+        success: function (data) {
             alert("Brisanje uspešno");
             $("div.potMain").remove();
             $("div.potBrisi").remove();
+            $("div.stars").remove();
+            $("div.rateClass").remove();
             for (let i = 0; i < data.length; i++) {
                 console.log(data[i]);
                 prikazJson(data[i]);
             }
         },
-        error: function(err) {
+        error: function (err) {
             console.log(err);
         }
     });
