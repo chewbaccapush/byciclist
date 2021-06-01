@@ -37,6 +37,10 @@ async function napolniBazo() {
         console.log(err);
         throw err
     });
+    knex.schema.dropTableIfExists('priljubljeni').catch((err) => {
+        console.log(err);
+        throw err
+    });
     knex.schema.dropTableIfExists('uporabnik').catch((err) => {
         console.log(err);
         throw err
@@ -71,6 +75,18 @@ async function napolniBazo() {
             //table.integer('tip_uporabnika_id').references('id').inTable('tip_uporabnika');
         }).then(() =>
             console.log("Tabela 'uporabnik' ustvarjena."))
+        .catch((err) => {
+            console.log(err);
+            throw err
+        });
+
+    //PRILJUBLJENI
+    await knex.schema.createTable('priljubljeni', (table) => {
+            table.increments('ID_priljubljeni');
+            table.integer('TK_ID_poti').unsigned().references('id').inTable('poti');
+            table.integer('TK_ID_uporabnik').unsigned().references('id').inTable('uporabnik');
+        }).then(() =>
+            console.log("Tabela 'priljubljeni' ustvarjena."))
         .catch((err) => {
             console.log(err);
             throw err

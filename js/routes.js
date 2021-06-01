@@ -4,7 +4,7 @@ function prikazPoti() {
         dataType: "json",
         url: "http://localhost:3000/routes",
         async: false,
-        success: function (data) {
+        success: function(data) {
             poti = data;
         }
     });
@@ -14,18 +14,18 @@ function prikazPoti() {
         prikazJson(poti[i]);
     }
     //STARS
-    $(document).ready(function () {
-        $('.star').hover(function () {
+    $(document).ready(function() {
+        $('.star').hover(function() {
             if (!$(".voted")[0]) {
                 $(this).prevAll().andSelf().removeClass('fa-star-o').addClass('fa-star');
             }
         });
-        $('.star').mouseout(function () {
+        $('.star').mouseout(function() {
             if (!$(".voted")[0]) {
                 $(this).prevAll().andSelf().removeClass('fa-star').addClass('fa-star-o');
             }
         });
-        $('.star').click(function (e) {
+        $('.star').click(function(e) {
             if (!$(".voted")[0]) {
                 const url = 'http://localhost:3000/ocena';
                 var ocena = $(this).prevAll().length + 1;
@@ -41,7 +41,7 @@ function prikazPoti() {
                     url: url,
                     data: data,
                     type: 'POST',
-                    success: function (data) {
+                    success: function(data) {
                         console.log(JSON.stringify(data));
                     }
                 });
@@ -80,7 +80,14 @@ function prikazJson(poti) {
                 </div>
 <div class="potMain media align-items-lg-center flex-column flex-lg-row pr-3 border-bottom roundedt" style="background-color: rgba(255, 255, 255, 0.7)">
             <div class="media-body order-2 order-lg-1">
-              <h3 class="mt-0 font-weight-bold mb-2">${poti.zacetnaTocka} - ${poti.koncnaTocka}</h3>     
+            <div style="display: flex; justify-content: space-between;">
+               
+                <h3 class="mt-0 font-weight-bold mb-2">${poti.zacetnaTocka} - ${poti.koncnaTocka}</h3>   
+                <div class="fav-btn"  style="margin: 0 0px 10px 10px; padding-bottom: 30px;">
+                <i class="i" id="priljubljena${poti.id}" onclick="dodajPriljubljene(this.id)"></i>
+                 <span id="liked">liked!</span>
+                </div>  
+            </div>
               <h6>Profil: <b>${poti.profil}</b> &nbsp;&nbsp;&nbsp; Tip: <b>${poti.tip}</b></h6>   
               <div class="d-flex align-items-center justify-content-between mt-1">
                 <h6 class="font-weight-bold my-2">Razdalja: ${poti.razdalja}km</h6>
@@ -89,6 +96,7 @@ function prikazJson(poti) {
                 <ul class="list-inline small">
                     ${tezavnost}
                 </ul>
+               
               </div>
             </div>
             <div style="width: 30%; height: 100%;">
@@ -104,6 +112,20 @@ function prikazJson(poti) {
         </div>
     `
     $(telo).append(potElement);
+}
+
+function dodajPriljubljene(idPriljubljena) {
+    let id = idPriljubljena.slice(idPriljubljena.length - 1);
+
+
+    $.ajax({
+        type: 'POST',
+        url: "http://localhost:3000/priljubljeno/" + id,
+        success: function() {
+            console.log("Uspešno shranjeno");
+        }
+    });
+
 }
 
 function preisci() {
@@ -125,7 +147,7 @@ function preisci() {
         url: "http://localhost:3000/routes",
         data: search,
         async: false,
-        success: function (data) {
+        success: function(data) {
             console.log(data.length)
             $("div.potMain").remove();
             $("div.potBrisi").remove();
@@ -134,7 +156,7 @@ function preisci() {
                 prikazJson(data[i]);
             }
         },
-        error: function (err) {
+        error: function(err) {
             console.log(err);
         }
     });
@@ -146,7 +168,7 @@ function brisiPot(idBrisi) {
     $.ajax({
         type: "POST",
         url: "http://localhost:3000/routesBrisi/" + id,
-        success: function (data) {
+        success: function(data) {
             alert("Brisanje uspešno");
             $("div.potMain").remove();
             $("div.potBrisi").remove();
@@ -157,8 +179,34 @@ function brisiPot(idBrisi) {
                 prikazJson(data[i]);
             }
         },
-        error: function (err) {
+        error: function(err) {
             console.log(err);
         }
     });
 }
+
+$(document).ready(() => {
+
+    $('#i').click(function() {
+        $.ajax({
+            contentType: 'application/json',
+            url: "http://localhost:3000/priljubljeno",
+            data: poti.id,
+            type: 'POST',
+            success: function() {
+                console.log("Uspešno shranjeno");
+            }
+        });
+    })
+});
+
+con.query("SELECT TK_ID_poti FROM priljubljeni", function(err, result, fields) {
+    if (err) throw err;
+    app.get('/priljubljeni', async(req, res, next) => {
+        try {
+            res.json(result);
+        } catch (err) {
+            res.status(500).json(err);
+        }
+    })
+});
