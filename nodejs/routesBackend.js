@@ -7,7 +7,14 @@ const port = 3000;
 let potiJson = require('./poti.json');
 const questions = require('./questions.json');
 const mysql = require('mysql');
+var hbs = require('express-handlebars');
+var path = require('path');
 
+/* -----ENGINE----- */
+app.engine('hbs', hbs({extname: 'hbs', defaultLayout: 'layout', layoutsDir: __dirname + '/../views/layouts/'}));
+app.set('views', path.join(__dirname, '../views'));
+app.set('view engine', '.hbs');
+app.use(express.static('../'));
 
 /* -----------------------------------BAZA SETUP----------------------------------- */
 
@@ -31,7 +38,7 @@ var Poti = bookshelf.Model.extend({
 })
 
 
-/* -----------------------------------USELESS----------------------------------- */
+/* -----------------------------------CORS----------------------------------- */
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -108,6 +115,43 @@ app.post('/routesBrisi/:id', async(req, res, next) => {
         console.log(err);
         res.status(500).json(err);
     }
+})
+
+/* -----PRIKAZ POTI----- */
+app.get('/pot', async (req, res, next) => {
+    try {
+        console.log(req.query.id);
+        let poti = await Poti.forge({id: req.query.id}).fetch();
+        //console.log(poti.get("koncnaTocka"));
+
+        //Zvezdice za tezavnost
+        var tezavnost = 'težavnost: <br>';
+        for (let i = 1; i <= 5; i++) {
+            if (i <= parseInt(poti.get("tezavnost"))) {
+                tezavnost += '<li class="list-inline-item m-0"><i class="fa fa-star fa-lg text-success"></i></li>'
+            } else {
+                tezavnost += '<li class="list-inline-item m-0"><i class="fa fa-star fa-lg text-muted"></i></li>'
+            }
+        }
+
+        //konstruktor za hbs Options
+        let napolniPot = {
+            title: poti.get("zacetnaTocka") + " - " + poti.get("koncnaTocka"),
+            razdalja: poti.get("razdalja"),
+            vzpon: poti.get("vzpon"),
+            spust: poti.get("spust"),
+            mapa: poti.get("mapa"),
+            img: poti.get("img"),
+            tezavnost: tezavnost,
+            ocena: poti.get("povprecnaOcena"),
+            oprema: poti.get("tip")
+        }
+        res.render('pot', napolniPot);
+    } catch (err) {
+        res.render('error', {message: "404: Ta stran ne obstaja :("});
+    }
+
+
 })
 
 app.listen(port, () => console.log("port: " + port));

@@ -10,7 +10,8 @@
     "tezavnost": "5",
     "mapa": "https://www.google.com/maps/embed?pb=!1m28!1m12!1m3!1d88060.91308013856!2d13.533299224197822!3d46.39113832391681!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!4m13!3e0!4m5!1s0x477a683c5d0fdefb%3A0x5d345816713d53fd!2sBovec!3m2!1d46.3376387!2d13.5516829!4m5!1s0x477a650ed955af7b%3A0x1d00f81cf287b460!2sMangart!3m2!1d46.4397222!2d13.655!5e0!3m2!1ssl!2ssi!4v1609074602339!5m2!1ssl!2ssi",
     "povprecnaOcena": 5,
-    "stOcenov": 1
+    "stOcenov": 1,
+    "img": "https://cdn.discordapp.com/attachments/844627508938670083/844668047201271859/mangart_cycling_2.png"
   },
   {
     "zacetnaTocka": "Maribor",
@@ -23,7 +24,8 @@
     "tezavnost": "1",
     "mapa": "https://www.google.com/maps/embed?pb=!1m28!1m12!1m3!1d43919.824886029346!2d15.617376357758816!3d46.52811840872799!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!4m13!3e0!4m5!1s0x476f77011dec62e1%3A0x6d6cd629e58b62c9!2sMaribor%2C%20Center%2C%20Maribor!3m2!1d46.562065!2d15.658011!4m5!1s0x476f79afe47414cd%3A0xdaa3bbde76480fd8!2zSG_EjWU!3m2!1d46.495958099999996!2d15.6238429!5e0!3m2!1ssl!2ssi!4v1621885407524!5m2!1ssl!2ssi",
     "povprecnaOcena": 7,
-    "stOcenov": 1  
+    "stOcenov": 1,
+    "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a6/SLO-Spodnje_Ho%C4%8De1.JPG/1200px-SLO-Spodnje_Ho%C4%8De1.JPG"
   },
   {
     "zacetnaTocka": "Nova Gorica",
@@ -36,7 +38,8 @@
     "tezavnost": "3",
     "mapa": "https://www.google.com/maps/embed?pb=!1m28!1m12!1m3!1d22182.51741094268!2d13.592914233163402!3d45.97496088821809!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!4m13!3e0!4m5!1s0x477b02437a4c8227%3A0x400f81c823fefd0!2sNova%20Gorica!3m2!1d45.954975499999996!2d13.6493044!4m5!1s0x477baaf7402273d9%3A0x72b2e8fb7754e07d!2sGornje%20Cerovo%2C%20Kojsko!3m2!1d45.9830767!2d13.565984799999999!5e0!3m2!1ssl!2ssi!4v1621885614716!5m2!1ssl!2ssi",
     "povprecnaOcena": 4,
-    "stOcenov": 1
+    "stOcenov": 1,
+    "img": "https://www.delo.si/media/images/20210524/948804.width-660.jpg"
   },
   {
     "zacetnaTocka": "Kranjska Gora",
@@ -47,8 +50,9 @@
     "vzpon": 1469,
     "spust": 1783,
     "tezavnost": "4",
-    "mapa": "https://www.google.com/maps/embed?pb=!1m70!1m12!1m3!1d176164.78637447357!2d13.810064957596753!3d46.377823777349484!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!4m55!3e0!4m5!1s0x477a7ce5980f8af5%3A0xdc10e282bbdf9dde!2sKranjska%20Gora!3m2!1d46.4845293!2d13.7857145!4m5!1s0x477a86744015ed1d%3A0xa00f81eceaab6f0!2sMojstrana!3m2!1d46.461301!2d13.9395387!4m5!1s0x477a8f45cf7e7547%3A0xb6f1ce1ac1ff37dd!2sZgornja%20Radovna%2C%204281!3m2!1d46.431689999999996!2d13.935630199999999!4m5!1s0x477a8ef75dcf198b%3A0xd8e7b275d0c15193!2sKrnica!3m2!1d46.377766799999996!2d14.0550416!4m5!1s0x477a92583ebf3957%3A0xfa3041839ed68ce5!2zR29yanXFoWU!3m2!1d46.3163055!2d14.011607!4m5!1s0x477a8b0e9d05b365%3A0x9dbe27334289c5bb!2sStara%20Fu%C5%BEina!3m2!1d46.288666!2d13.894893999999999!4m5!1s0x477af2c549ec828d%3A0xc6579c9f7dccbcc4!2sKamnje%2C%204264!3m2!1d46.2717093!2d13.916360899999999!4m5!1s0x477a8d690162778d%3A0x400f81c823fec60!2sOb%C4%8Dina%20Bohinj!3m2!1d46.3005652!2d13.942719499999999!4m5!1s0x477a8e1dd7139961%3A0x400f81c823fec50!2sBled!3m2!1d46.368326599999996!2d14.1145798!5e0!3m2!1ssl!2ssi!4v1609158412583!5m2!1ssl!2ssi",
+    "mapa": "https://www.google.com/maps/embed?pb=!1m28!1m12!1m3!1d88005.16539552322!2d13.902645475118383!3d46.42568005022799!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!4m13!3e0!4m5!1s0x477a7ce5980f8af5%3A0xdc10e282bbdf9dde!2sKranjska%20Gora!3m2!1d46.4845293!2d13.7857145!4m5!1s0x477a8e1dd7139961%3A0x400f81c823fec50!2sBled!3m2!1d46.368326599999996!2d14.1145798!5e0!3m2!1ssl!2ssi!4v1622636555419!5m2!1ssl!2ssi",
     "povprecnaOcena": 10,
-    "stOcenov": 1
+    "stOcenov": 1,
+    "img": "https://upload.wikimedia.org/wikipedia/commons/b/bd/Bled_15.jpg"
   }
 ]

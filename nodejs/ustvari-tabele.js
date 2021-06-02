@@ -106,6 +106,7 @@ async function napolniBazo() {
             table.string('mapa', [1000]);
             table.float('povprecnaOcena').notNullable();
             table.integer('stOcenov').notNullable();
+            table.string('img');
         }).then(() =>
             console.log("Tabela 'poti' ustvarjena."))
         .catch((err) => {
