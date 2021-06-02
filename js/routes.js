@@ -2,6 +2,7 @@ function prikazPoti() {
     var poti;
     $.ajax({
         dataType: "json",
+        type: 'GET',
         url: "http://localhost:3000/routes",
         async: false,
         success: function(data) {
@@ -82,8 +83,9 @@ function prikazJson(poti) {
             <div class="media-body order-2 order-lg-1">
             <div style="display: flex; justify-content: space-between;">
                
-                <h3 class="mt-0 font-weight-bold mb-2">${poti.zacetnaTocka} - ${poti.koncnaTocka}</h3>   
+                <h3 class="mt-0 font-weight-bold mb-2">${poti.zacetnaTocka} - ${poti.koncnaTocka}</h3>
                 <div class="fav-btn"  style="margin: 0 0px 10px 10px; padding-bottom: 30px;">
+                <button class="btn btn-success preglej-pot" id="preglej${poti.id}" onclick="preglejPot(this.id)">Preglej pot</button>   
                 <i class="i" id="priljubljena${poti.id}" onclick="dodajPriljubljene(this.id)"></i>
                  <span id="liked">liked!</span>
                 </div>  
@@ -117,6 +119,7 @@ function prikazJson(poti) {
 function dodajPriljubljene(idPriljubljena) {
     let id = idPriljubljena.slice(idPriljubljena.length - 1);
 
+    $("i, span").toggleClass( "press", 1000 );
 
     $.ajax({
         type: 'POST',
@@ -183,6 +186,18 @@ function brisiPot(idBrisi) {
             console.log(err);
         }
     });
+}
+
+function preglejPot(idPreglej) {
+    let id = idPreglej.slice(idPreglej.length - 1);
+    $.ajax({
+        type: "GET",
+        url: "http://localhost:3000/pot?id=" + id,
+        success: function (res) {
+            var tab = window.open();
+            tab.document.write(res);
+        }
+    })
 }
 
 $(document).ready(() => {

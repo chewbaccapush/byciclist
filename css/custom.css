@@ -557,3 +557,12 @@ span.press {
         padding: 10px 12px 8px;
     }
 }
+
+.preglej-pot {
+    background-color: #64a19d;
+}
+
+.naslovPoti {
+    text-align: left;
+    color: white;
+}

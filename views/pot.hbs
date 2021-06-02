@@ -1,0 +1,74 @@
+<nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+    <div class="container">
+        <a class="navbar-brand js-scroll-trigger" href="#page-top">BycicLIST.si</a>
+        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            Menu
+            <i class="fas fa-bars"></i>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item"><a class="nav-link js-scroll-trigger" href="index.html">Home</a></li>
+                <li class="nav-item"><a class="nav-link js-scroll-trigger" href="about.html">About</a></li>
+                <li class="nav-item"><a class="nav-link js-scroll-trigger" href="routes.html">Routes</a></li>
+                <li class="nav-item"><a class="nav-link js-scroll-trigger" href="forum.html">Forum</a></li>
+                <li class="nav-item"><a class="nav-link js-scroll-trigger" href="contact.html">Contact</a></li>
+                <li class="nav-item"><a class="btn btn-primary js-scroll-trigger pt-2 pb-2 mt-4" href="#">Sign
+                    in</a></li>
+                <li class="nav-item"><a class="btn btn-primary js-scroll-trigger pt-2 pb-2 mt-4 ml-2" href="register.html">Register</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<section class="about-section text-center" id="about">
+    <div class="container-fluid pot">
+        <h2 class="card-title justify-content-start naslovPoti">{{ title }}</h2>
+        <div class="row" style="height: 600px">
+            <div class="col-md-4 mx-auto">
+                <!--<h2 class="text-white mb-4">Bovec - Mangart</h2>-->
+                <div class="card" style="width: 100%">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <p class="card-text">Razdalja:</p><h5><b>{{ razdalja }}km</b></h5>
+                            </div>
+                            <div class="col-sm-4">
+                                <p class="card-text">Vzpon:</p><h5><b>{{ vzpon }}m</b></h5>
+                            </div>
+                            <div class="col-sm-4">
+                                <p class="card-text">Spust:</p><h5><b>{{ spust }}m</b></h5>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row">
+                            <div class="col-sm-4">
+                                {{{ tezavnost }}}
+                            </div>
+                            <div class="col-sm-4">
+                                <p class="card-text">Povprečna ocena:</p><h5><b>{{ ocena }}</b></h5>
+                            </div>
+                            <div class="col-sm-4">
+                                <p class="card-text">Oprema:</p><h5><b>{{ oprema }}</b></h5>
+                            </div>
+                        </div>
+                        <hr>
+                        <!--<img src="https://cdn.discordapp.com/attachments/844627508938670083/844668150238281829/Capture.PNG" style="width: 100%">-->
+                        <img src={{ img }} style="width: 100%">
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-8 mx-auto">
+                <iframe
+                        src={{ mapa }}
+                        width="100%" height="100%" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false"
+                        tabindex="0">
+                </iframe>
+            </div>
+        </div>
+        <!--<img class="img-fluid" src="assets/img/ipad.png" alt="..." />-->
+    </div>
+</section>
+
+<!-- Footer-->
+<footer class="footer bg-black small text-center text-white-50">
+    <div class="container">Copyright &copy; Your Website 2021</div>
+</footer>

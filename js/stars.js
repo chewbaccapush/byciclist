@@ -10,8 +10,3 @@ document.getElementById('divRating').addEventListener('click', function(event) {
         event.target.classList.add('rated');
     }
 });
-
-// Funkcija za favorite button
-$('#i').on('click', function() {
-    console.log("Danes je čaga");
-});
