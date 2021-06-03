@@ -52,6 +52,8 @@ function prikazPoti() {
     //STARS END
 }
 
+
+
 function prikazJson(poti) {
     var telo = document.getElementById("routesContainer");
     var tezavnost = 'težavnost: ';
@@ -119,7 +121,7 @@ function prikazJson(poti) {
 function dodajPriljubljene(idPriljubljena) {
     let id = idPriljubljena.slice(idPriljubljena.length - 1);
 
-    $("i, span").toggleClass( "press", 1000 );
+    $("#" + idPriljubljena).toggleClass("press", 1000);
 
     $.ajax({
         type: 'POST',
@@ -193,7 +195,7 @@ function preglejPot(idPreglej) {
     $.ajax({
         type: "GET",
         url: "http://localhost:3000/pot?id=" + id,
-        success: function (res) {
+        success: function(res) {
             var tab = window.open();
             tab.document.write(res);
         }
@@ -215,13 +217,20 @@ $(document).ready(() => {
     })
 });
 
-con.query("SELECT TK_ID_poti FROM priljubljeni", function(err, result, fields) {
-    if (err) throw err;
-    app.get('/priljubljeni', async(req, res, next) => {
-        try {
-            res.json(result);
-        } catch (err) {
-            res.status(500).json(err);
+function prikazPriljubljenih() {
+
+    $.ajax({
+        dataType: "json",
+        type: 'GET',
+        url: "http://localhost:3000/priljubljeni/" + 1,
+        success: function(data) {
+            for (let i = 0; i < data.length; i++) {
+                prikazJson(data[i]);
+            }
         }
-    })
-});
+    });
+
+
+
+
+}

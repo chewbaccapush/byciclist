@@ -10,8 +10,9 @@ const mysql = require('mysql');
 var hbs = require('express-handlebars');
 var path = require('path');
 
+
 /* -----ENGINE----- */
-app.engine('hbs', hbs({extname: 'hbs', defaultLayout: 'layout', layoutsDir: __dirname + '/../views/layouts/'}));
+app.engine('hbs', hbs({ extname: 'hbs', defaultLayout: 'layout', layoutsDir: __dirname + '/../views/layouts/' }));
 app.set('views', path.join(__dirname, '../views'));
 app.set('view engine', '.hbs');
 app.use(express.static('../'));
@@ -36,7 +37,6 @@ var Poti = bookshelf.Model.extend({
     tableName: 'poti',
     idAttribute: 'id'
 })
-
 
 /* -----------------------------------CORS----------------------------------- */
 
@@ -118,10 +118,10 @@ app.post('/routesBrisi/:id', async(req, res, next) => {
 })
 
 /* -----PRIKAZ POTI----- */
-app.get('/pot', async (req, res, next) => {
+app.get('/pot', async(req, res, next) => {
     try {
         console.log(req.query.id);
-        let poti = await Poti.forge({id: req.query.id}).fetch();
+        let poti = await Poti.forge({ id: req.query.id }).fetch();
         //console.log(poti.get("koncnaTocka"));
 
         //Zvezdice za tezavnost
@@ -148,10 +148,8 @@ app.get('/pot', async (req, res, next) => {
         }
         res.render('pot', napolniPot);
     } catch (err) {
-        res.render('error', {message: "404: Ta stran ne obstaja :("});
+        res.render('error', { message: "404: Ta stran ne obstaja :(" });
     }
-
-
 })
 
 app.listen(port, () => console.log("port: " + port));
@@ -169,6 +167,7 @@ con.connect(function(err) {
     if (err) throw err;
 });
 
+//Dodajanje ocen
 app.post('/ocena', async(req, res, next) => {
     if (!req.body.ocena) {
         res.status(400);
@@ -187,23 +186,44 @@ app.post('/ocena', async(req, res, next) => {
                 console.log("1 record updated");
             });
         });
-
     }
 })
 
-
+//Dodajanje priljubljenih poti
 app.post('/priljubljeno/:id', function(req, res, next) {
 
     if (!req.params.id) {
         res.status(400);
         res.json({ message: "Bad Request" });
     } else {
-
         var potID = req.params.id;
-        var sql = "INSERT INTO priljubljeni (ID_priljubljeni, TK_ID_poti) VALUES (default,'" + potID + "')";
-        con.query(sql, function(err, result) {
-            if (err) throw err;
-            console.log("1 record inserted");
+        con.query("SELECT TK_ID_poti FROM priljubljeni WHERE TK_ID_poti = '" + potID + "'", function(err, result, field) {
+
+            if (result.length === 0) {
+                var sql = "INSERT INTO priljubljeni (ID_priljubljeni, TK_ID_poti, TK_ID_uporabnik) VALUES (default,'" + potID + "', 1)";
+                con.query(sql, function(err, result) {
+                    if (err) throw err;
+                    console.log("1 record inserted");
+                });
+            } else {
+                var sql2 = "DELETE FROM priljubljeni WHERE TK_ID_poti = '" + potID + "'";
+                con.query(sql2, 1, (error, results, fields) => {
+                    if (err) throw err;
+                    console.log("Deleted");
+                });
+            }
         });
+    }
+});
+
+// Poizvedba za priljubljene poti
+app.get('/priljubljeni/:idUporabnika', async(req, res, next) => {
+    try {
+        let priljubljenePot = await knex('priljubljeni').innerJoin('poti', 'priljubljeni.TK_ID_poti', 'poti.id').where('TK_ID_uporabnik', req.params.idUporabnika);
+        res.json(priljubljenePot);
+
+    } catch (err) {
+        console.log(err);
+        res.status(500).json(err);
     }
 })
