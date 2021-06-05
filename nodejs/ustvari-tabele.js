@@ -210,8 +210,8 @@ async function napolniBazo() {
 
     //HOTELI_NA_POTI
     await knex.schema.createTable('hoteli_na_poti', (table) => {
-            table.integer('poti_id').unsigned().references('id').inTable('poti');
-            table.integer('hoteli_id').unsigned().references('id').inTable('hoteli');
+            table.integer('fk_poti').unsigned().references('id').inTable('poti');
+            table.integer('fk_hoteli').unsigned().references('id').inTable('hoteli');
         }).then(() =>
             console.log("Tabela hoteli_na_poti ustvarjena."))
         .catch((err) => {
@@ -229,6 +229,18 @@ async function napolniBazo() {
             console.log(err);
             throw err
         });
+
+    const hoteli_na_poti = require('./hoteli_na_poti.json');
+
+    await knex('hoteli_na_poti').insert(hoteli_na_poti)
+        .then(() => {
+            console.log("Hoteli na poti vstavljeni");
+        })
+        .catch((err) => {
+            console.log(err);
+            throw err
+        });
+
 
     knex.destroy();
 }

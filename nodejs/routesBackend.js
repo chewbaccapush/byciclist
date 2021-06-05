@@ -117,12 +117,15 @@ app.post('/routesBrisi/:id', async(req, res, next) => {
     }
 })
 
-/* -----PRIKAZ POTI----- */
+/* -----PRIKAZ POTI IN HOTELOV NA POTI----- */
 app.get('/pot', async(req, res, next) => {
     try {
         console.log(req.query.id);
+        //Query
         let poti = await Poti.forge({ id: req.query.id }).fetch();
-        //console.log(poti.get("koncnaTocka"));
+        let hoteli_na_poti = await knex('hoteli_na_poti')
+            .innerJoin('hoteli', 'hoteli.id', 'hoteli_na_poti.fk_poti')
+            .where('fk_poti', req.query.id);
 
         //Zvezdice za tezavnost
         var tezavnost = 'težavnost: <br>';
@@ -133,8 +136,7 @@ app.get('/pot', async(req, res, next) => {
                 tezavnost += '<li class="list-inline-item m-0"><i class="fa fa-star fa-lg text-muted"></i></li>'
             }
         }
-
-        //konstruktor za hbs Options
+        //konstruktor za hbs
         let napolniPot = {
             title: poti.get("zacetnaTocka") + " - " + poti.get("koncnaTocka"),
             razdalja: poti.get("razdalja"),
@@ -144,8 +146,10 @@ app.get('/pot', async(req, res, next) => {
             img: poti.get("img"),
             tezavnost: tezavnost,
             ocena: poti.get("povprecnaOcena"),
-            oprema: poti.get("tip")
+            oprema: poti.get("tip"),
+            hoteli: hoteli_na_poti
         }
+
         res.render('pot', napolniPot);
     } catch (err) {
         res.render('error', { message: "404: Ta stran ne obstaja :(" });
@@ -167,7 +171,7 @@ con.connect(function(err) {
     if (err) throw err;
 });
 
-//Dodajanje ocen
+//DODAJANJE OCEN
 app.post('/ocena', async(req, res, next) => {
     if (!req.body.ocena) {
         res.status(400);
@@ -189,7 +193,7 @@ app.post('/ocena', async(req, res, next) => {
     }
 })
 
-//Dodajanje priljubljenih poti
+//DODAJANJE PRILJUBLJENIH POTI
 app.post('/priljubljeno/:id', function(req, res, next) {
 
     if (!req.params.id) {
@@ -216,10 +220,13 @@ app.post('/priljubljeno/:id', function(req, res, next) {
     }
 });
 
-// Poizvedba za priljubljene poti
+//PRIKAZ PRILJUBLJENIH POTI
 app.get('/priljubljeni/:idUporabnika', async(req, res, next) => {
     try {
-        let priljubljenePot = await knex('priljubljeni').innerJoin('poti', 'priljubljeni.TK_ID_poti', 'poti.id').where('TK_ID_uporabnik', req.params.idUporabnika);
+        let priljubljenePot = await knex('priljubljeni')
+            .innerJoin('poti', 'priljubljeni.TK_ID_poti', 'poti.id')
+            .where('TK_ID_uporabnik', req.params.idUporabnika);
+
         res.json(priljubljenePot);
 
     } catch (err) {
@@ -227,3 +234,4 @@ app.get('/priljubljeni/:idUporabnika', async(req, res, next) => {
         res.status(500).json(err);
     }
 })
+

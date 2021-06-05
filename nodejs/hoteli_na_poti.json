@@ -1,0 +1,38 @@
+[
+  {
+    "fk_poti": 1,
+    "fk_hoteli": 11
+  },
+  {
+    "fk_poti": 1,
+    "fk_hoteli": 12
+  },
+  {
+    "fk_poti": 2,
+    "fk_hoteli": 3
+  },
+  {
+    "fk_poti": 2,
+    "fk_hoteli": 4
+  },
+  {
+    "fk_poti": 3,
+    "fk_hoteli": 7
+  },
+  {
+    "fk_poti": 3,
+    "fk_hoteli": 8
+  },
+  {
+    "fk_poti": 4,
+    "fk_hoteli": 1
+  },
+  {
+    "fk_poti": 4,
+    "fk_hoteli": 2
+  },
+  {
+    "fk_poti": 4,
+    "fk_hoteli": 6
+  }
+]

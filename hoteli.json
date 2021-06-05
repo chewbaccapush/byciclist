@@ -1,64 +1,86 @@
 [
-    {   
+    {
         "id": 1,
         "naziv": "Hotel Špik Alpine Resort",
         "naslov": "Jezerci 21, 4282 Kranjska Gora, Slovenija",
         "email": "hotel.spik@hit.si",
         "telefon": "+386 4 587 71 00"
-    },{   
+    },
+    {
         "id": 2,
         "naziv": "Hotel Hotel Kompas",
         "naslov": "Borovska Cesta 100, 4280 Kranjska Gora, Slovenija",
         "email": "info@hit-alpinea.si",
         "telefon": "+386 4 589 21 00"
-    },{   
+    },
+    {
         "id": 3,
         "naziv": "Hotel Tabor",
         "naslov": "Ulica Heroja Zidanška 18, 2000 Maribor, Slovenija",
         "email": "info@hoteltabor-maribor.si",
         "telefon": "+386 2 42 16 410"
-    },{   
+    },
+    {
         "id": 4,
         "naziv": "Garni Hotel Terano",
         "naslov": "Macunova ulica 1, 2000 Maribor, Slovenija",
         "email": "info@hotel-terano.si",
         "telefon": "+386 40 463 863"
-    },{   
+    },
+    {
         "id": 5,
         "naziv": "Hotel Atelier",
         "naslov": "Jezerci 21, 4282 Kranjska Gora, Slovenija",
         "email": "info@atelierhotel.si",
         "telefon": "+386 40 691 393"
-    },{   
+    },
+    {
         "id": 6,
         "naziv": "Hotel City Hotel Ljubljana",
         "naslov": "Dalmatinova casta 15, 1000 Ljubljana, Slovenija",
         "email": "info@cityhotel.si",
         "telefon": "+386 1 239 00 00"
-    },{   
+    },
+    {
         "id": 7,
         "naziv": "Hotel Gredič",
         "naslov": "Ceglo 9, 5212 Dobrovo, Slovenija",
         "email": "info@gredic.si",
         "telefon": "+386 5 828 0120"
-    },{   
+    },
+    {
         "id": 8,
         "naziv": "Hotel Venko",
         "naslov": "Neblo 11, 5212 Dobrovo, Slovenija",
         "email": "info@venko.si",
         "telefon": "+386 5 398 87 50"
-    },{   
+    },
+    {
         "id": 9,
         "naziv": "Hotel Zvezda",
         "naslov": "Trg Zmage 8, 9000 Murska Sobota, Slovenija",
         "email": "recepcija@hotel-zvezda.si",
         "telefon": "+386 2 539 15 73"
-    },{   
+    },
+    {
         "id": 10,
         "naziv": "Hotel Strk",
         "naslov": "Polana 40, 9000 Murska Sobota, Slovenija",
         "email": "hotel.strk@siol.net",
         "telefon": "+386 2 52 52 158"
+    },
+    {
+        "id": 11,
+        "naziv": "Hotel Mangart Superior",
+        "naslov": "Mala vas 107, 5230 Bovec, Slovenija",
+        "email": " info@hotel-mangart.com",
+        "telefon": "+386 5 388 4250"
+    },
+    {
+        "id": 12,
+        "naziv": "Hotel Alp",
+        "naslov": "Trg golobarskih žrtev 48, 5230 Bovec, Slovenija",
+        "email": " info@hotel-alp-bovec.com",
+        "telefon": "+386 5 38 84 000"
     }
 ]
-    

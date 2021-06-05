@@ -566,3 +566,12 @@ span.press {
     text-align: left;
     color: white;
 }
+.hoteli-na-poti-container {
+    margin-top: 2em;
+    width: 90%;
+    margin-left: 5%;
+}
+
+.hotel-na-poti {
+    background-color: white;
+}

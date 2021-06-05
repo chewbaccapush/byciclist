@@ -196,10 +196,12 @@ function preglejPot(idPreglej) {
         type: "GET",
         url: "http://localhost:3000/pot?id=" + id,
         success: function(res) {
-            var tab = window.open();
-            tab.document.write(res);
+            var tabPoti = window.open();
+            tabPoti.document.write(res);
         }
     })
+
+
 }
 
 $(document).ready(() => {
