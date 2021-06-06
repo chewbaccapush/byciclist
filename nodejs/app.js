@@ -24,10 +24,23 @@ con.connect(function(err) {
     if (err) throw err;
 });
 
+//GET QUESTIONS FROM DB
 con.query("SELECT * FROM vprasanja", function(err, result, fields) {
     if (err) throw err;
-    //GET QUESTIONS FROM DB
     app.get('/questions', async(req, res, next) => {
+        try {
+            res.json(result);
+        } catch (err) {
+            res.status(500).json(err);
+        }
+    })
+});
+
+//GET ANSWERS FROM DB
+//con.query("SELECT odgovori.odgovor, odgovori.ID_TK_vprasanja FROM odgovori INNER JOIN vprasanja ON odgovori.ID_TK_vprasanja = vprasanja.ID_vprasanja", function(err, result, fields) {
+con.query("SELECT * FROM odgovori", function(err, result, fields) {
+    if (err) throw err;
+    app.get('/answers', async(req, res, next) => {
         try {
             res.json(result);
         } catch (err) {
@@ -56,6 +69,23 @@ app.post('/questions', async(req, res, next) => {
         console.log(req.body.title);
         var siteResponse = req.body.title;
         var sql = "INSERT INTO vprasanja (ID_vprasanja, vprasanje) VALUES (default,'" + siteResponse + "')";
+        con.query(sql, function(err, result) {
+            if (err) throw err;
+            console.log("1 record inserted");
+        });
+    }
+})
+
+//INSERT ANSWERS INTO DB
+app.post('/answers', async(req, res, next) => {
+    if (!req.body.title && !req.body.foreignID) {
+        res.status(400);
+        res.json({ message: "Bad Request" });
+    } else {
+        console.log(req.body.title);
+        var siteResponse = req.body.title;
+        var siteResponseID = req.body.foreignID;
+        var sql = "INSERT INTO odgovori (ID_odgovori, odgovor, ID_TK_vprasanja) VALUES (default,'" + siteResponse + "', " + siteResponseID + ")";
         con.query(sql, function(err, result) {
             if (err) throw err;
             console.log("1 record inserted");

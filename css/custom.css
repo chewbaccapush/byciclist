@@ -1,3 +1,6 @@
+html {
+    background-color: #060606 !important;
+}
 /* Style the search field */
 
 form.example input[type=text] {
@@ -29,7 +32,18 @@ form.example button:hover {
     background: #0b7dda;
 }
 
-
+.addNewComment {
+    background-color:green !important;
+    padding-top: 0px !important;
+    padding-bottom: 0px !important;
+}
+.addNewComment:hover {
+    background-color: #0b7dda !important;
+}
+.addCommentInput {
+    padding-top: 0px !important;
+    padding-bottom: 0px !important;
+}
 /* Clear floats */
 
 form.example::after {
