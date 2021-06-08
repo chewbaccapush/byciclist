@@ -235,3 +235,38 @@ app.get('/priljubljeni/:idUporabnika', async(req, res, next) => {
     }
 })
 
+/* -----REGISTRACIJA UPORABNIKA----- */
+app.post('/registracija', async(req, res, next) => {
+    let uporabniskoIme = req.body.username;
+    let email = req.body.email;
+
+    let uporabnik = {
+        'uporabnisko_ime': uporabniskoIme,
+        'email': email,
+        'geslo': req.body.password,
+        'ime': req.body.first_name,
+        'priimek': req.body.last_name,
+        'datum_rojstva': '2000-01-01',
+        'spol': 1
+    }
+
+    knex.select('uporabnisko_ime', 'email')
+        .from('uporabnik')
+        .where('uporabnisko_ime', uporabniskoIme)
+        .orWhere('email', email)
+        .then(uporabniki => {
+            if (uporabniki.length === 0) {
+                return knex('uporabnik')
+                    .insert(uporabnik)
+                    .then((idUporabnika) => {
+                        console.log(`Uporabnik ${idUporabnika} vstavljen.`);
+                        res.json({'id': idUporabnika[0]});
+                    })
+            }
+            console.log("Vstavljanje neuspešno");
+            res.status(400).json({"message": "Uporabniško ime/geslo je že v uporabi."});
+            return;
+        })
+})
+
+

@@ -231,8 +231,58 @@ function prikazPriljubljenih() {
             }
         }
     });
+}
 
+$('#registracijaForm').submit(() => {
+    let pass = document.forms["registracija"]["password"].value;
+    let pass2 = document.forms["registracija"]["confirm_password"].value;
+    let username = document.forms["registracija"]["username"].value;
+    let email = document.forms["registracija"]["email"].value;
 
+    var format = /[ `!#$%^&*()_+čćšđž\-=\[\]{};':"\\|,<>\/?~]/;
+    if (pass.length < 6) {
+        alert("Geslo mora vsebovati vsaj 6 znakov.");
+        return false;
+    } else if (format.test(username) || format.test(email)) {
+        alert("Geslo in E-pošta ne smeta vsebovati šumnikov ter posebnih znakov, z izjemo @.");
+        return false;
+    } else {
+        if (pass === pass2)
+            registriraj();
+        else {
+            alert("Gesli se ne ujemata.");
+            return false;
+        }
+    }
+})
 
+function registriraj() {
+    let url = 'http://localhost:3000/registracija';
+    let password = document.forms["registracija"]["password"].value;
+    let first_name = document.forms["registracija"]["first_name"].value;
+    let last_name = document.forms["registracija"]["last_name"].value;
+    let email = document.forms["registracija"]["email"].value;
+    let username = document.forms["registracija"]["username"].value;
 
+    let uporabnik = {
+        'password': password,
+        'first_name': first_name,
+        'last_name': last_name,
+        'email': email,
+        'username': username,
+    };
+
+    $.ajax({
+        dataType: 'application/json',
+        type: 'POST',
+        url: url,
+        data: uporabnik,
+        success: function(data) {
+            console.log("ahhaha");
+            alert(data);
+        },
+        error: function(err) {
+            console.log(err);
+        }
+    });
 }

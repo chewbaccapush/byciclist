@@ -68,7 +68,8 @@ async function napolniBazo() {
             table.string('geslo').notNullable();
             table.string('ime').notNullable();
             table.string('priimek').notNullable();
-            table.dateTime('datum_rojstva').notNullable();
+            table.string('email').notNullable();
+            table.date('datum_rojstva').notNullable();
             table.integer('spol').notNullable();
             table.integer('visina');
             table.integer('teza');
@@ -79,6 +80,24 @@ async function napolniBazo() {
             console.log(err);
             throw err
         });
+
+        /*let uporabniki = {
+            'uporabnisko_ime': 'anze',
+            'geslo': 'aaa',
+            'ime': 'Anže',
+            'priimek': 'Mihelic',
+            'email': 'anze@mihelic',
+            'datum_rojstva': '2000-11-11',
+            'spol': 1
+        }
+        await knex('uporabnik').insert(uporabniki)
+            .then(() => {
+                console.log("Poti vstavljene");
+            })
+            .catch((err) => {
+                console.log(err);
+                throw err
+            });*/
 
     //PRILJUBLJENI
     await knex.schema.createTable('priljubljeni', (table) => {

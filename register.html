@@ -48,7 +48,7 @@
     <header class="masthead">
         <div class="container align-items-center">
             <div class="signup-form">
-                <form action="/examples/actions/confirmation.php" method="post">
+                <form id='registracijaForm' name="registracija">
                     <h2>Register</h2>
                     <p class="hint-text">Create your account. It's free and only takes a minute.</p>
                     <div class="form-group">
@@ -59,6 +59,9 @@
                     </div>
                     <div class="form-group">
                         <input type="email" class="form-control" name="email" placeholder="Email" required="required">
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control" name="username" placeholder="Uporabniško ime" required="required">
                     </div>
                     <div class="form-group">
                         <input type="password" class="form-control" name="password" placeholder="Password" required="required">
@@ -88,6 +91,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
     <!-- Core theme JS-->
     <script src="js/scripts.js"></script>
+    <script src="js/routes.js"></script>
 </body>
 
 </html>
