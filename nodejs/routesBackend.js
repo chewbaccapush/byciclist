@@ -11,6 +11,7 @@ var hbs = require('express-handlebars');
 var path = require('path');
 
 
+
 /* -----ENGINE----- */
 app.engine('hbs', hbs({ extname: 'hbs', defaultLayout: 'layout', layoutsDir: __dirname + '/../views/layouts/' }));
 app.set('views', path.join(__dirname, '../views'));
@@ -245,9 +246,7 @@ app.post('/registracija', async(req, res, next) => {
         'email': email,
         'geslo': req.body.password,
         'ime': req.body.first_name,
-        'priimek': req.body.last_name,
-        'datum_rojstva': '2000-01-01',
-        'spol': 1
+        'priimek': req.body.last_name
     }
 
     knex.select('uporabnisko_ime', 'email')
@@ -260,13 +259,40 @@ app.post('/registracija', async(req, res, next) => {
                     .insert(uporabnik)
                     .then((idUporabnika) => {
                         console.log(`Uporabnik ${idUporabnika} vstavljen.`);
-                        res.json({'id': idUporabnika[0]});
+                        res.json({ 'id': idUporabnika[0] });
                     })
             }
             console.log("Vstavljanje neuspešno");
-            res.status(400).json({"message": "Uporabniško ime/geslo je že v uporabi."});
+            res.status(400).json({ "message": "Uporabniško ime/geslo je že v uporabi." });
             return;
         })
 })
 
+//GET za profil uporabnika
+app.get('/profil/:idUporabnika', async(req, res, next) => {
+    try {
+        let uporabnik = await knex('uporabnik').where('id', req.params.idUporabnika);
+        console.log(uporabnik);
+        res.json(uporabnik);
+    } catch (err) {
+        res.status(500).json(err);
+    }
+})
 
+app.post('/urediProfil', async(req, res, next) => {
+    try {
+        await knex('uporabnik')
+            .where('id', req.body.id)
+            .update({
+                'uporabnisko_ime': req.body.uporabnisko_ime,
+                'geslo': req.body.geslo,
+                'ime': req.body.ime,
+                'priimek': req.body.priimek,
+                'email': req.body.email
+            });
+        res.send('Uspesno spremenjeno')
+    } catch (err) {
+        console.log(err);
+        res.status(500).json(err);
+    }
+});

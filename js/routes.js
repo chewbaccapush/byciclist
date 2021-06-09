@@ -52,8 +52,6 @@ function prikazPoti() {
     //STARS END
 }
 
-
-
 function prikazJson(poti) {
     var telo = document.getElementById("routesContainer");
     var tezavnost = 'težavnost: ';
@@ -205,19 +203,55 @@ function preglejPot(idPreglej) {
 }
 
 $(document).ready(() => {
-
+    //Gumb za dodajanje k priljubljenim
     $('#i').click(function() {
+            $.ajax({
+                contentType: 'application/json',
+                url: "http://localhost:3000/priljubljeno",
+                data: poti.id,
+                type: 'POST',
+                success: function() {
+                    console.log("Uspešno shranjeno");
+                }
+            });
+        })
+        // Gumb za spremembo podatkov uporabnike
+    $('#buttonSpremembe').click(function() {
+        let ime = $("#spremeniIme").val();
+        let priimek = $("#spremeniPriimek").val();
+        let mail = $("#spremeniMail").val();
+        let uporabniskoIme = $("#spremeniUime").val();
+        let geslo = $("#spremeniGeslo").val();
+
+        let uporabnik = {
+            'id': 1,
+            'uporabnisko_ime': uporabniskoIme,
+            'geslo': geslo,
+            'ime': ime,
+            'priimek': priimek,
+            'email': mail
+        };
+
+        console.log(uporabnik);
+
+
         $.ajax({
-            contentType: 'application/json',
-            url: "http://localhost:3000/priljubljeno",
-            data: poti.id,
+            dataType: 'application/json',
             type: 'POST',
-            success: function() {
-                console.log("Uspešno shranjeno");
+            url: 'http://localhost:3000/urediProfil',
+            data: uporabnik,
+            success: function(data) {
+                console.log("fix");
+                alert(data);
+            },
+            error: function(err) {
+                console.log(err);
             }
         });
     })
+
 });
+
 
 function prikazPriljubljenih() {
 
@@ -285,4 +319,28 @@ function registriraj() {
             console.log(err);
         }
     });
+}
+
+function izpisiUporabnika() {
+    let imeU = document.getElementById("imeUporabika");
+    let mail = document.getElementById("mailUporabnika");
+    let rd = document.getElementById("rdUporabnika");
+    let uporabniskoIme = document.getElementById("uporabniskoIme");
+
+
+    $.ajax({
+        dataType: 'json',
+        type: 'GET',
+        url: 'http://localhost:3000/profil/' + 1,
+        success: function(data) {
+            data = data[0];
+            imeU.innerHTML = (`${data.ime} ${data.priimek}`);
+            uporabniskoIme.innerHTML = (`${data.uporabnisko_ime}`);
+            mail.innerHTML = (`${data.email}`);
+        },
+        error: function(err) {
+            console.log(err);
+        }
+    });
+
 }
