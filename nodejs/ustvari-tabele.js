@@ -13,6 +13,10 @@ var knex = require('knex')({
 
 //DROP TABLES
 async function napolniBazo() {
+    knex.schema.dropTableIfExists('komentarji').catch((err) => {
+        console.log(err);
+        throw err
+    });
     knex.schema.dropTableIfExists('hoteli_na_poti').catch((err) => {
         console.log(err);
         throw err
@@ -124,8 +128,8 @@ async function napolniBazo() {
             table.integer('spust').notNullable();
             table.enu('tezavnost', ['1', '2', '3', '4', '5']).notNullable();
             table.string('mapa', [1000]);
-            table.float('povprecnaOcena').notNullable();
-            table.integer('stOcenov').notNullable();
+            table.float('povprecnaOcena');
+            table.integer('stOcenov');
             table.string('img');
         }).then(() =>
             console.log("Tabela 'poti' ustvarjena."))
@@ -208,6 +212,29 @@ async function napolniBazo() {
     await knex('nasveti').insert(nasveti)
         .then(() => {
             console.log("Nasveti vstavljeni");
+        })
+        .catch((err) => {
+            console.log(err);
+            throw err
+        });
+
+    // KOMENTARJI
+    await knex.schema.createTable('komentarji', (table) => {
+        table.increments('ID_komentarji');
+        table.string('komentar');
+        table.integer('fk_poti').unsigned().references('id').inTable('poti');
+    }).then(() =>
+        console.log("Tabela 'komentarji' ustvarjena."))
+    .catch((err) => {
+        console.log(err);
+        throw err
+    });
+
+    const komentarji = require('../nodejs/komentarji.json');
+
+    await knex('komentarji').insert(komentarji)
+        .then(() => {
+            console.log("Komentarji vstavljeni");
         })
         .catch((err) => {
             console.log(err);

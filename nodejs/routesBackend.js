@@ -39,6 +39,11 @@ var Poti = bookshelf.Model.extend({
     idAttribute: 'id'
 })
 
+var Komentarji = bookshelf.Model.extend({
+    tableName: 'komentarji',
+    idAttribute: 'id'
+})
+
 /* -----------------------------------CORS----------------------------------- */
 
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -294,5 +299,38 @@ app.post('/urediProfil', async(req, res, next) => {
     } catch (err) {
         console.log(err);
         res.status(500).json(err);
+    }
+});
+
+/* -----DODAJANJE POTI---- */
+app.post('/dodajPot', async(req, res, next) => {
+    try{
+        let nov = {
+            zacetnaTocka: req.body.zacetnaTocka,
+            koncnaTocka: req.body.koncnaTocka,
+            tip: req.body.tip,
+            profil: req.body.profil,
+            razdalja: req.body.razdalja,
+            vzpon: req.body.vzpon,
+            spust: req.body.spust,
+            tezavnost: req.body.tezavnost
+        };
+        let pot = await new Poti().save(nov);
+        res.json(await new Poti().fetchAll().toJSON());
+    } catch(error){
+        res.status(500).json(error);
+    }
+});
+
+/* -----DODAJANJE KOMENTARJEV---- */
+app.post('/dodajKomentar', async(req, res, next) => {
+    try{
+        let nov = {
+            komentar: req.body.komentar
+        };
+        let pot = await new Komentarji().save(nov);
+        res.json(await new Komentarji().fetchAll().toJSON());
+    } catch(error){
+        res.status(500).json(error);
     }
 });
