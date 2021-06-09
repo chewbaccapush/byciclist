@@ -70,6 +70,7 @@ async function napolniBazo() {
             table.increments('id');
             table.string('uporabnisko_ime').notNullable();
             table.string('geslo').notNullable();
+            table.integer('tip').notNullable();
             table.string('ime').notNullable();
             table.string('priimek').notNullable();
             table.string('email').notNullable();

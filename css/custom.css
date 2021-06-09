@@ -1,10 +1,42 @@
 html {
     background-color: #060606 !important;
 }
-
-
+#loggedInUser{
+    color: #efff00;
+        padding-top: 30px;
+        padding-left: 10px;
+        font-weight: bold;
+    }
 /* Style the search field */
-
+#logginButton {
+    color: #fff;
+    font-size: 15px;
+    border: none;
+    cursor: pointer;
+    padding-top: 3px;
+    padding-bottom: 4px;
+    background-color: #27ba2f;
+    margin-left:5px;
+}
+#logoutButton {
+    color: #fff;
+    font-size: 15px;
+    border: none;
+    cursor: pointer;
+    padding-top: 3px;
+    padding-bottom: 4px;
+    background-color: #8e0000;
+    margin-left:5px;
+}
+#logoutButton:hover {
+    background-color: #d40000;
+}
+#logginButton:hover {
+    background-color: #68e442;
+}
+#loginForm input {
+    margin-left: 5px;
+}
 form.example input[type=text] {
     padding: 10px;
     font-size: 17px;
@@ -260,7 +292,7 @@ body {
     text-align: center;
     width: 110px;
 }
-
+.container-xl, .container-lg, .container-md, .container-sm, .container {max-width:1300px}
 .forum-avatar .img-circle {
     height: 48px;
     width: 48px;

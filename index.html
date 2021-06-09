@@ -16,6 +16,8 @@
     <!-- Core theme CSS (includes Bootstrap)-->
     <link href="css/styles.css" rel="stylesheet" />
     <link href="css/custom.css" rel="stylesheet" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="js/login.js"></script>
 </head>
 
 <body id="page-top">
@@ -30,16 +32,28 @@
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item"><a class="nav-link js-scroll-trigger" href="index.html">Home</a></li>
-                    <li class="nav-item"><a class="nav-link js-scroll-trigger" href="about.html">About</a></li>
+                    <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#">About</a></li>
                     <li class="nav-item"><a class="nav-link js-scroll-trigger" href="routes.html">Routes</a></li>
                     <li class="nav-item"><a class="nav-link js-scroll-trigger" href="forum.html">Forum</a></li>
-                    <li class="nav-item"><a class="nav-link js-scroll-trigger" href="contact.html">Contact</a></li>
+                    <li class="nav-item"><a class="nav-link js-scroll-trigger" href="hoteli.html">Hoteli</a></li>
+                    <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#">Contact</a></li>
                     <li class="nav-item"><a class="nav-link js-scroll-trigger" href="priljubljeni.html">Favorites</a></li>
-                    <li class="nav-item"><a class="btn btn-primary js-scroll-trigger pt-2 pb-2 mt-4" href="#">Sign
-                            in</a></li>
                     <li class="nav-item"><a class="btn btn-primary js-scroll-trigger pt-2 pb-2 mt-4 ml-2" href="register.html">Register</a></li>
                     <a href="profil.html"><img src="assets\img\avatar.jpg" alt="Avatar" class="avatar"></a>
+                    <li class="nav-item" id="loggedInUser"></li>
                 </ul>
+            </div>
+        </div>
+    </nav>
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav" style="
+    top: 50px;
+">
+        <div class="container">
+            <div class="navbar-collapse collapse show" id="navbarResponsive">
+                <form id="loginForm" name="loginForm" action="" method="POST">
+                    <input type="text" placeholder="Username" name="username"><input type="password" name="password"
+                        placeholder="Password"><button type="button" id="logginButton">Login</button>
+                </form>
             </div>
         </div>
     </nav>
