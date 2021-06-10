@@ -154,6 +154,8 @@ function preisci() {
             console.log(data.length)
             $("div.potMain").remove();
             $("div.potBrisi").remove();
+            $("div.stars").remove();
+            $("div.rateClass").remove();
             for (let i = 0; i < data.length; i++) {
                 console.log(data[i]);
                 prikazJson(data[i]);

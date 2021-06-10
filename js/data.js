@@ -180,7 +180,7 @@ $(document).ready(() => {
             data: data,
             type: 'POST',
             success: function(data) {
-                console.log(JSON.stringify(data));
+                console.log(data);
             }
         });
     })

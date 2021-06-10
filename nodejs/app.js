@@ -53,6 +53,7 @@ con.query("SELECT naslovNasveta FROM nasveti", function (err, result, fields) {
     if (err) throw err;
     app.get('/nasveti', async (req, res, next) => {
         try {
+            console.log(result);
             res.json(result);
         } catch (err) {
             res.status(500).json(err);

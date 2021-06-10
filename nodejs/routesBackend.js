@@ -251,7 +251,8 @@ app.post('/registracija', async(req, res, next) => {
         'email': email,
         'geslo': req.body.password,
         'ime': req.body.first_name,
-        'priimek': req.body.last_name
+        'priimek': req.body.last_name,
+        'tip': 1
     }
 
     knex.select('uporabnisko_ime', 'email')
