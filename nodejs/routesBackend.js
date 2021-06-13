@@ -41,7 +41,7 @@ var Poti = bookshelf.Model.extend({
 
 var Komentarji = bookshelf.Model.extend({
     tableName: 'komentarji',
-    idAttribute: 'id'
+    idAttribute: 'ID_komentarji'
 })
 
 /* -----------------------------------CORS----------------------------------- */
