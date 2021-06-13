@@ -207,17 +207,19 @@ function preglejPot(idPreglej) {
 $(document).ready(() => {
     //Gumb za dodajanje k priljubljenim
     $('#i').click(function() {
-            $.ajax({
-                contentType: 'application/json',
-                url: "http://localhost:3000/priljubljeno",
-                data: poti.id,
-                type: 'POST',
-                success: function() {
-                    console.log("Uspešno shranjeno");
-                }
-            });
-        })
-        // Gumb za spremembo podatkov uporabnike
+        $.ajax({
+            contentType: 'application/json',
+            url: "http://localhost:3000/priljubljeno",
+            data: poti.id,
+            type: 'POST',
+            success: function() {
+                console.log("Uspešno shranjeno");
+            }
+        });
+    })
+
+
+    // Gumb za spremembo podatkov uporabnike
     $('#buttonSpremembe').click(function() {
         let ime = $("#spremeniIme").val();
         let priimek = $("#spremeniPriimek").val();
@@ -252,10 +254,25 @@ $(document).ready(() => {
         });
     })
 
+
+    $('#brisiKomentar').click(function(idKomentarja) {
+        $.ajax({
+            type: "POST",
+            url: "http://localhost:3000/brisiKomentar/" + idKomentarja,
+            success: function() {
+                //Posodobi prikaz komentarjev.
+            },
+            error: function(err) {
+                console.log(err);
+            }
+        });
+    })
+
 });
 
 
 function prikazPriljubljenih() {
+    //Dodaj ID uporabnika iz sessionStorage-a
 
     $.ajax({
         dataType: "json",
@@ -324,6 +341,8 @@ function registriraj() {
 }
 
 function izpisiUporabnika() {
+    //Dodaj ID uporabnika iz sessionStorage-a
+
     let imeU = document.getElementById("imeUporabika");
     let mail = document.getElementById("mailUporabnika");
     let rd = document.getElementById("rdUporabnika");

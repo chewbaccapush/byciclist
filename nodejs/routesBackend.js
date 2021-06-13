@@ -305,7 +305,7 @@ app.post('/urediProfil', async(req, res, next) => {
 
 /* -----DODAJANJE POTI---- */
 app.post('/dodajPot', async(req, res, next) => {
-    try{
+    try {
         let nov = {
             zacetnaTocka: req.body.zacetnaTocka,
             koncnaTocka: req.body.koncnaTocka,
@@ -318,20 +318,32 @@ app.post('/dodajPot', async(req, res, next) => {
         };
         let pot = await new Poti().save(nov);
         res.json(await new Poti().fetchAll().toJSON());
-    } catch(error){
+    } catch (error) {
         res.status(500).json(error);
     }
 });
 
 /* -----DODAJANJE KOMENTARJEV---- */
 app.post('/dodajKomentar', async(req, res, next) => {
-    try{
+    try {
         let nov = {
             komentar: req.body.komentar
         };
         let pot = await new Komentarji().save(nov);
         res.json(await new Komentarji().fetchAll().toJSON());
-    } catch(error){
+    } catch (error) {
+        res.status(500).json(error);
+    }
+});
+
+//Brisanje komentarja
+app.post('/brisiKomentar/:idKomentar', async(req, res, next) => {
+    try {
+        await knex('komentarji')
+            .where('ID_komentarji', req.params.idKomentar)
+            .del();
+        res.send('Komentar zbrisan');
+    } catch (error) {
         res.status(500).json(error);
     }
 });
