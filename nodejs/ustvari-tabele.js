@@ -223,15 +223,17 @@ async function napolniBazo() {
 
     // KOMENTARJI
     await knex.schema.createTable('komentarji', (table) => {
-        table.increments('ID_komentarji');
-        table.string('komentar');
-        table.integer('fk_poti').unsigned().references('id').inTable('poti');
-    }).then(() =>
-        console.log("Tabela 'komentarji' ustvarjena."))
-    .catch((err) => {
-        console.log(err);
-        throw err
-    });
+            table.increments('ID_komentarji');
+            table.string('komentar');
+            table.integer('fk_poti').unsigned().references('id').inTable('poti');
+            table.integer('fk_uporabnik').unsigned().references('id').inTable('uporabnik');
+
+        }).then(() =>
+            console.log("Tabela 'komentarji' ustvarjena."))
+        .catch((err) => {
+            console.log(err);
+            throw err
+        });
 
     const komentarji = require('../nodejs/komentarji.json');
 

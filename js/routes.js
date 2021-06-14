@@ -5,7 +5,7 @@ function prikazPoti() {
         type: 'GET',
         url: "http://localhost:3000/routes",
         async: false,
-        success: function (data) {
+        success: function(data) {
             poti = data;
         }
     });
@@ -15,18 +15,18 @@ function prikazPoti() {
         prikazJson(poti[i]);
     }
     //STARS
-    $(document).ready(function () {
-        $('.star').hover(function () {
+    $(document).ready(function() {
+        $('.star').hover(function() {
             if (!$(".voted")[0]) {
                 $(this).prevAll().andSelf().removeClass('fa-star-o').addClass('fa-star');
             }
         });
-        $('.star').mouseout(function () {
+        $('.star').mouseout(function() {
             if (!$(".voted")[0]) {
                 $(this).prevAll().andSelf().removeClass('fa-star').addClass('fa-star-o');
             }
         });
-        $('.star').click(function (e) {
+        $('.star').click(function(e) {
             if (!$(".voted")[0]) {
                 const url = 'http://localhost:3000/ocena';
                 var ocena = $(this).prevAll().length + 1;
@@ -42,7 +42,7 @@ function prikazPoti() {
                     url: url,
                     data: data,
                     type: 'POST',
-                    success: function (data) {
+                    success: function(data) {
                         console.log(JSON.stringify(data));
                     }
                 });
@@ -123,7 +123,7 @@ function dodajPriljubljene(idPriljubljena) {
     $.ajax({
         type: 'POST',
         url: "http://localhost:3000/priljubljeno/" + id,
-        success: function () {
+        success: function() {
             console.log("Uspešno shranjeno");
         }
     });
@@ -149,7 +149,7 @@ function preisci() {
         url: "http://localhost:3000/routes",
         data: search,
         async: false,
-        success: function (data) {
+        success: function(data) {
             console.log(data.length)
             $("div.potMain").remove();
             $("div.potBrisi").remove();
@@ -160,7 +160,7 @@ function preisci() {
                 prikazJson(data[i]);
             }
         },
-        error: function (err) {
+        error: function(err) {
             console.log(err);
         }
     });
@@ -172,7 +172,7 @@ function brisiPot(idBrisi) {
     $.ajax({
         type: "POST",
         url: "http://localhost:3000/routesBrisi/" + id,
-        success: function (data) {
+        success: function(data) {
             alert("Brisanje uspešno");
             $("div.potMain").remove();
             $("div.potBrisi").remove();
@@ -183,7 +183,7 @@ function brisiPot(idBrisi) {
                 prikazJson(data[i]);
             }
         },
-        error: function (err) {
+        error: function(err) {
             console.log(err);
         }
     });
@@ -194,30 +194,42 @@ function preglejPot(idPreglej) {
     $.ajax({
         type: "GET",
         url: "http://localhost:3000/pot?id=" + id,
-        success: function (res) {
+        success: function(res) {
             var tabPoti = window.open();
             tabPoti.document.write(res);
         }
     })
+}
 
+function brisiKomentar(idKomentar) {
+    $.ajax({
+        type: "POST",
+        url: "http://localhost:3000/brisiKomentar/" + idKomentar,
+        success: function(data) {
+            console.log(data);
 
+        },
+        error: function(err) {
+            console.log(err);
+        }
+    });
 }
 
 $(document).ready(() => {
     //Gumb za dodajanje k priljubljenim
-    $('#i').click(function () {
-        $.ajax({
-            contentType: 'application/json',
-            url: "http://localhost:3000/priljubljeno",
-            data: poti.id,
-            type: 'POST',
-            success: function () {
-                console.log("Uspešno shranjeno");
-            }
-        });
-    })
-    // Gumb za spremembo podatkov uporabnike
-    $('#buttonSpremembe').click(function () {
+    $('#i').click(function() {
+            $.ajax({
+                contentType: 'application/json',
+                url: "http://localhost:3000/priljubljeno",
+                data: poti.id,
+                type: 'POST',
+                success: function() {
+                    console.log("Uspešno shranjeno");
+                }
+            });
+        })
+        // Gumb za spremembo podatkov uporabnike
+    $('#buttonSpremembe').click(function() {
         let ime = $("#spremeniIme").val();
         let priimek = $("#spremeniPriimek").val();
         let mail = $("#spremeniMail").val();
@@ -241,11 +253,11 @@ $(document).ready(() => {
             type: 'POST',
             url: 'http://localhost:3000/urediProfil',
             data: uporabnik,
-            success: function (data) {
+            success: function(data) {
                 console.log("fix");
                 alert(data);
             },
-            error: function (err) {
+            error: function(err) {
                 console.log(err);
             }
         });
@@ -253,16 +265,7 @@ $(document).ready(() => {
 
 
     $('#brisiKomentar').click(function(idKomentarja) {
-        $.ajax({
-            type: "POST",
-            url: "http://localhost:3000/brisiKomentar/" + idKomentarja,
-            success: function() {
-                //Posodobi prikaz komentarjev.
-            },
-            error: function(err) {
-                console.log(err);
-            }
-        });
+
     })
 
 });
@@ -275,7 +278,7 @@ function prikazPriljubljenih() {
         dataType: "json",
         type: 'GET',
         url: "http://localhost:3000/priljubljeni/" + 1,
-        success: function (data) {
+        success: function(data) {
             for (let i = 0; i < data.length; i++) {
                 prikazJson(data[i]);
             }
@@ -349,13 +352,13 @@ function izpisiUporabnika() {
         dataType: 'json',
         type: 'GET',
         url: 'http://localhost:3000/profil/' + 1,
-        success: function (data) {
+        success: function(data) {
             data = data[0];
             imeU.innerHTML = (`${data.ime} ${data.priimek}`);
             uporabniskoIme.innerHTML = (`${data.uporabnisko_ime}`);
             mail.innerHTML = (`${data.email}`);
         },
-        error: function (err) {
+        error: function(err) {
             console.log(err);
         }
     });
@@ -367,17 +370,17 @@ function dodajKomentar(komentar, id) {
         dataType: 'application/json',
         type: 'POST',
         url: 'http://localhost:3000/dodajKomentar',
-        data: {komentar, id},
-        success: function (data) {
+        data: { komentar, id },
+        success: function(data) {
             console.log(data);
         },
-        error: function (err) {
+        error: function(err) {
             console.error(err);
         }
     });
 }
 
-function prikazKomentarjev(id){
+function prikazKomentarjev(id) {
     console.log("prikazKomentarjev");
     let url = "http://localhost:3000/komentarji/" + id;
     console.log(url);
@@ -385,10 +388,10 @@ function prikazKomentarjev(id){
         dataType: "json",
         type: 'GET',
         url: url,
-        success: function (data) {
+        success: function(data) {
             console.log(data);
         },
-        error: function (err) {
+        error: function(err) {
             console.error(err);
         }
     });
