@@ -130,7 +130,7 @@ app.get('/pot', async(req, res, next) => {
         //Query
         let poti = await Poti.forge({ id: req.query.id }).fetch();
         let hoteli_na_poti = await knex('hoteli_na_poti')
-            .innerJoin('hoteli', 'hoteli.id', 'hoteli_na_poti.fk_poti')
+            .innerJoin('hoteli', 'hoteli.id', 'hoteli_na_poti.fk_hoteli')
             .where('fk_poti', req.query.id);
 
         //Zvezdice za tezavnost

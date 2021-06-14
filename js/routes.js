@@ -395,3 +395,7 @@ function prikazKomentarjev(id){
         }
     });
 }
+
+function dodajPot() {
+
+}
