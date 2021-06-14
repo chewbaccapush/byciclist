@@ -5,7 +5,7 @@ function prikazPoti() {
         type: 'GET',
         url: "http://localhost:3000/routes",
         async: false,
-        success: function (data) {
+        success: function(data) {
             poti = data;
         }
     });
@@ -15,18 +15,18 @@ function prikazPoti() {
         prikazJson(poti[i]);
     }
     //STARS
-    $(document).ready(function () {
-        $('.star').hover(function () {
+    $(document).ready(function() {
+        $('.star').hover(function() {
             if (!$(".voted")[0]) {
                 $(this).prevAll().andSelf().removeClass('fa-star-o').addClass('fa-star');
             }
         });
-        $('.star').mouseout(function () {
+        $('.star').mouseout(function() {
             if (!$(".voted")[0]) {
                 $(this).prevAll().andSelf().removeClass('fa-star').addClass('fa-star-o');
             }
         });
-        $('.star').click(function (e) {
+        $('.star').click(function(e) {
             if (!$(".voted")[0]) {
                 const url = 'http://localhost:3000/ocena';
                 var ocena = $(this).prevAll().length + 1;
@@ -42,7 +42,7 @@ function prikazPoti() {
                     url: url,
                     data: data,
                     type: 'POST',
-                    success: function (data) {
+                    success: function(data) {
                         console.log(JSON.stringify(data));
                     }
                 });
@@ -65,7 +65,6 @@ function prikazJson(poti) {
     }
 
     potElement = `
-<br>
 <div style="color:#fff" class="rateClass">Rate this route :) </div>
                 <div id="${poti.id}" class="stars">
                     <span class="fa fa-star-o star"></span>
@@ -109,8 +108,8 @@ function prikazJson(poti) {
         </iframe></div><!--TU SLIKA-->
           </div>
         <div class="potBrisi media align-items-lg-center flex-column flex-lg-row pr-3 border-bottom roundedt" style="background-color: rgba(255, 255, 255, 0.7)">
-        <button class="btn btn-danger brisiPotGumb" id="brisiPot${poti.id}" onclick="brisiPot(this.id)">Izbriši</button>
-        <button class="btn btn-success urediPotGumb">Uredi</button>
+            <button class="btn btn-danger brisiPotGumb" id="brisiPot${poti.id}" onclick="brisiPot(this.id)">Izbriši</button>
+            <a class="btn btn-success urediPotGumb" id="urediPot${poti.id}" target="__blank" href="urejanje_poti.html" onclick="shraniPot(this.id)">Uredi</a>
         </div>
     `
     $(telo).append(potElement);
@@ -124,7 +123,7 @@ function dodajPriljubljene(idPriljubljena) {
     $.ajax({
         type: 'POST',
         url: "http://localhost:3000/priljubljeno/" + id,
-        success: function () {
+        success: function() {
             console.log("Uspešno shranjeno");
         }
     });
@@ -150,7 +149,7 @@ function preisci() {
         url: "http://localhost:3000/routes",
         data: search,
         async: false,
-        success: function (data) {
+        success: function(data) {
             console.log(data.length)
             $("div.potMain").remove();
             $("div.potBrisi").remove();
@@ -161,7 +160,7 @@ function preisci() {
                 prikazJson(data[i]);
             }
         },
-        error: function (err) {
+        error: function(err) {
             console.log(err);
         }
     });
@@ -173,7 +172,7 @@ function brisiPot(idBrisi) {
     $.ajax({
         type: "POST",
         url: "http://localhost:3000/routesBrisi/" + id,
-        success: function (data) {
+        success: function(data) {
             alert("Brisanje uspešno");
             $("div.potMain").remove();
             $("div.potBrisi").remove();
@@ -184,7 +183,7 @@ function brisiPot(idBrisi) {
                 prikazJson(data[i]);
             }
         },
-        error: function (err) {
+        error: function(err) {
             console.log(err);
         }
     });
@@ -195,30 +194,42 @@ function preglejPot(idPreglej) {
     $.ajax({
         type: "GET",
         url: "http://localhost:3000/pot?id=" + id,
-        success: function (res) {
+        success: function(res) {
             var tabPoti = window.open();
             tabPoti.document.write(res);
         }
     })
+}
 
+function brisiKomentar(idKomentar) {
+    $.ajax({
+        type: "POST",
+        url: "http://localhost:3000/brisiKomentar/" + idKomentar,
+        success: function(data) {
+            console.log(data);
 
+        },
+        error: function(err) {
+            console.log(err);
+        }
+    });
 }
 
 $(document).ready(() => {
     //Gumb za dodajanje k priljubljenim
-    $('#i').click(function () {
-        $.ajax({
-            contentType: 'application/json',
-            url: "http://localhost:3000/priljubljeno",
-            data: poti.id,
-            type: 'POST',
-            success: function () {
-                console.log("Uspešno shranjeno");
-            }
-        });
-    })
-    // Gumb za spremembo podatkov uporabnike
-    $('#buttonSpremembe').click(function () {
+    $('#i').click(function() {
+            $.ajax({
+                contentType: 'application/json',
+                url: "http://localhost:3000/priljubljeno",
+                data: poti.id,
+                type: 'POST',
+                success: function() {
+                    console.log("Uspešno shranjeno");
+                }
+            });
+        })
+        // Gumb za spremembo podatkov uporabnike
+    $('#buttonSpremembe').click(function() {
         let ime = $("#spremeniIme").val();
         let priimek = $("#spremeniPriimek").val();
         let mail = $("#spremeniMail").val();
@@ -242,11 +253,10 @@ $(document).ready(() => {
             type: 'POST',
             url: 'http://localhost:3000/urediProfil',
             data: uporabnik,
-            success: function (data) {
-                console.log("fix");
+            success: function(data) {
                 alert(data);
             },
-            error: function (err) {
+            error: function(err) {
                 console.log(err);
             }
         });
@@ -254,16 +264,7 @@ $(document).ready(() => {
 
 
     $('#brisiKomentar').click(function(idKomentarja) {
-        $.ajax({
-            type: "POST",
-            url: "http://localhost:3000/brisiKomentar/" + idKomentarja,
-            success: function() {
-                //Posodobi prikaz komentarjev.
-            },
-            error: function(err) {
-                console.log(err);
-            }
-        });
+
     })
 
 });
@@ -276,7 +277,7 @@ function prikazPriljubljenih() {
         dataType: "json",
         type: 'GET',
         url: "http://localhost:3000/priljubljeni/" + 1,
-        success: function (data) {
+        success: function(data) {
             for (let i = 0; i < data.length; i++) {
                 prikazJson(data[i]);
             }
@@ -324,21 +325,20 @@ function registriraj() {
     };
 
     $.ajax({
-        dataType: 'application/json',
         type: 'POST',
         url: url,
         data: uporabnik,
-        success: function (data) {
-            console.log("ahhaha");
-            alert(data);
+        async: false,
+        success: function(data) {
+            alert(data.sporocilo);
         },
-        error: function (err) {
-            console.log(err);
+        error: function(err) {
+            alert(err.sporocilo);
         }
     });
 }
 
-function izpisiUporabnika() {
+function izpisiUporabnika(izpisiIme) {
     //Dodaj ID uporabnika iz sessionStorage-a
 
     let imeU = document.getElementById("imeUporabika");
@@ -346,18 +346,29 @@ function izpisiUporabnika() {
     let rd = document.getElementById("rdUporabnika");
     let uporabniskoIme = document.getElementById("uporabniskoIme");
 
-
     $.ajax({
         dataType: 'json',
         type: 'GET',
         url: 'http://localhost:3000/profil/' + 1,
-        success: function (data) {
+        success: function(data) {
             data = data[0];
+
             imeU.innerHTML = (`${data.ime} ${data.priimek}`);
-            uporabniskoIme.innerHTML = (`${data.uporabnisko_ime}`);
-            mail.innerHTML = (`${data.email}`);
+            if (izpisiIme == 1) {
+                uporabniskoIme.innerHTML = `${data.uporabnisko_ime}`;
+                mail.innerHTML = `${data.email}`;
+            }
+
+            console.log(data);
+
+            document.getElementById("spremeniIme").value = data.ime;
+            document.getElementById("spremeniPriimek").value = data.priimek;
+            document.getElementById("spremeniMail").value = data.email;
+            document.getElementById("spremeniUime").value = data.uporabnisko_ime;
+            document.getElementById("spremeniGeslo").value = data.ime;
+
         },
-        error: function (err) {
+        error: function(err) {
             console.log(err);
         }
     });
@@ -369,17 +380,17 @@ function dodajKomentar(komentar, id) {
         dataType: 'application/json',
         type: 'POST',
         url: 'http://localhost:3000/dodajKomentar',
-        data: {komentar, id},
-        success: function (data) {
+        data: { komentar, id },
+        success: function(data) {
             console.log(data);
         },
-        error: function (err) {
+        error: function(err) {
             console.error(err);
         }
     });
 }
 
-function prikazKomentarjev(id){
+function prikazKomentarjev(id) {
     console.log("prikazKomentarjev");
     let url = "http://localhost:3000/komentarji/" + id;
     console.log(url);
@@ -387,11 +398,116 @@ function prikazKomentarjev(id){
         dataType: "json",
         type: 'GET',
         url: url,
-        success: function (data) {
+        success: function(data) {
             console.log(data);
         },
-        error: function (err) {
+        error: function(err) {
             console.error(err);
+        }
+    });
+}
+
+function dodajPot() {
+    let zacetnaTocka = document.forms["dodajanjePoti"]["zacetnaTocka"].value;
+    let koncnaTocka = document.forms["dodajanjePoti"]["koncnaTocka"].value;
+    let profil = document.forms["dodajanjePoti"]["profil"].value;
+    let tip = document.forms["dodajanjePoti"]["tip"].value;
+    let razdalja = document.forms["dodajanjePoti"]["razdalja"].value;
+    let vzpon = document.forms["dodajanjePoti"]["vzpon"].value;
+    let spust = document.forms["dodajanjePoti"]["spust"].value;
+    let tezavnost = document.forms["dodajanjePoti"]["tezavnost"].value;
+    let slika = document.forms["dodajanjePoti"]["slika"].value;
+    let mapa = document.forms["dodajanjePoti"]["mapa"].value;
+
+    let telo = {
+        'zacetnaTocka': zacetnaTocka,
+        'koncnaTocka': koncnaTocka,
+        'tip': tip,
+        'profil': profil,
+        'razdalja': razdalja,
+        'vzpon': vzpon,
+        'spust': spust,
+        'tezavnost': tezavnost,
+        'mapa': mapa,
+        'img': slika,
+        'fk_uporabnik': 1,
+        'potrjeno': 0
+    }
+
+    $.ajax({
+        type: "POST",
+        url: "http://localhost:3000/dodajPot",
+        data: telo,
+        async: false,
+        success: function(data) {
+            alert("Pot uspešno dodana")
+        }
+    });
+}
+
+function shraniPot(idPoti) {
+    let id = idPoti.slice(idPoti.length - 1);
+    localStorage.setItem("trenutnaPot", id);
+}
+
+function urediPot() {
+
+    $.ajax({
+        type: "GET",
+        url: "http://localhost:3000/urediPot/" + localStorage.getItem("trenutnaPot"),
+        async: false,
+        success: function(podatki) {
+            let data = podatki[0];
+            document.forms["urejanjePoti"]["zacetnaTocka"].value = data.zacetnaTocka;
+            document.forms["urejanjePoti"]["koncnaTocka"].value = data.koncnaTocka;
+            document.forms["urejanjePoti"]["profil"].value = data.profil;
+            document.forms["urejanjePoti"]["tip"].value = data.tip;
+            document.forms["urejanjePoti"]["razdalja"].value = data.razdalja;
+            document.forms["urejanjePoti"]["vzpon"].value = data.vzpon;
+            document.forms["urejanjePoti"]["spust"].value = data.spust;
+            document.forms["urejanjePoti"]["tezavnost"].value = data.tezavnost;
+            document.forms["urejanjePoti"]["slika"].value = data.img;
+            document.forms["urejanjePoti"]["mapa"].value = data.mapa;
+        }
+    });
+}
+
+function postUrediPot() {
+    let zacetnaTocka = document.forms["urejanjePoti"]["zacetnaTocka"].value;
+    let koncnaTocka = document.forms["urejanjePoti"]["koncnaTocka"].value;
+    let profil = document.forms["urejanjePoti"]["profil"].value;
+    let tip = document.forms["urejanjePoti"]["tip"].value;
+    let razdalja = document.forms["urejanjePoti"]["razdalja"].value;
+    let vzpon = document.forms["urejanjePoti"]["vzpon"].value;
+    let spust = document.forms["urejanjePoti"]["spust"].value;
+    let tezavnost = document.forms["urejanjePoti"]["tezavnost"].value;
+    let slika = document.forms["urejanjePoti"]["slika"].value;
+    let mapa = document.forms["urejanjePoti"]["mapa"].value;
+    let idPoti = localStorage.getItem("trenutnaPot");
+    console.log(idPoti)
+    let telo = {
+        'zacetnaTocka': zacetnaTocka,
+        'koncnaTocka': koncnaTocka,
+        'tip': tip,
+        'profil': profil,
+        'razdalja': razdalja,
+        'vzpon': vzpon,
+        'spust': spust,
+        'tezavnost': tezavnost,
+        'mapa': mapa,
+        'img': slika,
+        'fk_uporabnik': 1,
+        'potrjeno': 0
+    }
+    console.log(telo)
+
+    $.ajax({
+        type: "POST",
+        url: "http://localhost:3000/urediPotSpremeni/" + idPoti,
+        data: telo,
+        async: false,
+        success: function(data) {
+            alert(data.sporocilo)
         }
     });
 }
