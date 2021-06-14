@@ -359,8 +359,10 @@ app.post('/urediPotSpremeni/:id', async(req, res, next) => {
         console.log("heh");
         await knex('poti').where({id: req.params.id})
             .update(req.body);
+        res.json({"sporocilo": "Pot spremenjena uspešno"})
     } catch (err) {
-
+        console.log(err);
+        res.json({"sporocilo": "Nekaj je šlo narobe"})
     }
 })
 

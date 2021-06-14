@@ -132,6 +132,8 @@ async function napolniBazo() {
             table.float('povprecnaOcena');
             table.integer('stOcenov');
             table.string('img');
+            table.integer('fk_uporabnik').unsigned().references('id').inTable('uporabnik');
+            table.boolean('potrjeno').defaultTo(true);
         }).then(() =>
             console.log("Tabela 'poti' ustvarjena."))
         .catch((err) => {

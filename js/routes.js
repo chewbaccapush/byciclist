@@ -492,8 +492,9 @@ function postUrediPot() {
         type: "POST",
         url: "http://localhost:3000/urediPotSpremeni/" + idPoti,
         data: telo,
+        async: false,
         success: function (data) {
-            alert("Pot uspešno dodana")
+            alert(data.sporocilo)
         }
     });
 }
