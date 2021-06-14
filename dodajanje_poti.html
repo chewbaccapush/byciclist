@@ -50,60 +50,49 @@
     <header class="masthead">
         <div class="container align-items-center">
             <div class="signup-form">
-                <form id='registracijaForm' name="registracija" action="http://localhost:3000/dodajPot" method="POST">
+                <form id="dodajPot" name="dodajanjePoti" onsubmit="dodajPot()">
                     <h2>Dodaj pot</h2>
-                    <p class="hint-text">Dodano pot bodo videli vsi uporabniki.</p>
+                    <p class="hint-text">Dodano pot vam mora potrditi administrator.</p>
                     <br>
                     <div class="form-group">
-                        <b></b> 
-                        <label for="vnosBesedila" class="col-sm-2 col-form-label"></label>
-                        <div class="col-sm-10">
-                            <input name="zacetnaTocka" type="text" class="form-control" id="text" placeholder="Začetna točka">
+                        <b></b>
+                        <div class="form-group">
+                            <input name="zacetnaTocka" type="text" class="form-control" placeholder="Začetna točka" name="zacetnaTocka" required>
                         </div>
                         <div class="form-group">
-                            <label for="vnosBesedila" class="col-sm-2 col-form-label"></label>
-                            <div class="col-sm-10">
-                                <input name="koncnaTocka" type="text" class="form-control" id="text"
-                                    placeholder="Končna točka">
-                            </div>
+                            <input name="koncnaTocka" type="text" class="form-control" placeholder="Končna točka" name="koncnaTocka" required>
                         </div>
                         <div class="form-group">
-                            <label for="exampleFormControlSelect1"></label>
-                            <select name="profil" class="form-control" id="exampleFormControlSelect1" placeholder="Profil">
+                            <label for="exampleFormControlSelect1">Profil</label>
+                            <select name="profil" class="form-control" required>
                                 <option>Ravninski</option>
                                 <option>Gričevnat</option>
                                 <option>Hribovit</option>
                                 <option>Gorski</option>
                             </select>
                         </div>
-                            <div class="form-group">
-                                <label for="exampleFormControlSelect1"></label>
-                                <select name="tip" class="form-control" id="exampleFormControlSelect1" placeholder="Tip">
-                                    <option>Cestno kolo</option>
-                                    <option>Gorsko kolo</option>
-                                </select>
+                        <div class="form-group">
+                            <label for="exampleFormControlSelect1">Tip</label>
+                            <select name="tip" class="form-control" placeholder="Tip" required>
+                                <option>Cestno kolo</option>
+                                <option>Gorsko kolo</option>
+                            </select>
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-lg-4" >
+                                <input name="razdalja" type="number" class="form-control" placeholder="Razdalja" required>
                             </div>
-                            <div class="form-group">
-                                <label for="vnosStevila" class="col-sm-2 col-form-label"></label>
-                                <div class="col-sm-10">
-                                    <input name="razdalja" type="number" class="form-control" id="number"
-                                        placeholder="Razdalja">
+                            <div class="form-group col-lg-4">
+                                <input name="vzpon" type="number" class="form-control" id=""  placeholder="Vzpon" required>
                             </div>
-                            <div class="form-group">
-                                <label for="vnosStevila" class="col-sm-2 col-form-label"></label>
-                                <div class="col-sm-10">
-                                    <input name="vzpon" type="number" class="form-control" id="number"
-                                        placeholder="Vzpon">
+
+                            <div class="form-group col-lg-4">
+                                <input name="spust" type="number" class="form-control" id="number" placeholder="Spust" required>
                             </div>
+                        </div>
                             <div class="form-group">
-                                <label for="vnosStevila" class="col-sm-2 col-form-label"></label>
-                                <div class="col-sm-10">
-                                    <input name="spust" type="number" class="form-control" id="number"
-                                        placeholder="Spust">
-                            </div>
-                            <div class="form-group">
-                                <label for="exampleFormControlSelect1"></label>
-                                <select name="tezavnost" class="form-control" id="exampleFormControlSelect1" placeholder="Težavnost">
+                                <label for="exampleFormControlSelect1">Težavnost</label>
+                                <select name="tezavnost" class="form-control" id="exampleFormControlSelect1" placeholder="Težavnost" required>
                                     <option>1</option>
                                     <option>2</option>
                                     <option>3</option>
@@ -111,9 +100,15 @@
                                     <option>5</option>
                                 </select>
                             </div>
-                            <div class="form-group">
-                                <button type="submit" class="btn btn-success btn-lg btn-block">Dodaj pot</button>
-                            </div>
+                        <div class="form-group">
+                            <input name="slika" type="text" class="form-control" placeholder="URL slike" name="slika">
+                        </div>
+                        <div class="form-group">
+                            <input name="mapa" type="text" class="form-control" placeholder="URL poti na Google Maps" name="mapa">
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-success btn-lg btn-block">Dodaj pot</button>
+                        </div>
                 </form>
             </div>
         </div>

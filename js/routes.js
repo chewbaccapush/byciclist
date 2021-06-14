@@ -324,16 +324,15 @@ function registriraj() {
     };
 
     $.ajax({
-        dataType: 'application/json',
         type: 'POST',
         url: url,
         data: uporabnik,
+        async: false,
         success: function (data) {
-            console.log("ahhaha");
-            alert(data);
+            alert(data.sporocilo);
         },
         error: function (err) {
-            console.log(err);
+            alert(err.sporocilo);
         }
     });
 }
@@ -397,5 +396,40 @@ function prikazKomentarjev(id){
 }
 
 function dodajPot() {
+    let zacetnaTocka = document.forms["dodajanjePoti"]["zacetnaTocka"].value;
+    let koncnaTocka = document.forms["dodajanjePoti"]["koncnaTocka"].value;
+    let profil = document.forms["dodajanjePoti"]["profil"].value;
+    let tip = document.forms["dodajanjePoti"]["tip"].value;
+    let razdalja = document.forms["dodajanjePoti"]["razdalja"].value;
+    let vzpon = document.forms["dodajanjePoti"]["vzpon"].value;
+    let spust = document.forms["dodajanjePoti"]["spust"].value;
+    let tezavnost = document.forms["dodajanjePoti"]["tezavnost"].value;
+    let slika = document.forms["dodajanjePoti"]["slika"].value;
+    let mapa = document.forms["dodajanjePoti"]["mapa"].value;
+
+    let telo = {
+        'zacetnaTocka': zacetnaTocka,
+        'koncnaTocka': koncnaTocka,
+        'tip': tip,
+        'profil': profil,
+        'razdalja': razdalja,
+        'vzpon': vzpon,
+        'spust': spust,
+        'tezavnost': tezavnost,
+        'mapa': mapa,
+        'img': slika,
+        'fk_uporabnik': 1,
+        'potrjeno': 0
+    }
+
+    $.ajax({
+        type: "POST",
+        url: "http://localhost:3000/dodajPot",
+        data: telo,
+        async: false,
+        success: function (data) {
+            alert("Pot uspešno dodana")
+        }
+    });
 
 }

@@ -284,11 +284,12 @@ app.post('/registracija', async(req, res, next) => {
                     .insert(uporabnik)
                     .then((idUporabnika) => {
                         console.log(`Uporabnik ${idUporabnika} vstavljen.`);
-                        res.json({ 'id': idUporabnika[0] });
+                        res.json({ 'id': idUporabnika[0],
+                                        'sporocilo': "Registracija uspešna."});
                     })
             }
             console.log("Vstavljanje neuspešno");
-            res.status(400).json({ "message": "Uporabniško ime/geslo je že v uporabi." });
+            res.json({ "sporocilo": "Uporabniško ime/geslo je že v uporabi." });
             return;
         })
 })
@@ -325,7 +326,8 @@ app.post('/urediProfil', async(req, res, next) => {
 /* -----DODAJANJE POTI---- */
 app.post('/dodajPot', async(req, res, next) => {
     try {
-        let nov = {
+        console.log(req.body)
+        /*let nov = {
             zacetnaTocka: req.body.zacetnaTocka,
             koncnaTocka: req.body.koncnaTocka,
             tip: req.body.tip,
@@ -334,8 +336,8 @@ app.post('/dodajPot', async(req, res, next) => {
             vzpon: req.body.vzpon,
             spust: req.body.spust,
             tezavnost: req.body.tezavnost
-        };
-        let pot = await new Poti().save(nov);
+        };*/
+        let pot = await new Poti().save(req.body);
         res.json(await new Poti().fetchAll().toJSON());
     } catch (error) {
         res.status(500).json(error);
@@ -350,9 +352,9 @@ app.post('/dodajKomentar', async(req, res, next) => {
             fk_poti: req.body.id
         };
         let pot = await new Komentarji().save(nov);
-        res.json(await new Komentarji().fetchAll().toJSON());
+        res.json({"sporocilo": "pot dodana"});
     } catch (error) {
-        res.status(500).json(error);
+        /*res.status(500).json(error);*/
     }
 });
 
