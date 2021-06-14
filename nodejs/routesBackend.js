@@ -344,6 +344,26 @@ app.post('/dodajPot', async(req, res, next) => {
     }
 });
 
+app.get('/urediPot/:id', async(req, res, next) => {
+    try {
+        let pot = await knex('poti').where({id: req.params.id}).select();
+        console.log(pot);
+        res.json(pot);
+    } catch (err) {
+
+    }
+})
+
+app.post('/urediPotSpremeni/:id', async(req, res, next) => {
+    try {
+        console.log("heh");
+        await knex('poti').where({id: req.params.id})
+            .update(req.body);
+    } catch (err) {
+
+    }
+})
+
 /* -----DODAJANJE KOMENTARJEV---- */
 app.post('/dodajKomentar', async(req, res, next) => {
     try {
