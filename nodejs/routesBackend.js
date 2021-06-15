@@ -501,19 +501,6 @@ app.post('/checkCreds', async (req, res, next) => {
     }
 })
 
-//GET POTRJEVANJE
-con.query("SELECT id,zacetnaTocka,koncnaTocka,tip,profil,razdalja,tezavnost FROM poti WHERE potrjeno=0", function (err, result, fields) {
-    if (err) throw err;
-    app.get('/potrjevanje', async (req, res, next) => {
-        try {
-            console.log(result);
-            res.json(result);
-        } catch (err) {
-            res.status(500).json(err);
-        }
-    })
-});
-
 //SET POTRJEVANJE
 app.post('/potrjevanje', async (req, res, next) => {
     if (!req.body.id) {
@@ -527,6 +514,16 @@ app.post('/potrjevanje', async (req, res, next) => {
             if (err) throw err;
             console.log("1 record updated");
         });
+    }
+})
+
+//GET POTRJEVANJE
+app.get('/potrjevanje', async (req, res, next) => {
+    try {
+        let result = await knex('poti').where({'potrjeno': 0});
+        res.json(result);
+    } catch (err) {
+        res.status(500).json(err);
     }
 })
 

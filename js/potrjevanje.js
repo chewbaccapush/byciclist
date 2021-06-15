@@ -81,7 +81,6 @@ async function getRoutes() {
         let potrdi = vrstica.insertCell(-1);
         potrdi.innerHTML = "<button style='border:1px solid black;' onclick='potrdiPot(this.id)' type='button' id='" + poti.id + "'>Potrdi</button>";
     }
-
 }
 getRoutes();
 //CONFIRM ROUTE
