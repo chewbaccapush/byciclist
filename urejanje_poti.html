@@ -6,47 +6,42 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="" />
     <meta name="author" content="" />
-    <title>Urejanje poti</title>
+    <title>Dodajanje poti</title>
     <link rel="icon" type="image/x-icon" href="assets/img/favicon.ico" />
     <!-- Font Awesome icons (free version)-->
     <script src="https://use.fontawesome.com/releases/v5.15.3/js/all.js" crossorigin="anonymous"></script>
     <!-- Google fonts-->
     <link href="https://fonts.googleapis.com/css?family=Varela+Round" rel="stylesheet" />
-    <link
-            href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
-            rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet" />
     <!-- Core theme CSS (includes Bootstrap)-->
     <link href="css/styles.css" rel="stylesheet" />
     <link href="css/custom.css" rel="stylesheet" />
 </head>
 
-<body id="page-top" onload="urediPot()">
-<!-- Navigation-->
-<nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
-    <div class="container">
-        <a class="navbar-brand js-scroll-trigger" href="#page-top">BicycLIST.si</a>
-        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
-                data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false"
-                aria-label="Toggle navigation">
-            Menu
-            <i class="fas fa-bars"></i>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarResponsive">
-            <ul class="navbar-nav ml-auto">
-                <li class="nav-item"><a class="nav-link js-scroll-trigger" href="index.html">Home</a></li>
-                <li class="nav-item"><a class="nav-link js-scroll-trigger" href="routes.html">Routes</a></li>
-                <li class="nav-item"><a class="nav-link js-scroll-trigger" href="dodajanje_poti.html">Dodajanje Poti</a></li>
-                <li class="nav-item"><a class="nav-link js-scroll-trigger" href="forum.html">Forum</a></li>
-                <li class="nav-item"><a class="nav-link js-scroll-trigger" href="hoteli.html">Hoteli</a></li>
-                <li class="nav-item"><a class="nav-link js-scroll-trigger" href="komentarji.html">Komentarji</a></li>
-                <li class="nav-item"><a class="btn btn-primary js-scroll-trigger pt-2 pb-2 mt-4 ml-2" href="register.html">Register</a></li>
-                <a href="profil.html"><img src="assets\img\avatar.jpg" alt="Avatar" class="avatar"></a>
-                <li class="nav-item" id="loggedInUser"></li>
-            </ul>
+<body id="page-top">
+    <!-- Navigation-->
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+        <div class="container">
+            <a class="navbar-brand js-scroll-trigger" href="#page-top">BicycLIST.si</a>
+            <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                Menu
+                <i class="fas fa-bars"></i>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item"><a class="nav-link js-scroll-trigger" href="index.html">HOME</a></li>
+                    <li class="nav-item"><a class="nav-link js-scroll-trigger" href="routes.html">POTI</a></li>
+                    <li class="nav-item"><a class="nav-link js-scroll-trigger" href="dodajanje_poti.html">DODAJ POT</a></li>
+                    <li class="nav-item"><a class="nav-link js-scroll-trigger" href="forum.html">FORUM</a></li>
+                    <li class="nav-item"><a class="nav-link js-scroll-trigger" href="potrjevanje.html">POTRDI POT</a></li>
+                    <li class="nav-item"><a class="btn btn-primary js-scroll-trigger pt-2 pb-2 mt-4 ml-2" href="register.html">REGISTRACIJA</a></li>
+                    <a href="profil.html"><img src="assets\img\avatar.jpg" alt="Avatar" class="avatar"></a>
+                    <li class="nav-item" id="loggedInUser"></li>
+                </ul>
+            </div>
         </div>
-    </div>
-</nav>
-<nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav" style="
+    </nav>
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top" style="
     top: 50px;
 ">
         <div class="container">
@@ -57,84 +52,86 @@
             </div>
         </div>
     </nav>
-<header class="masthead">
-    <div class="container align-items-center">
-        <div class="signup-form">
-            <form id="dodajPot" name="urejanjePoti" onsubmit="postUrediPot()">
-                <h2>Uredi pot</h2>
-                <br>
-                <div class="form-group">
-                    <b></b>
+    <header class="masthead">
+        <div class="container align-items-center">
+            <div class="signup-form">
+                <form id="dodajPot" name="dodajanjePoti" onsubmit="dodajPot()">
+                    <h2>Dodaj pot</h2>
+                    <p class="hint-text">Dodano pot vam mora potrditi administrator.</p>
+                    <br>
                     <div class="form-group">
-                        <input id="urediZacetna" name="zacetnaTocka" type="text" class="form-control" placeholder="Začetna točka" required>
-                    </div>
-                    <div class="form-group">
-                        <input name="koncnaTocka" type="text" class="form-control" placeholder="Končna točka" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="exampleFormControlSelect1">Profil</label>
-                        <select name="profil" class="form-control" required>
-                            <option>Ravninski</option>
-                            <option>Gričevnat</option>
-                            <option>Hribovit</option>
-                            <option>Gorski</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="exampleFormControlSelect1">Tip</label>
-                        <select name="tip" class="form-control" placeholder="Tip" required>
-                            <option>Cestno kolo</option>
-                            <option>Gorsko kolo</option>
-                        </select>
-                    </div>
-                    <div class="row">
-                        <div class="form-group col-lg-4" >
-                            <input name="razdalja" type="number" class="form-control" placeholder="Razdalja" required>
+                        <b></b>
+                        <div class="form-group">
+                            <input name="zacetnaTocka" type="text" class="form-control" placeholder="Začetna točka" name="zacetnaTocka" required>
                         </div>
-                        <div class="form-group col-lg-4">
-                            <input name="vzpon" type="number" class="form-control" id=""  placeholder="Vzpon" required>
+                        <div class="form-group">
+                            <input name="koncnaTocka" type="text" class="form-control" placeholder="Končna točka" name="koncnaTocka" required>
                         </div>
+                        <div class="form-group">
+                            <label for="exampleFormControlSelect1">Profil</label>
+                            <select name="profil" class="form-control" required>
+                                <option>Ravninski</option>
+                                <option>Gričevnat</option>
+                                <option>Hribovit</option>
+                                <option>Gorski</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleFormControlSelect1">Tip</label>
+                            <select name="tip" class="form-control" placeholder="Tip" required>
+                                <option>Cestno kolo</option>
+                                <option>Gorsko kolo</option>
+                            </select>
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-lg-4">
+                                <input name="razdalja" type="number" class="form-control" placeholder="Razdalja" required>
+                            </div>
+                            <div class="form-group col-lg-4">
+                                <input name="vzpon" type="number" class="form-control" id="" placeholder="Vzpon" required>
+                            </div>
 
-                        <div class="form-group col-lg-4">
-                            <input name="spust" type="number" class="form-control" id="number" placeholder="Spust" required>
+                            <div class="form-group col-lg-4">
+                                <input name="spust" type="number" class="form-control" id="number" placeholder="Spust" required>
+                            </div>
                         </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="exampleFormControlSelect1">Težavnost</label>
-                        <select name="tezavnost" class="form-control" id="exampleFormControlSelect1" placeholder="Težavnost" required>
-                            <option>1</option>
-                            <option>2</option>
-                            <option>3</option>
-                            <option>4</option>
-                            <option>5</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <input name="slika" type="text" class="form-control" placeholder="URL slike" name="slika">
-                    </div>
-                    <div class="form-group">
-                        <input name="mapa" type="text" class="form-control" placeholder="URL poti na Google Maps" name="mapa">
-                    </div>
-                    <div class="form-group">
-                        <button type="submit" class="btn btn-success btn-lg btn-block">Uredi Pot</button>
-                    </div>
-            </form>
-        </div>
-    </div>
-</header>
-<!-- Footer-->
-<footer class="footer bg-black small text-center text-white-50">
-    <div class="container">Copyright &copy; Your Website 2021</div>
-</footer>
-<!-- Bootstrap core JS-->
-<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"></script>
-<!-- Third party plugin JS-->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
-<!-- Core theme JS-->
-<script src="js/scripts.js"></script>
-<script src="js/login.js"></script>
-<script src="js/routes.js"></script>
+                        <div class="form-group">
+                            <label for="exampleFormControlSelect1">Težavnost</label>
+                            <select name="tezavnost" class="form-control" id="exampleFormControlSelect1" placeholder="Težavnost" required>
+                                    <option>1</option>
+                                    <option>2</option>
+                                    <option>3</option>
+                                    <option>4</option>
+                                    <option>5</option>
+                                </select>
+                        </div>
+                        <div class="form-group">
+                            <input name="slika" type="text" class="form-control" placeholder="URL slike" name="slika">
+                        </div>
+                        <div class="form-group">
+                            <input name="mapa" type="text" class="form-control" placeholder="URL poti na Google Maps" name="mapa">
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-success btn-lg btn-block">Dodaj pot</button>
+                        </div>
+                </form>
+                </div>
+            </div>
+    </header>
+    <!-- Footer-->
+    <footer class="footer bg-black small text-center text-white-50">
+        <div class="container">Copyright &copy; Your Website 2021</div>
+    </footer>
+    <!-- Bootstrap core JS-->
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Third party plugin JS-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <!-- Core theme JS-->
+    <script src="js/scripts.js"></script>
+    <script src="js/routes.js"></script>
+    <script src="js/login.js"></script>
+    <script src="js/access.js"></script>
 </body>
 
 </html>

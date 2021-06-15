@@ -135,7 +135,7 @@ function prikazJson(poti) {
     } else {
         if (sessionStorage.getItem("loggedIn") !== null && JSON.parse(sessionStorage.getItem("loggedIn")).tip != 3) {
             var x = document.getElementsByClassName('potBrisi').length;
-            for(let i=0;i<x;i++)
+            for (let i = 0; i < x; i++)
                 document.getElementsByClassName('potBrisi')[i].innerHTML = "";
         }
     }
@@ -223,7 +223,7 @@ function preglejPot(idPreglej) {
     $.ajax({
         type: "GET",
         url: "http://localhost:3000/pot?id=" + id,
-        success: function (res) {
+        success: function(res) {
             /*var tabPoti = window.open();
             tabPoti.document.write(res);
             tabPoti.document.close();*/
@@ -240,11 +240,11 @@ function brisiKomentar(idKomentar) {
     $.ajax({
         type: "POST",
         url: "http://localhost:3000/brisiKomentar/" + idKomentar,
-        success: function (data) {
+        success: function(data) {
             console.log(data);
             preglejPot("Pot" + localStorage.getItem("trenutnaPot"));
         },
-        error: function (err) {
+        error: function(err) {
             console.log(err);
         }
     });
@@ -296,12 +296,6 @@ $(document).ready(() => {
             }
         });
     })
-
-
-    $('#brisiKomentar').click(function (idKomentarja) {
-
-    })
-
 });
 
 
@@ -364,10 +358,10 @@ function registriraj() {
         url: url,
         data: uporabnik,
         async: false,
-        success: function (data) {
+        success: function(data) {
             alert(data.sporocilo);
         },
-        error: function (err) {
+        error: function(err) {
             alert(err.sporocilo);
         }
     });
@@ -416,7 +410,7 @@ function dodajKomentar(komentar, id) {
         type: 'POST',
         url: 'http://localhost:3000/dodajKomentar',
         data: { komentar, id },
-        success: function (data) {
+        success: function(data) {
             console.log(data);
         },
         error: function(err) {
@@ -475,7 +469,7 @@ function dodajPot() {
         url: "http://localhost:3000/dodajPot",
         data: telo,
         async: false,
-        success: function (data) {
+        success: function(data) {
             alert("Pot uspešno dodana")
         }
     });
@@ -492,7 +486,7 @@ function urediPot() {
         type: "GET",
         url: "http://localhost:3000/urediPot/" + localStorage.getItem("trenutnaPot"),
         async: false,
-        success: function (podatki) {
+        success: function(podatki) {
             let data = podatki[0];
             document.forms["urejanjePoti"]["zacetnaTocka"].value = data.zacetnaTocka;
             document.forms["urejanjePoti"]["koncnaTocka"].value = data.koncnaTocka;
@@ -542,7 +536,7 @@ function postUrediPot() {
         url: "http://localhost:3000/urediPotSpremeni/" + idPoti,
         data: telo,
         async: false,
-        success: function (data) {
+        success: function(data) {
             alert(data.sporocilo)
         }
     });
@@ -587,15 +581,14 @@ function calculateAndDisplayRoute(directionsService, directionsRenderer) {
         type: 'GET',
         url: "http://localhost:3000/pridobiEnoPot/" + localStorage.getItem("trenutnaPot"),
         async: false,
-        success: function (data) {
+        success: function(data) {
             zacetnaTocka = data[0].zacetnaTocka;
             koncnaTocka = data[0].koncnaTocka;
         }
     });
     console.log(zacetnaTocka);
     console.log(koncnaTocka);
-    directionsService.route(
-        {
+    directionsService.route({
             origin: zacetnaTocka,
             destination: koncnaTocka,
             travelMode: google.maps.TravelMode.DRIVING

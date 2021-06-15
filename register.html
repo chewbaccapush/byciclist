@@ -12,9 +12,7 @@
     <script src="https://use.fontawesome.com/releases/v5.15.3/js/all.js" crossorigin="anonymous"></script>
     <!-- Google fonts-->
     <link href="https://fonts.googleapis.com/css?family=Varela+Round" rel="stylesheet" />
-    <link
-        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
-        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet" />
     <!-- Core theme CSS (includes Bootstrap)-->
     <link href="css/styles.css" rel="stylesheet" />
     <link href="css/custom.css" rel="stylesheet" />
@@ -27,21 +25,18 @@
     <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
         <div class="container">
             <a class="navbar-brand js-scroll-trigger" href="#page-top">BicycLIST.si</a>
-            <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
-                data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false"
-                aria-label="Toggle navigation">
+            <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
                 Menu
                 <i class="fas fa-bars"></i>
             </button>
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav ml-auto">
-                    <li class="nav-item"><a class="nav-link js-scroll-trigger" href="index.html">Home</a></li>
-                    <li class="nav-item"><a class="nav-link js-scroll-trigger" href="routes.html">Routes</a></li>
-                    <li class="nav-item"><a class="nav-link js-scroll-trigger" href="dodajanje_poti.html">Dodajanje Poti</a></li>
-                    <li class="nav-item"><a class="nav-link js-scroll-trigger" href="forum.html">Forum</a></li>
-                    <li class="nav-item"><a class="nav-link js-scroll-trigger" href="hoteli.html">Hoteli</a></li>
-                    <li class="nav-item"><a class="nav-link js-scroll-trigger" href="komentarji.html">Komentarji</a></li>
-                    <li class="nav-item"><a class="btn btn-primary js-scroll-trigger pt-2 pb-2 mt-4 ml-2" href="register.html">Register</a></li>
+                    <li class="nav-item"><a class="nav-link js-scroll-trigger" href="index.html">DOMOV</a></li>
+                    <li class="nav-item"><a class="nav-link js-scroll-trigger" href="routes.html">POTI</a></li>
+                    <li class="nav-item"><a class="nav-link js-scroll-trigger" href="dodajanje_poti.html">DODAJ POT</a></li>
+                    <li class="nav-item"><a class="nav-link js-scroll-trigger" href="forum.html">FORUM</a></li>
+                    <li class="nav-item"><a class="nav-link js-scroll-trigger" href="potrjevanje.html">POTRDI POT</a></li>
+                    <li class="nav-item"><a class="btn btn-primary js-scroll-trigger pt-2 pb-2 mt-4 ml-2" href="register.html">REGISTRACIJA</a></li>
                     <a href="profil.html"><img src="assets\img\avatar.jpg" alt="Avatar" class="avatar"></a>
                     <li class="nav-item" id="loggedInUser"></li>
                 </ul>
@@ -54,8 +49,7 @@
         <div class="container">
             <div class="navbar-collapse collapse show" id="navbarResponsive">
                 <form id="loginForm" name="loginForm" action="" method="POST">
-                    <input type="text" placeholder="Username" name="username"><input type="password" name="password"
-                        placeholder="Password"><button type="button" id="logginButton">Login</button>
+                    <input type="text" placeholder="Username" name="username"><input type="password" name="password" placeholder="Password"><button type="button" id="logginButton">Login</button>
                 </form>
             </div>
         </div>
@@ -65,13 +59,13 @@
         <div class="container align-items-center">
             <div class="signup-form">
                 <form id='registracijaForm' name="registracija">
-                    <h2>Register</h2>
-                    <p class="hint-text">Create your account. It's free and only takes a minute.</p>
+                    <h2>REGISTRACIJA</h2>
+
                     <div class="form-group">
                         <div class="row">
                             <div class="col"><input type="text" class="form-control" name="first_name" placeholder="First Name" required="required"></div>
                             <div class="col"><input type="text" class="form-control" name="last_name" placeholder="Last Name" required="required"></div>
-                        </div>        	
+                        </div>
                     </div>
                     <div class="form-group">
                         <input type="email" class="form-control" name="email" placeholder="Email" required="required">
@@ -84,12 +78,12 @@
                     </div>
                     <div class="form-group">
                         <input type="password" class="form-control" name="confirm_password" placeholder="Confirm Password" required="required">
-                    </div>        
-                    <div class="form-group">
-                        <label class="form-check-label"><input type="checkbox" required="required"> I accept the <a href="#">Terms of Use</a> &amp; <a href="#">Privacy Policy</a></label>
                     </div>
                     <div class="form-group">
-                        <button type="submit" class="btn btn-success btn-lg btn-block">Register Now</button>
+                        <label class="form-check-label"><input type="checkbox" required="required"> Sprejmem <a href="#">pogoje uporabe</a> &amp; <a href="#">pravilnik zasebnosti</a></label>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-success btn-lg btn-block">REGISTRIRAJ SE</button>
                     </div>
                 </form>
                 <div class="text-center signin">Already have an account? <a href="#">Sign in</a></div>
