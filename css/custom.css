@@ -540,6 +540,7 @@ a.forum-item-title:hover {
 }
 
 .i {
+    line-height: normal;
     cursor: pointer;
     padding: 10px 12px 8px;
     background: #fff;
@@ -720,4 +721,12 @@ span.press {
     width: 40px;
     height: 40px;
     border-radius: 50%;
+}
+
+.map-hbs {
+    width: 100%;
+    height: 100%;
+}
+.potMain {
+    line-height: 0;
 }

@@ -160,7 +160,8 @@ app.get('/pot', async(req, res, next) => {
             oprema: poti.get("tip"),
             hoteli: hoteli_na_poti,
             ID_komentar: poti.get("id"),
-            komentarji: komentarji_na_poti
+            komentarji: komentarji_na_poti,
+            id: poti.get("id")
         }
 
         res.render('pot', napolniPot);
