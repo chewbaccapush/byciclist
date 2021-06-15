@@ -130,7 +130,7 @@ app.get('/pot', async(req, res, next) => {
         //Query
         let poti = await Poti.forge({ id: req.query.id }).fetch();
         let hoteli_na_poti = await knex('hoteli_na_poti')
-            .innerJoin('hoteli', 'hoteli.id', 'hoteli_na_poti.fk_poti')
+            .innerJoin('hoteli', 'hoteli.id', 'hoteli_na_poti.fk_hoteli')
             .where('fk_poti', req.query.id);
 
         //Zvezdice za tezavnost
@@ -142,6 +142,11 @@ app.get('/pot', async(req, res, next) => {
                 tezavnost += '<li class="list-inline-item m-0"><i class="fa fa-star fa-lg text-muted"></i></li>'
             }
         }
+
+        let komentarji_na_poti = await knex('komentarji')
+            .where('fk_poti', req.query.id);
+        console.log(komentarji_na_poti);
+
         //konstruktor za hbs
         let napolniPot = {
             title: poti.get("zacetnaTocka") + " - " + poti.get("koncnaTocka"),
@@ -154,7 +159,9 @@ app.get('/pot', async(req, res, next) => {
             ocena: poti.get("povprecnaOcena"),
             oprema: poti.get("tip"),
             hoteli: hoteli_na_poti,
-            ID_komentar: poti.get("id")
+            ID_komentar: poti.get("id"),
+            komentarji: komentarji_na_poti,
+            id: poti.get("id")
         }
 
         res.render('pot', napolniPot);
@@ -278,11 +285,12 @@ app.post('/registracija', async(req, res, next) => {
                     .insert(uporabnik)
                     .then((idUporabnika) => {
                         console.log(`Uporabnik ${idUporabnika} vstavljen.`);
-                        res.json({ 'id': idUporabnika[0] });
+                        res.json({ 'id': idUporabnika[0],
+                                        'sporocilo': "Registracija uspešna."});
                     })
             }
             console.log("Vstavljanje neuspešno");
-            res.status(400).json({ "message": "Uporabniško ime/geslo je že v uporabi." });
+            res.json({ "sporocilo": "Uporabniško ime/geslo je že v uporabi." });
             return;
         })
 })
@@ -319,7 +327,8 @@ app.post('/urediProfil', async(req, res, next) => {
 /* -----DODAJANJE POTI---- */
 app.post('/dodajPot', async(req, res, next) => {
     try {
-        let nov = {
+        console.log(req.body)
+        /*let nov = {
             zacetnaTocka: req.body.zacetnaTocka,
             koncnaTocka: req.body.koncnaTocka,
             tip: req.body.tip,
@@ -328,13 +337,35 @@ app.post('/dodajPot', async(req, res, next) => {
             vzpon: req.body.vzpon,
             spust: req.body.spust,
             tezavnost: req.body.tezavnost
-        };
-        let pot = await new Poti().save(nov);
+        };*/
+        let pot = await new Poti().save(req.body);
         res.json(await new Poti().fetchAll().toJSON());
     } catch (error) {
         res.status(500).json(error);
     }
 });
+
+app.get('/urediPot/:id', async(req, res, next) => {
+    try {
+        let pot = await knex('poti').where({id: req.params.id}).select();
+        console.log(pot);
+        res.json(pot);
+    } catch (err) {
+
+    }
+})
+
+app.post('/urediPotSpremeni/:id', async(req, res, next) => {
+    try {
+        console.log("heh");
+        await knex('poti').where({id: req.params.id})
+            .update(req.body);
+        res.json({"sporocilo": "Pot spremenjena uspešno"})
+    } catch (err) {
+        console.log(err);
+        res.json({"sporocilo": "Nekaj je šlo narobe"})
+    }
+})
 
 /* -----DODAJANJE KOMENTARJEV---- */
 app.post('/dodajKomentar', async(req, res, next) => {
@@ -344,9 +375,9 @@ app.post('/dodajKomentar', async(req, res, next) => {
             fk_poti: req.body.id
         };
         let pot = await new Komentarji().save(nov);
-        res.json(await new Komentarji().fetchAll().toJSON());
+        res.json({"sporocilo": "pot dodana"});
     } catch (error) {
-        res.status(500).json(error);
+        /*res.status(500).json(error);*/
     }
 });
 
@@ -361,3 +392,148 @@ app.post('/brisiKomentar/:idKomentar', async(req, res, next) => {
         res.status(500).json(error);
     }
 });
+
+//GET QUESTIONS FROM DB
+con.query("SELECT * FROM vprasanja", function (err, result, fields) {
+    if (err) throw err;
+    app.get('/questions', async (req, res, next) => {
+        try {
+            res.json(result);
+        } catch (err) {
+            res.status(500).json(err);
+        }
+    })
+});
+
+//GET ANSWERS FROM DB
+//con.query("SELECT odgovori.odgovor, odgovori.ID_TK_vprasanja FROM odgovori INNER JOIN vprasanja ON odgovori.ID_TK_vprasanja = vprasanja.ID_vprasanja", function(err, result, fields) {
+con.query("SELECT * FROM odgovori", function (err, result, fields) {
+    if (err) throw err;
+    app.get('/answers', async (req, res, next) => {
+        try {
+            res.json(result);
+        } catch (err) {
+            res.status(500).json(err);
+        }
+    })
+});
+
+con.query("SELECT naslovNasveta FROM nasveti", function (err, result, fields) {
+    if (err) throw err;
+    app.get('/nasveti', async (req, res, next) => {
+        try {
+            console.log(result);
+            res.json(result);
+        } catch (err) {
+            res.status(500).json(err);
+        }
+    })
+});
+
+//INSERT QUESTIONS INTO DB
+app.post('/questions', async (req, res, next) => {
+    if (!req.body.title) {
+        res.status(400);
+        res.json({ message: "Bad Request" });
+    } else {
+        console.log(req.body.title);
+        var siteResponse = req.body.title;
+        var sql = "INSERT INTO vprasanja (ID_vprasanja, vprasanje) VALUES (default,'" + siteResponse + "')";
+        con.query(sql, function (err, result) {
+            if (err) throw err;
+            console.log("1 record inserted");
+        });
+    }
+})
+
+//INSERT ANSWERS INTO DB
+app.post('/answers', async (req, res, next) => {
+    if (!req.body.title && !req.body.foreignID) {
+        res.status(400);
+        res.json({ message: "Bad Request" });
+    } else {
+        console.log(req.body.title);
+        var siteResponse = req.body.title;
+        var siteResponseID = req.body.foreignID;
+        var sql = "INSERT INTO odgovori (ID_odgovori, odgovor, ID_TK_vprasanja) VALUES (default,'" + siteResponse + "', " + siteResponseID + ")";
+        con.query(sql, function (err, result) {
+            if (err) throw err;
+            console.log("1 record inserted");
+        });
+    }
+})
+
+//DODAJANJE NASVETOV V BAZO
+app.post('/nasveti', async (req, res, next) => {
+    if (!req.body.naslovNasveta) {
+        res.status(400);
+        res.json({ message: "Bad Request" });
+    } else {
+
+        let siteResponse = req.body.naslovNasveta;
+        var sql = "INSERT INTO nasveti (ID_nasvet, naslovNasveta) VALUES (default,'" + siteResponse + "')";
+        con.query(sql, function (err, result) {
+            if (err) throw err;
+            console.log("1 record inserted");
+        });
+    }
+})
+
+//CHECK CREDS
+app.post('/checkCreds', async (req, res, next) => {
+    if (!req.body.username && !req.body.password) {
+        res.status(400);
+        res.json({ message: "Bad Request" });
+    } else {
+        let username = req.body.username;
+        let password = req.body.password;
+        var sql = "SELECT id, uporabnisko_ime, geslo, tip FROM uporabnik WHERE uporabnisko_ime='" + username + "' AND geslo='" + password + "'";
+        con.query(sql, function (err, result) {
+            if (err) throw err;
+            if(result.length>0)
+                res.json(result);
+            else {
+                var invalidCreds = new Object();
+                invalidCreds.error = 1;
+                res.json(invalidCreds);
+            }
+        });
+    }
+})
+
+//SET POTRJEVANJE
+app.post('/potrjevanje', async (req, res, next) => {
+    if (!req.body.id) {
+        res.status(400);
+        res.json({ message: "Bad Request" });
+    } else {
+        console.log(req.body.id);
+        var siteResponse = req.body.id;
+        var sql = "UPDATE poti SET potrjeno=1 WHERE id="+siteResponse;
+        con.query(sql, function (err, result) {
+            if (err) throw err;
+            console.log("1 record updated");
+        });
+    }
+})
+
+//GET POTRJEVANJE
+app.get('/potrjevanje', async (req, res, next) => {
+    try {
+        let result = await knex('poti').where({'potrjeno': 0});
+        res.json(result);
+    } catch (err) {
+        res.status(500).json(err);
+    }
+})
+
+app.get("/pridobiEnoPot/:id", async(req, res, next) => {
+    if (!req.params.id) {
+        res.status(400);
+        res.json({ message: "Bad Request" });
+    } else {
+        let pot = await knex('poti').select().where({ 'id': req.params.id});
+        console.log(pot);
+        res.json(pot);
+    }
+})

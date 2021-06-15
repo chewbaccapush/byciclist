@@ -12,7 +12,8 @@ function prikazPoti() {
 
     localStorage.setItem("poti", JSON.stringify(poti));
     for (let i = 0; i < poti.length; i++) {
-        prikazJson(poti[i]);
+        if (poti[i].potrjeno == 1)
+            prikazJson(poti[i]);
     }
     //STARS
     $(document).ready(function() {
@@ -46,6 +47,11 @@ function prikazPoti() {
                         console.log(JSON.stringify(data));
                     }
                 });
+                if (confirm('You voted ' + ocena + '. Thanks for your vote!')) {
+                    window.location.reload();
+                } else {
+                    window.location.reload();
+                }
             }
         });
     });
@@ -100,19 +106,40 @@ function prikazJson(poti) {
                
               </div>
             </div>
-            <div style="width: 30%; height: 100%;">
+            <div style="width: 30%; height: 200px;"> 
              <iframe
                 src=${poti.mapa}
                 width="97%" height="100%" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false"
                 tabindex="0">
-        </iframe></div><!--TU SLIKA-->
+            </iframe>                  
+            </div><!--TU SLIKA-->
           </div>
         <div class="potBrisi media align-items-lg-center flex-column flex-lg-row pr-3 border-bottom roundedt" style="background-color: rgba(255, 255, 255, 0.7)">
             <button class="btn btn-danger brisiPotGumb" id="brisiPot${poti.id}" onclick="brisiPot(this.id)">Izbriši</button>
             <a class="btn btn-success urediPotGumb" id="urediPot${poti.id}" target="__blank" href="urejanje_poti.html" onclick="shraniPot(this.id)">Uredi</a>
         </div>
+        <hr class="lineBreak" style="background-color: white">
     `
     $(telo).append(potElement);
+    //access
+    if (sessionStorage.getItem("loggedIn") === null) {
+        var x = document.getElementsByClassName('stars').length;
+        for (let i = 0; i < x; i++) {
+            document.getElementsByClassName('stars')[i].innerHTML = "";
+            document.getElementsByClassName('rateClass')[i].innerHTML = "";
+            document.getElementsByClassName('potBrisi')[i].innerHTML = "";
+            var l = i + 1;
+            var tmp = "priljubljena" + l;
+            document.getElementById(tmp).style.display = "none";
+        }
+    } else {
+        if (sessionStorage.getItem("loggedIn") !== null && JSON.parse(sessionStorage.getItem("loggedIn")).tip != 3) {
+            var x = document.getElementsByClassName('potBrisi').length;
+            for(let i=0;i<x;i++)
+                document.getElementsByClassName('potBrisi')[i].innerHTML = "";
+        }
+    }
+    //access end
 }
 
 function dodajPriljubljene(idPriljubljena) {
@@ -155,6 +182,7 @@ function preisci() {
             $("div.potBrisi").remove();
             $("div.stars").remove();
             $("div.rateClass").remove();
+            $("hr.lineBreak").remove();
             for (let i = 0; i < data.length; i++) {
                 console.log(data[i]);
                 prikazJson(data[i]);
@@ -178,6 +206,7 @@ function brisiPot(idBrisi) {
             $("div.potBrisi").remove();
             $("div.stars").remove();
             $("div.rateClass").remove();
+            $("hr.lineBreak").remove();
             for (let i = 0; i < data.length; i++) {
                 console.log(data[i]);
                 prikazJson(data[i]);
@@ -194,22 +223,28 @@ function preglejPot(idPreglej) {
     $.ajax({
         type: "GET",
         url: "http://localhost:3000/pot?id=" + id,
-        success: function(res) {
-            var tabPoti = window.open();
+        success: function (res) {
+            /*var tabPoti = window.open();
             tabPoti.document.write(res);
+            tabPoti.document.close();*/
+            localStorage.setItem("trenutnaPot", id);
+            document.open();
+            document.write(res);
+            document.close();
         }
     })
 }
 
 function brisiKomentar(idKomentar) {
+    console.log(idKomentar)
     $.ajax({
         type: "POST",
         url: "http://localhost:3000/brisiKomentar/" + idKomentar,
-        success: function(data) {
+        success: function (data) {
             console.log(data);
-
+            preglejPot("Pot" + localStorage.getItem("trenutnaPot"));
         },
-        error: function(err) {
+        error: function (err) {
             console.log(err);
         }
     });
@@ -263,7 +298,7 @@ $(document).ready(() => {
     })
 
 
-    $('#brisiKomentar').click(function(idKomentarja) {
+    $('#brisiKomentar').click(function (idKomentarja) {
 
     })
 
@@ -329,10 +364,10 @@ function registriraj() {
         url: url,
         data: uporabnik,
         async: false,
-        success: function(data) {
+        success: function (data) {
             alert(data.sporocilo);
         },
-        error: function(err) {
+        error: function (err) {
             alert(err.sporocilo);
         }
     });
@@ -381,7 +416,7 @@ function dodajKomentar(komentar, id) {
         type: 'POST',
         url: 'http://localhost:3000/dodajKomentar',
         data: { komentar, id },
-        success: function(data) {
+        success: function (data) {
             console.log(data);
         },
         error: function(err) {
@@ -400,6 +435,7 @@ function prikazKomentarjev(id) {
         url: url,
         success: function(data) {
             console.log(data);
+            preglejPot("Pot" + localStorage.getItem("trenutnaPot"));
         },
         error: function(err) {
             console.error(err);
@@ -430,7 +466,7 @@ function dodajPot() {
         'tezavnost': tezavnost,
         'mapa': mapa,
         'img': slika,
-        'fk_uporabnik': 1,
+        'fk_uporabnik': 100,
         'potrjeno': 0
     }
 
@@ -439,7 +475,7 @@ function dodajPot() {
         url: "http://localhost:3000/dodajPot",
         data: telo,
         async: false,
-        success: function(data) {
+        success: function (data) {
             alert("Pot uspešno dodana")
         }
     });
@@ -456,7 +492,7 @@ function urediPot() {
         type: "GET",
         url: "http://localhost:3000/urediPot/" + localStorage.getItem("trenutnaPot"),
         async: false,
-        success: function(podatki) {
+        success: function (podatki) {
             let data = podatki[0];
             document.forms["urejanjePoti"]["zacetnaTocka"].value = data.zacetnaTocka;
             document.forms["urejanjePoti"]["koncnaTocka"].value = data.koncnaTocka;
@@ -506,8 +542,70 @@ function postUrediPot() {
         url: "http://localhost:3000/urediPotSpremeni/" + idPoti,
         data: telo,
         async: false,
-        success: function(data) {
+        success: function (data) {
             alert(data.sporocilo)
         }
     });
+}
+
+let hbsMap;
+
+/*function initMap() {
+    let id = $(".map-hbs").prop('id');
+    console.log(id);
+    hbsMap = new google.maps.Map(document.getElementById(id), {
+        center: { lat: 46.119944, lng: 14.815333},
+        zoom: 8,
+    });
+}*/
+
+
+function initMap() {
+    let id = $(".map-hbs").prop('id');
+    const directionsService = new google.maps.DirectionsService();
+    const directionsRenderer = new google.maps.DirectionsRenderer();
+    const map = new google.maps.Map(document.getElementById(id), {
+        zoom: 8,
+        center: { lat: 46.119944, lng: 14.815333 },
+    });
+    directionsRenderer.setMap(map);
+
+    /*const onChangeHandler = function () {
+        calculateAndDisplayRoute(directionsService, directionsRenderer);
+    };
+    document.getElementById("start").addEventListener("change", onChangeHandler);
+    document.getElementById("end").addEventListener("change", onChangeHandler);*/
+    calculateAndDisplayRoute(directionsService, directionsRenderer);
+}
+
+function calculateAndDisplayRoute(directionsService, directionsRenderer) {
+    console.log(localStorage.getItem("trenutnaPot"));
+    var zacetnaTocka;
+    var koncnaTocka;
+    $.ajax({
+        dataType: "json",
+        type: 'GET',
+        url: "http://localhost:3000/pridobiEnoPot/" + localStorage.getItem("trenutnaPot"),
+        async: false,
+        success: function (data) {
+            zacetnaTocka = data[0].zacetnaTocka;
+            koncnaTocka = data[0].koncnaTocka;
+        }
+    });
+    console.log(zacetnaTocka);
+    console.log(koncnaTocka);
+    directionsService.route(
+        {
+            origin: zacetnaTocka,
+            destination: koncnaTocka,
+            travelMode: google.maps.TravelMode.DRIVING
+        },
+        (response, status) => {
+            if (status === "OK") {
+                directionsRenderer.setDirections(response);
+            } else {
+                window.alert("Directions request failed due to " + status);
+            }
+        }
+    );
 }

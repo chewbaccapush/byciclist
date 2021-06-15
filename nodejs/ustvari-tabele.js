@@ -7,7 +7,8 @@ var knex = require('knex')({
         port: 3306,
         user: 'bicyclist_user',
         password: '*yO4p,R;-;1y',
-        database: 'bicyclist_db'
+        database: 'bicyclist_db',
+        charset  : 'utf8'
     }
 });
 
@@ -87,15 +88,32 @@ async function napolniBazo() {
             throw err
         });
 
-    /*let uporabniki = {
-        'uporabnisko_ime': 'anze',
-        'geslo': 'aaa',
-        'ime': 'Anže',
-        'priimek': 'Mihelic',
-        'email': 'anze@mihelic',
-        'datum_rojstva': '2000-11-11',
-        'spol': 1
-    }
+    let uporabniki = [
+        {
+            'uporabnisko_ime': 'test1',
+            'geslo': 'test',
+            'ime': 'Test',
+            'priimek': 'Test',
+            'email': 'test@test',
+            'tip': 1
+        },
+        {
+            'uporabnisko_ime': 'test2',
+            'geslo': 'test',
+            'ime': 'Test',
+            'priimek': 'Test',
+            'email': 'test@test',
+            'tip': 2
+        },
+        {
+            'uporabnisko_ime': 'test3',
+            'geslo': 'test',
+            'ime': 'Test',
+            'priimek': 'Test',
+            'email': 'test@test',
+            'tip': 3
+        }
+    ]
     await knex('uporabnik').insert(uporabniki)
         .then(() => {
             console.log("Poti vstavljene");
@@ -103,7 +121,7 @@ async function napolniBazo() {
         .catch((err) => {
             console.log(err);
             throw err
-        });*/
+        });
 
     //PRILJUBLJENI
     await knex.schema.createTable('priljubljeni', (table) => {
@@ -132,6 +150,8 @@ async function napolniBazo() {
             table.float('povprecnaOcena');
             table.integer('stOcenov');
             table.string('img');
+            table.integer('fk_uporabnik').unsigned().references('id').inTable('uporabnik');
+            table.boolean('potrjeno').defaultTo(true);
         }).then(() =>
             console.log("Tabela 'poti' ustvarjena."))
         .catch((err) => {
@@ -221,15 +241,17 @@ async function napolniBazo() {
 
     // KOMENTARJI
     await knex.schema.createTable('komentarji', (table) => {
-        table.increments('ID_komentarji');
-        table.string('komentar');
-        table.integer('fk_poti').unsigned().references('id').inTable('poti');
-    }).then(() =>
-        console.log("Tabela 'komentarji' ustvarjena."))
-    .catch((err) => {
-        console.log(err);
-        throw err
-    });
+            table.increments('ID_komentarji');
+            table.string('komentar');
+            table.integer('fk_poti').unsigned().references('id').inTable('poti');
+            table.integer('fk_uporabnik').unsigned().references('id').inTable('uporabnik');
+
+        }).then(() =>
+            console.log("Tabela 'komentarji' ustvarjena."))
+        .catch((err) => {
+            console.log(err);
+            throw err
+        });
 
     const komentarji = require('../nodejs/komentarji.json');
 
