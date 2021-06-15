@@ -12,7 +12,8 @@ function prikazPoti() {
 
     localStorage.setItem("poti", JSON.stringify(poti));
     for (let i = 0; i < poti.length; i++) {
-        prikazJson(poti[i]);
+        if (poti[i].potrjeno == 1)
+            prikazJson(poti[i]);
     }
     //STARS
     $(document).ready(function () {
@@ -105,12 +106,13 @@ function prikazJson(poti) {
                
               </div>
             </div>
-            <div style="width: 30%; height: 100%;">
+            <div style="width: 30%; height: 200px;"> 
              <iframe
                 src=${poti.mapa}
                 width="97%" height="100%" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false"
                 tabindex="0">
-        </iframe></div><!--TU SLIKA-->
+            </iframe>                  
+            </div><!--TU SLIKA-->
           </div>
         <div class="potBrisi media align-items-lg-center flex-column flex-lg-row pr-3 border-bottom roundedt" style="background-color: rgba(255, 255, 255, 0.7)">
             <button class="btn btn-danger brisiPotGumb" id="brisiPot${poti.id}" onclick="brisiPot(this.id)">Izbriši</button>
@@ -119,7 +121,6 @@ function prikazJson(poti) {
         <hr class="lineBreak" style="background-color: white">
     `
     $(telo).append(potElement);
-
     //access
     if (sessionStorage.getItem("loggedIn") === null) {
         var x = document.getElementsByClassName('stars').length;
@@ -539,11 +540,63 @@ function postUrediPot() {
 
 let hbsMap;
 
-function initMap() {
+/*function initMap() {
     let id = $(".map-hbs").prop('id');
     console.log(id);
     hbsMap = new google.maps.Map(document.getElementById(id), {
         center: { lat: 46.119944, lng: 14.815333},
         zoom: 8,
     });
+}*/
+
+
+function initMap() {
+    let id = $(".map-hbs").prop('id');
+    const directionsService = new google.maps.DirectionsService();
+    const directionsRenderer = new google.maps.DirectionsRenderer();
+    const map = new google.maps.Map(document.getElementById(id), {
+        zoom: 8,
+        center: { lat: 46.119944, lng: 14.815333 },
+    });
+    directionsRenderer.setMap(map);
+
+    /*const onChangeHandler = function () {
+        calculateAndDisplayRoute(directionsService, directionsRenderer);
+    };
+    document.getElementById("start").addEventListener("change", onChangeHandler);
+    document.getElementById("end").addEventListener("change", onChangeHandler);*/
+    calculateAndDisplayRoute(directionsService, directionsRenderer);
 }
+
+function calculateAndDisplayRoute(directionsService, directionsRenderer) {
+    console.log(localStorage.getItem("trenutnaPot"));
+    var zacetnaTocka;
+    var koncnaTocka;
+    $.ajax({
+        dataType: "json",
+        type: 'GET',
+        url: "http://localhost:3000/pridobiEnoPot/" + localStorage.getItem("trenutnaPot"),
+        async: false,
+        success: function (data) {
+            zacetnaTocka = data[0].zacetnaTocka;
+            koncnaTocka = data[0].koncnaTocka;
+        }
+    });
+    console.log(zacetnaTocka);
+    console.log(koncnaTocka);
+    directionsService.route(
+        {
+            origin: zacetnaTocka,
+            destination: koncnaTocka,
+            travelMode: google.maps.TravelMode.DRIVING
+        },
+        (response, status) => {
+            if (status === "OK") {
+                directionsRenderer.setDirections(response);
+            } else {
+                window.alert("Directions request failed due to " + status);
+            }
+        }
+    );
+}
+
