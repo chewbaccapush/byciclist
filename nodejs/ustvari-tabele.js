@@ -87,15 +87,32 @@ async function napolniBazo() {
             throw err
         });
 
-    /*let uporabniki = {
-        'uporabnisko_ime': 'anze',
-        'geslo': 'aaa',
-        'ime': 'Anže',
-        'priimek': 'Mihelic',
-        'email': 'anze@mihelic',
-        'datum_rojstva': '2000-11-11',
-        'spol': 1
-    }
+    let uporabniki = [
+        {
+            'uporabnisko_ime': 'test1',
+            'geslo': 'test',
+            'ime': 'Test',
+            'priimek': 'Test',
+            'email': 'test@test',
+            'tip': 1
+        },
+        {
+            'uporabnisko_ime': 'test2',
+            'geslo': 'test',
+            'ime': 'Test',
+            'priimek': 'Test',
+            'email': 'test@test',
+            'tip': 2
+        },
+        {
+            'uporabnisko_ime': 'test3',
+            'geslo': 'test',
+            'ime': 'Test',
+            'priimek': 'Test',
+            'email': 'test@test',
+            'tip': 3
+        }
+    ]
     await knex('uporabnik').insert(uporabniki)
         .then(() => {
             console.log("Poti vstavljene");
@@ -103,7 +120,7 @@ async function napolniBazo() {
         .catch((err) => {
             console.log(err);
             throw err
-        });*/
+        });
 
     //PRILJUBLJENI
     await knex.schema.createTable('priljubljeni', (table) => {

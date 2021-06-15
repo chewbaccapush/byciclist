@@ -506,6 +506,7 @@ con.query("SELECT id,zacetnaTocka,koncnaTocka,tip,profil,razdalja,tezavnost FROM
     if (err) throw err;
     app.get('/potrjevanje', async (req, res, next) => {
         try {
+            console.log(result);
             res.json(result);
         } catch (err) {
             res.status(500).json(err);
@@ -526,5 +527,16 @@ app.post('/potrjevanje', async (req, res, next) => {
             if (err) throw err;
             console.log("1 record updated");
         });
+    }
+})
+
+app.get("/pridobiEnoPot/:id", async(req, res, next) => {
+    if (!req.params.id) {
+        res.status(400);
+        res.json({ message: "Bad Request" });
+    } else {
+        let pot = await knex('poti').select().where({ 'id': req.params.id});
+        console.log(pot);
+        res.json(pot);
     }
 })
