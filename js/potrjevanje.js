@@ -60,23 +60,9 @@ async function getRoutes() {
     const response = await fetch("http://localhost:3000/potrjevanje");
     const rawData = await response.text();
     var JSONData = JSON.parse(rawData);
-    var datax = [];
-    for (let i = 0; i < JSONData.length; i++) {
-        var newItem = { id: JSONData[i].id, zacetnaTocka: JSONData[i].zacetnaTocka, koncnaTocka: JSONData[i].koncnaTocka, tip: JSONData[i].tip, profil: JSONData[i].profil, razdalja: JSONData[i].razdalja, tezavnost: JSONData[i].tezavnost };
-        datax.push(newItem);
-    }
-    if (localStorage.getItem("nepotrjenePoti") === null) {
-        localStorage.setItem("nepotrjenePoti", JSON.stringify(datax));
-    } else {
-        refreshPotrjevanje();
-    }
-}
-
-function refreshPotrjevanje() {
-    var nepotrjenePoti = localStorage.getItem("nepotrjenePoti");
-    nepotrjenePoti = JSON.parse(nepotrjenePoti);
+    console.log(JSON.stringify(JSONData));
     const tabela = document.getElementById("tabela-hoteli");
-    for (const poti of nepotrjenePoti) {
+    for (const poti of JSONData) {
         let vrstica = tabela.insertRow(-1);
         let id = vrstica.insertCell(-1);
         id.innerHTML = poti.id;
@@ -95,8 +81,9 @@ function refreshPotrjevanje() {
         let potrdi = vrstica.insertCell(-1);
         potrdi.innerHTML = "<button style='border:1px solid black;' onclick='potrdiPot(this.id)' type='button' id='" + poti.id + "'>Potrdi</button>";
     }
-}
 
+}
+getRoutes();
 //CONFIRM ROUTE
 function potrdiPot(id) {
     var pot = new Object();
@@ -104,16 +91,6 @@ function potrdiPot(id) {
     const url2 = 'http://localhost:3000/potrjevanje';
     const data = JSON.stringify(pot);
     console.log(data);
-
-    var nepotrjenePoti = localStorage.getItem("nepotrjenePoti");
-    nepotrjenePoti = JSON.parse(nepotrjenePoti);
-    for (let i = 0; i < nepotrjenePoti.length; i++) {
-        if (nepotrjenePoti[i].id == id) {
-            nepotrjenePoti.splice(i, 1);
-            break;
-        }
-    }
-    localStorage.setItem("nepotrjenePoti", JSON.stringify(nepotrjenePoti));
 
     $.ajax({
         contentType: 'application/json',

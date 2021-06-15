@@ -7,7 +7,8 @@ var knex = require('knex')({
         port: 3306,
         user: 'bicyclist_user',
         password: '*yO4p,R;-;1y',
-        database: 'bicyclist_db'
+        database: 'bicyclist_db',
+        charset  : 'utf8'
     }
 });
 
