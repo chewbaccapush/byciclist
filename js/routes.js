@@ -116,6 +116,7 @@ function prikazJson(poti) {
             <button class="btn btn-danger brisiPotGumb" id="brisiPot${poti.id}" onclick="brisiPot(this.id)">Izbriši</button>
             <a class="btn btn-success urediPotGumb" id="urediPot${poti.id}" target="__blank" href="urejanje_poti.html" onclick="shraniPot(this.id)">Uredi</a>
         </div>
+        <hr class="lineBreak" style="background-color: white">
     `
     $(telo).append(potElement);
 
@@ -180,6 +181,7 @@ function preisci() {
             $("div.potBrisi").remove();
             $("div.stars").remove();
             $("div.rateClass").remove();
+            $("hr.lineBreak").remove();
             for (let i = 0; i < data.length; i++) {
                 console.log(data[i]);
                 prikazJson(data[i]);
@@ -203,6 +205,7 @@ function brisiPot(idBrisi) {
             $("div.potBrisi").remove();
             $("div.stars").remove();
             $("div.rateClass").remove();
+            $("hr.lineBreak").remove();
             for (let i = 0; i < data.length; i++) {
                 console.log(data[i]);
                 prikazJson(data[i]);
@@ -220,19 +223,24 @@ function preglejPot(idPreglej) {
         type: "GET",
         url: "http://localhost:3000/pot?id=" + id,
         success: function (res) {
-            var tabPoti = window.open();
+            /*var tabPoti = window.open();
             tabPoti.document.write(res);
+            tabPoti.document.close();*/
+            document.open();
+            document.write(res);
+            document.close();
         }
     })
 }
 
 function brisiKomentar(idKomentar) {
+    console.log(idKomentar)
     $.ajax({
         type: "POST",
         url: "http://localhost:3000/brisiKomentar/" + idKomentar,
         success: function (data) {
             console.log(data);
-
+            preglejPot("Pot" + localStorage.getItem("trenutnaPot"));
         },
         error: function (err) {
             console.log(err);
@@ -415,6 +423,7 @@ function prikazKomentarjev(id) {
         url: url,
         success: function (data) {
             console.log(data);
+            preglejPot("Pot" + localStorage.getItem("trenutnaPot"));
         },
         error: function (err) {
             console.error(err);
@@ -524,5 +533,16 @@ function postUrediPot() {
         success: function (data) {
             alert(data.sporocilo)
         }
+    });
+}
+
+let hbsMap;
+
+function initMap() {
+    let id = $(".map-hbs").prop('id');
+    console.log(id);
+    hbsMap = new google.maps.Map(document.getElementById(id), {
+        center: { lat: 46.119944, lng: 14.815333},
+        zoom: 8,
     });
 }

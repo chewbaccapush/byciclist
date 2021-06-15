@@ -1,24 +1,34 @@
 <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
     <div class="container">
-        <a class="navbar-brand js-scroll-trigger" href="#page-top">BycicLIST.si</a>
-        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
-            data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false"
-            aria-label="Toggle navigation">
+        <a class="navbar-brand js-scroll-trigger" href="#page-top">BicycLIST.si</a>
+        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
             Menu
             <i class="fas fa-bars"></i>
         </button>
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item"><a class="nav-link js-scroll-trigger" href="index.html">Home</a></li>
-                <li class="nav-item"><a class="nav-link js-scroll-trigger" href="about.html">About</a></li>
                 <li class="nav-item"><a class="nav-link js-scroll-trigger" href="routes.html">Routes</a></li>
+                <li class="nav-item"><a class="nav-link js-scroll-trigger" href="dodajanje_poti.html">Dodajanje Poti</a></li>
                 <li class="nav-item"><a class="nav-link js-scroll-trigger" href="forum.html">Forum</a></li>
-                <li class="nav-item"><a class="nav-link js-scroll-trigger" href="contact.html">Contact</a></li>
-                <li class="nav-item"><a class="btn btn-primary js-scroll-trigger pt-2 pb-2 mt-4" href="#">Sign
-                        in</a></li>
-                <li class="nav-item"><a class="btn btn-primary js-scroll-trigger pt-2 pb-2 mt-4 ml-2"
-                        href="register.html">Register</a></li>
+                <li class="nav-item"><a class="nav-link js-scroll-trigger" href="hoteli.html">Hoteli</a></li>
+                <li class="nav-item"><a class="nav-link js-scroll-trigger" href="komentarji.html">Komentarji</a></li>
+                <li class="nav-item"><a class="btn btn-primary js-scroll-trigger pt-2 pb-2 mt-4 ml-2" href="register.html">Register</a></li>
+                <a href="profil.html"><img src="assets\img\avatar.jpg" alt="Avatar" class="avatar"></a>
+                <li class="nav-item" id="loggedInUser"></li>
             </ul>
+        </div>
+    </div>
+</nav>
+<nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav" style="
+    top: 50px;
+">
+    <div class="container">
+        <div class="navbar-collapse collapse show" id="navbarResponsive">
+            <form id="loginForm" name="loginForm" action="" method="POST">
+                <input type="text" placeholder="Username" name="username"><input type="password" name="password"
+                                                                                 placeholder="Password"><button type="button" id="logginButton">Login</button>
+            </form>
         </div>
     </div>
 </nav>
@@ -65,10 +75,15 @@
                 </div>
             </div>
             <div class="col-md-8 mx-auto">
-                <iframe src={{ mapa }} width="100%" height="100%" frameborder="0" style="border:0;" allowfullscreen=""
+                <div id="map{{ id }}" class="map-hbs"></div>
+                <!--<iframe src={{ mapa }} width="100%" height="100%" frameborder="0" style="border:0;" allowfullscreen=""
                     aria-hidden="false" tabindex="0">
-                </iframe>
+                </iframe>-->
             </div>
+            <script
+                src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAvcBkgnsXXbwF9DTTyzgYQ4kKxB33YCuc&callback=initMap&libraries=&v=weekly"
+                async
+            ></script>
         </div>
         <!--<img class="img-fluid" src="assets/img/ipad.png" alt="..." />-->
     </div>
@@ -158,3 +173,4 @@
     </footer>
 
     <script src="js/routes.js"></script>
+    <script src="js/login.js"></script>
