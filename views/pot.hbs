@@ -140,17 +140,12 @@
         </div>
     </div>
     <div class="container-fluid hoteli-na-poti-container">
-        <h2 class="card-title justify-content-start naslovPoti">Komentarji</h2>
-        <table class="table table-striped table-light">
-            <thead>
-                <tr>
-                    <th scope="col">Komentar</th>
-                </tr>
-            </thead>
+        {{!-- <h2>Komentarji</h2> --}}
+        <table class="forum-item table table-hover table-bordered">
             <tbody>
                 {{#each komentarji}}
                 <tr>
-                    <td>{{ this.komentar }} <button class="btn btn-danger brisiPotGumb"
+                    <td>{{ this.komentar }} <button class="btn btn-danger brisiPotGumb float-right"
                             onclick="brisiKomentar({{this.ID_komentarji}})">Izbriši</button>
                     </td>
 
@@ -160,11 +155,7 @@
         </table>
         <!--<img class="img-fluid" src="assets/img/ipad.png" alt="..." />-->
     </div>
-    <div class="ibox-content forum-container">
-
-
-
-    </div>
+    <div class="ibox-content forum-container"></div>
     </section>
 
     <!-- Footer-->
