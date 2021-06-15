@@ -115,7 +115,7 @@ form.example button {
 }
 
 #mainNav .nav-link {
-    color: white;
+    color: white !important;
 }
 
 h5 {
@@ -166,9 +166,12 @@ p {
     margin: 0 auto;
     font-size: 15px;
     position: relative;
-    top: 250px;
+    top: 150px;
 }
-
+#mainNav{
+    background: #000000ad !important;
+    color: white !important;
+}
 .signup-form h2 {
     color: #fff;
     margin: 0 0 15px;

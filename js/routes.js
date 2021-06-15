@@ -456,7 +456,7 @@ function dodajPot() {
         'tezavnost': tezavnost,
         'mapa': mapa,
         'img': slika,
-        'fk_uporabnik': 1,
+        'fk_uporabnik': 100,
         'potrjeno': 0
     }
 
