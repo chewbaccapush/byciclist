@@ -226,6 +226,7 @@ function preglejPot(idPreglej) {
             /*var tabPoti = window.open();
             tabPoti.document.write(res);
             tabPoti.document.close();*/
+            localStorage.setItem("trenutnaPot", id);
             document.open();
             document.write(res);
             document.close();
