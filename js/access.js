@@ -9,4 +9,7 @@ if (sessionStorage.getItem("loggedIn") !== null) {
         document.getElementById("addNew").style.display = "none";
         document.getElementById("forma").style.display = "none";
     }
+    if (window.location.href.indexOf("potrjevanje.html") != -1) {
+        document.getElementById("pott").innerHTML = "<h2>Ta funkcionalnost je na voljo samo za administratorji</h2>";
+    }
 }

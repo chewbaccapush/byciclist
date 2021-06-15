@@ -499,3 +499,31 @@ app.post('/checkCreds', async (req, res, next) => {
         });
     }
 })
+
+//GET POTRJEVANJE
+con.query("SELECT id,zacetnaTocka,koncnaTocka,tip,profil,razdalja,tezavnost FROM poti WHERE potrjeno=0", function (err, result, fields) {
+    if (err) throw err;
+    app.get('/potrjevanje', async (req, res, next) => {
+        try {
+            res.json(result);
+        } catch (err) {
+            res.status(500).json(err);
+        }
+    })
+});
+
+//SET POTRJEVANJE
+app.post('/potrjevanje', async (req, res, next) => {
+    if (!req.body.id) {
+        res.status(400);
+        res.json({ message: "Bad Request" });
+    } else {
+        console.log(req.body.id);
+        var siteResponse = req.body.id;
+        var sql = "UPDATE poti SET potrjeno=1 WHERE id="+siteResponse;
+        con.query(sql, function (err, result) {
+            if (err) throw err;
+            console.log("1 record updated");
+        });
+    }
+})
