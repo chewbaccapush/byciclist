@@ -132,7 +132,6 @@ app.get('/pot', async(req, res, next) => {
         let hoteli_na_poti = await knex('hoteli_na_poti')
             .innerJoin('hoteli', 'hoteli.id', 'hoteli_na_poti.fk_hoteli')
             .where('fk_poti', req.query.id);
-
         //Zvezdice za tezavnost
         var tezavnost = 'težavnost: <br>';
         for (let i = 1; i <= 5; i++) {
@@ -375,6 +374,7 @@ app.post('/dodajKomentar', async(req, res, next) => {
             fk_poti: req.body.id,
             uporabnik: req.body.uporabnik
         };
+        console.log(nov);
         let pot = await new Komentarji().save(nov);
         res.json({"sporocilo": "pot dodana"});
     } catch (error) {

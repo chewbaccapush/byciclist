@@ -106,12 +106,10 @@ function prikazJson(poti) {
                
               </div>
             </div>
-            <div style="width: 30%; height: 200px;"> 
-             <iframe
-                src=${poti.mapa}
-                width="97%" height="100%" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false"
-                tabindex="0">
-            </iframe>                  
+            <div class="fill" style="width: 30%; height: 200px;"> 
+                <img src="${poti.img}">
+            
+            </iframe>              
             </div><!--TU SLIKA-->
           </div>
         <div class="potBrisi media align-items-lg-center flex-column flex-lg-row pr-3 border-bottom roundedt" style="background-color: rgba(255, 255, 255, 0.7)">
