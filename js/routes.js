@@ -71,7 +71,7 @@ function prikazJson(poti) {
     }
 
     potElement = `
-<div style="color:#fff" class="rateClass">Rate this route :) </div>
+<div style="color:#fff" class="rateClass">Oceni pot :) </div>
                 <div id="${poti.id}" class="stars">
                     <span class="fa fa-star-o star"></span>
                     <span class="fa fa-star-o star"></span>

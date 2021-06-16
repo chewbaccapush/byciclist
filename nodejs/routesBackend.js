@@ -419,7 +419,7 @@ con.query("SELECT * FROM odgovori", function (err, result, fields) {
     })
 });
 
-con.query("SELECT naslovNasveta FROM nasveti", function (err, result, fields) {
+con.query("SELECT * FROM nasveti", function (err, result, fields) {
     if (err) throw err;
     app.get('/nasveti', async (req, res, next) => {
         try {
@@ -472,9 +472,9 @@ app.post('/nasveti', async (req, res, next) => {
         res.status(400);
         res.json({ message: "Bad Request" });
     } else {
-
+        var desc = req.body.desc;
         let siteResponse = req.body.naslovNasveta;
-        var sql = "INSERT INTO nasveti (ID_nasvet, naslovNasveta) VALUES (default,'" + siteResponse + "')";
+        var sql = "INSERT INTO nasveti (ID_nasvet, naslovNasveta, nasvet) VALUES (default,'" + siteResponse + "', '"+ desc +"')";
         con.query(sql, function (err, result) {
             if (err) throw err;
             console.log("1 record inserted");
