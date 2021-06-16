@@ -174,6 +174,7 @@ async function napolniBazo() {
     await knex.schema.createTable('vprasanja', (table) => {
             table.increments('ID_vprasanja');
             table.string('vprasanje').notNullable();
+            table.string('username');
         }).then(() =>
             console.log("Tabela 'vprasanja' ustvarjena."))
         .catch((err) => {
@@ -197,6 +198,7 @@ async function napolniBazo() {
             table.increments('ID_odgovori');
             table.string('odgovor').notNullable();
             table.integer('ID_TK_vprasanja').unsigned().references('ID_vprasanja').inTable('vprasanja');
+            table.string('username');
         }).then(() =>
             console.log("Tabela 'odgovori' ustvarjena."))
         .catch((err) => {

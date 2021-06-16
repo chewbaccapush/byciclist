@@ -465,6 +465,11 @@ a.forum-item-title:hover {
 }
 
 .ibox-content {
+    margin-top: 80px;
+    margin-bottom: 80px;
+    width: 88.5%;
+    margin-left: auto;
+    margin-right: auto;
     background-color: #ffffffe0;
     color: inherit;
     padding: 15px 20px 20px 20px;

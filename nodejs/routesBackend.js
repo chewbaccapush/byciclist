@@ -438,7 +438,8 @@ app.post('/questions', async (req, res, next) => {
     } else {
         console.log(req.body.title);
         var siteResponse = req.body.title;
-        var sql = "INSERT INTO vprasanja (ID_vprasanja, vprasanje) VALUES (default,'" + siteResponse + "')";
+        var user = req.body.username;
+        var sql = "INSERT INTO vprasanja (ID_vprasanja, vprasanje, username) VALUES (default,'" + siteResponse + "', '"+user+"')";
         con.query(sql, function (err, result) {
             if (err) throw err;
             console.log("1 record inserted");
@@ -455,7 +456,8 @@ app.post('/answers', async (req, res, next) => {
         console.log(req.body.title);
         var siteResponse = req.body.title;
         var siteResponseID = req.body.foreignID;
-        var sql = "INSERT INTO odgovori (ID_odgovori, odgovor, ID_TK_vprasanja) VALUES (default,'" + siteResponse + "', " + siteResponseID + ")";
+        var user = req.body.username;
+        var sql = "INSERT INTO odgovori (ID_odgovori, odgovor, ID_TK_vprasanja, username) VALUES (default,'" + siteResponse + "', " + siteResponseID + ", '"+user+"')";
         con.query(sql, function (err, result) {
             if (err) throw err;
             console.log("1 record inserted");
