@@ -148,11 +148,13 @@
             <tbody>
                 {{#each komentarji}}
                 <tr>
-                    <td>{{ this.komentar }} <button class="btn btn-danger brisiPotGumb float-right"
+                    <td>
+                        <b>{{ this.uporabnik }}:</b>&nbsp
+                        {{ this.komentar }} <button class="birisKomentar btn btn-danger brisiPotGumb float-right"
                             onclick="brisiKomentar({{this.ID_komentarji}})">Izbriši</button>
                     </td>
-
                 </tr>
+                    <hr>
                 {{/each}}
             </tbody>
         </table>

@@ -405,11 +405,15 @@ function izpisiUporabnika(izpisiIme) {
 }
 
 function dodajKomentar(komentar, id) {
+    let uporabnik = JSON.parse(sessionStorage.getItem("loggedIn")).username;
     $.ajax({
         dataType: 'application/json',
         type: 'POST',
         url: 'http://localhost:3000/dodajKomentar',
-        data: { komentar, id },
+        data: { 'komentar': komentar,
+                'id': id,
+                'uporabnik': uporabnik
+        },
         success: function(data) {
             console.log(data);
         },

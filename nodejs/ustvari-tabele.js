@@ -246,7 +246,7 @@ async function napolniBazo() {
             table.increments('ID_komentarji');
             table.string('komentar');
             table.integer('fk_poti').unsigned().references('id').inTable('poti');
-            table.integer('fk_uporabnik').unsigned().references('id').inTable('uporabnik');
+            table.string('uporabnik');
 
         }).then(() =>
             console.log("Tabela 'komentarji' ustvarjena."))

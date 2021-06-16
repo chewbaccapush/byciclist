@@ -372,7 +372,8 @@ app.post('/dodajKomentar', async(req, res, next) => {
     try {
         let nov = {
             komentar: req.body.komentar,
-            fk_poti: req.body.id
+            fk_poti: req.body.id,
+            uporabnik: req.body.uporabnik
         };
         let pot = await new Komentarji().save(nov);
         res.json({"sporocilo": "pot dodana"});
