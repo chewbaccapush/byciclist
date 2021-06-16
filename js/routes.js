@@ -47,7 +47,7 @@ function prikazPoti() {
                         console.log(JSON.stringify(data));
                     }
                 });
-                if (confirm('You voted ' + ocena + '. Thanks for your vote!')) {
+                if (confirm('Vaša ocena je ' + ocena + '. Hvala za oceno!')) {
                     window.location.reload();
                 } else {
                     window.location.reload();
@@ -269,8 +269,10 @@ $(document).ready(() => {
         let uporabniskoIme = $("#spremeniUime").val();
         let geslo = $("#spremeniGeslo").val();
 
+        let user = JSON.parse(sessionStorage.getItem("loggedIn")).ID;
+
         let uporabnik = {
-            'id': 1,
+            'id': user,
             'uporabnisko_ime': uporabniskoIme,
             'geslo': geslo,
             'ime': ime,
@@ -293,6 +295,7 @@ $(document).ready(() => {
                 console.log(err);
             }
         });
+        location.reload();
     })
 });
 
@@ -372,11 +375,13 @@ function izpisiUporabnika(izpisiIme) {
     let mail = document.getElementById("mailUporabnika");
     let rd = document.getElementById("rdUporabnika");
     let uporabniskoIme = document.getElementById("uporabniskoIme");
+    let user = JSON.parse(sessionStorage.getItem("loggedIn")).ID;
 
     $.ajax({
         dataType: 'json',
         type: 'GET',
-        url: 'http://localhost:3000/profil/' + 1,
+        type: 'GET',
+        url: 'http://localhost:3000/profil/' + user,
         success: function(data) {
             data = data[0];
 
@@ -449,7 +454,6 @@ function dodajPot() {
     let spust = document.forms["dodajanjePoti"]["spust"].value;
     let tezavnost = document.forms["dodajanjePoti"]["tezavnost"].value;
     let slika = document.forms["dodajanjePoti"]["slika"].value;
-    let mapa = document.forms["dodajanjePoti"]["mapa"].value;
 
     let telo = {
         'zacetnaTocka': zacetnaTocka,
@@ -460,7 +464,6 @@ function dodajPot() {
         'vzpon': vzpon,
         'spust': spust,
         'tezavnost': tezavnost,
-        'mapa': mapa,
         'img': slika,
         'fk_uporabnik': 100,
         'potrjeno': 0
@@ -480,16 +483,18 @@ function dodajPot() {
 function shraniPot(idPoti) {
     let id = idPoti.slice(idPoti.length - 1);
     localStorage.setItem("trenutnaPot", id);
+    /*urediPot();*/
 }
 
 function urediPot() {
-
+    console.log("haha");
     $.ajax({
         type: "GET",
         url: "http://localhost:3000/urediPot/" + localStorage.getItem("trenutnaPot"),
         async: false,
         success: function(podatki) {
             let data = podatki[0];
+            console.log(data);
             document.forms["urejanjePoti"]["zacetnaTocka"].value = data.zacetnaTocka;
             document.forms["urejanjePoti"]["koncnaTocka"].value = data.koncnaTocka;
             document.forms["urejanjePoti"]["profil"].value = data.profil;
@@ -499,7 +504,6 @@ function urediPot() {
             document.forms["urejanjePoti"]["spust"].value = data.spust;
             document.forms["urejanjePoti"]["tezavnost"].value = data.tezavnost;
             document.forms["urejanjePoti"]["slika"].value = data.img;
-            document.forms["urejanjePoti"]["mapa"].value = data.mapa;
         }
     });
 }
@@ -514,7 +518,6 @@ function postUrediPot() {
     let spust = document.forms["urejanjePoti"]["spust"].value;
     let tezavnost = document.forms["urejanjePoti"]["tezavnost"].value;
     let slika = document.forms["urejanjePoti"]["slika"].value;
-    let mapa = document.forms["urejanjePoti"]["mapa"].value;
     let idPoti = localStorage.getItem("trenutnaPot");
     console.log(idPoti)
     let telo = {
@@ -526,10 +529,9 @@ function postUrediPot() {
         'vzpon': vzpon,
         'spust': spust,
         'tezavnost': tezavnost,
-        'mapa': mapa,
         'img': slika,
         'fk_uporabnik': 1,
-        'potrjeno': 0
+        'potrjeno': 1
     }
     console.log(telo)
 

@@ -18,7 +18,7 @@
     <link href="css/custom.css" rel="stylesheet" />
 </head>
 
-<body id="page-top">
+<body id="page-top" onload="urediPot()">
     <!-- Navigation-->
     <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
         <div class="container">
@@ -55,9 +55,8 @@
     <header class="masthead">
         <div class="container align-items-center">
             <div class="signup-form">
-                <form id="dodajPot" name="dodajanjePoti" onsubmit="dodajPot()">
-                    <h2>Dodaj pot</h2>
-                    <p class="hint-text">Dodano pot vam mora potrditi administrator.</p>
+                <form id="urejanjePoti" name="urejanjePoti" onsubmit="postUrediPot()">
+                    <h2>Uredi pot</h2>
                     <br>
                     <div class="form-group">
                         <b></b>
@@ -109,10 +108,7 @@
                             <input name="slika" type="text" class="form-control" placeholder="URL slike" name="slika">
                         </div>
                         <div class="form-group">
-                            <input name="mapa" type="text" class="form-control" placeholder="URL poti na Google Maps" name="mapa">
-                        </div>
-                        <div class="form-group">
-                            <button type="submit" class="btn btn-success btn-lg btn-block">Dodaj pot</button>
+                            <button type="submit" class="btn btn-success btn-lg btn-block">Uredi pot</button>
                         </div>
                 </form>
                 </div>

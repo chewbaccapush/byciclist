@@ -1,1 +1,14 @@
-[{ "naslovNasveta": "5 nasvetov kako premagati težke vzpone" }]
+[
+  {
+    "naslovNasveta": "Kako premagati težke vzpone",
+    "nasvet": "Na začetku pripročam poačsno vzpenjanje, nato pa full gas do vrha ;)"
+  },
+  {
+    "naslovNasveta": "Kako se varno spuščati",
+    "nasvet": "pazite na pesek v ovinkih!"
+  },
+  {
+    "naslovNasveta": "Kako skrbeti za kolo",
+    "nasvet": "Verigo mažite redno, čistite pesek med obroči."
+  }
+]

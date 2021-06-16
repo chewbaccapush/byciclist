@@ -1,1 +1,18 @@
-[{ "komentar": "Odlicna pot" }]
+[
+  { "komentar": "Odlicna pot",
+    "fk_poti": 1,
+    "uporabnik": "Mirko"
+  },
+  { "komentar": "Super vožnja!",
+    "fk_poti": 1,
+    "uporabnik": "Kolesar iz Dupleka"
+  },
+  { "komentar": "Težak vzpon..",
+    "fk_poti": 1,
+    "uporabnik": "Roglič"
+  },
+  { "komentar": "Noge bolijo!",
+    "fk_poti": 1,
+    "uporabnik": "Pogačar"
+  }
+]

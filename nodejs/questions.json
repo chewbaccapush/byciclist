@@ -1,1 +1,10 @@
-[{ "ID_vprasanja": "1", "vprasanje": "Road to Ruse?", "username": "Marko" }]
+[
+  {
+    "vprasanje": "Ketna mi je padla dol, kaj narediti?",
+    "username": "Marko"
+  },
+  {
+    "vprasanje": "Najhitrejša pot do Ptuja?",
+    "username": "Miran"
+  }
+]

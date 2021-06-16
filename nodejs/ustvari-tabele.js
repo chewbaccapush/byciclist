@@ -90,27 +90,27 @@ async function napolniBazo() {
 
     let uporabniki = [
         {
-            'uporabnisko_ime': 'test1',
-            'geslo': 'test',
-            'ime': 'Test',
-            'priimek': 'Test',
-            'email': 'test@test',
+            'uporabnisko_ime': 'kolesar1',
+            'geslo': 'kolesar1',
+            'ime': 'Kolesar',
+            'priimek': 'Ena',
+            'email': 'kolesar@ena.com',
             'tip': 1
         },
         {
-            'uporabnisko_ime': 'test2',
-            'geslo': 'test',
-            'ime': 'Test',
-            'priimek': 'Test',
-            'email': 'test@test',
+            'uporabnisko_ime': 'strokovnjak',
+            'geslo': 'strokovnjak',
+            'ime': 'Strokovnjak',
+            'priimek': 'Majstor',
+            'email': 'strokovnjak@majstor.si',
             'tip': 2
         },
         {
-            'uporabnisko_ime': 'test3',
-            'geslo': 'test',
-            'ime': 'Test',
-            'priimek': 'Test',
-            'email': 'test@test',
+            'uporabnisko_ime': 'admin',
+            'geslo': 'admin',
+            'ime': 'Admin',
+            'priimek': 'Strani',
+            'email': 'admin@strani.com',
             'tip': 3
         }
     ]
@@ -221,7 +221,7 @@ async function napolniBazo() {
     await knex.schema.createTable('nasveti', (table) => {
             table.increments('ID_nasvet');
             table.string('naslovNasveta').notNullable();
-            table.string('nasvet');
+            table.string('nasvet', [1000]);
         }).then(() =>
             console.log("Tabela 'nasveti' ustvarjena."))
         .catch((err) => {
@@ -255,7 +255,7 @@ async function napolniBazo() {
             throw err
         });
 
-    const komentarji = require('../nodejs/komentarji.json');
+    const komentarji = require('./komentarji.json');
 
     await knex('komentarji').insert(komentarji)
         .then(() => {
