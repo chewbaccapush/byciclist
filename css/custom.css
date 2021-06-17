@@ -1,13 +1,17 @@
 html {
     background-color: #060606 !important;
 }
-#loggedInUser{
+
+#loggedInUser {
     color: #efff00;
-        padding-top: 30px;
-        padding-left: 10px;
-        font-weight: bold;
-    }
+    padding-top: 30px;
+    padding-left: 10px;
+    font-weight: bold;
+}
+
+
 /* Style the search field */
+
 #logginButton {
     color: #fff;
     font-size: 15px;
@@ -16,8 +20,9 @@ html {
     padding-top: 3px;
     padding-bottom: 4px;
     background-color: #27ba2f;
-    margin-left:5px;
+    margin-left: 5px;
 }
+
 #logoutButton {
     color: #fff;
     font-size: 15px;
@@ -26,17 +31,21 @@ html {
     padding-top: 3px;
     padding-bottom: 4px;
     background-color: #8e0000;
-    margin-left:5px;
+    margin-left: 5px;
 }
+
 #logoutButton:hover {
     background-color: #d40000;
 }
+
 #logginButton:hover {
     background-color: #68e442;
 }
+
 #loginForm input {
     margin-left: 5px;
 }
+
 form.example input[type=text] {
     padding: 10px;
     font-size: 17px;
@@ -168,10 +177,12 @@ p {
     position: relative;
     top: 150px;
 }
-#mainNav{
+
+#mainNav {
     background: #000000ad !important;
     color: white !important;
 }
+
 .signup-form h2 {
     color: #fff;
     margin: 0 0 15px;
@@ -295,7 +306,15 @@ body {
     text-align: center;
     width: 110px;
 }
-.container-xl, .container-lg, .container-md, .container-sm, .container {max-width:1300px}
+
+.container-xl,
+.container-lg,
+.container-md,
+.container-sm,
+.container {
+    max-width: 1300px
+}
+
 .forum-avatar .img-circle {
     height: 48px;
     width: 48px;
@@ -559,11 +578,33 @@ a.forum-item-title:hover {
     transition: .2s;
 }
 
+.i2 {
+    line-height: normal;
+    cursor: pointer;
+    padding: 10px 12px 8px;
+    background: #fff;
+    border-radius: 50%;
+    display: inline-block;
+    margin: 0 0 15px;
+    color: #e23b3b;
+    transition: .2s;
+}
+
 .i:hover {
     color: #666;
 }
 
+.i2:hover {
+    color: #666;
+}
+
 .i:before {
+    font-family: fontawesome;
+    content: '\f004';
+    font-style: normal;
+}
+
+.i2:before {
     font-family: fontawesome;
     content: '\f004';
     font-style: normal;
@@ -585,6 +626,11 @@ a.forum-item-title:hover {
 .i.press {
     animation: size .4s;
     color: #e23b3b;
+}
+
+.i2.press {
+    animation: size .4s;
+    color: #aaa;
 }
 
 span.press {
@@ -645,12 +691,16 @@ span.press {
 .card {
     box-shadow: 0 1px 3px 0 rgba(0, 0, 0, .1), 0 1px 2px 0 rgba(0, 0, 0, .06);
 }
+
 #recentItems {
     margin-top: 20px;
 }
-.form-control, .single-line {
-    color:black !important;
+
+.form-control,
+.single-line {
+    color: black !important;
 }
+
 .card {
     position: relative;
     display: flex;
@@ -735,9 +785,11 @@ span.press {
     width: 100%;
     height: 100%;
 }
+
 .potMain {
     line-height: 0;
 }
+
 
 /*
 .fill {

@@ -284,8 +284,10 @@ app.post('/registracija', async(req, res, next) => {
                     .insert(uporabnik)
                     .then((idUporabnika) => {
                         console.log(`Uporabnik ${idUporabnika} vstavljen.`);
-                        res.json({ 'id': idUporabnika[0],
-                                        'sporocilo': "Registracija uspešna."});
+                        res.json({
+                            'id': idUporabnika[0],
+                            'sporocilo': "Registracija uspešna."
+                        });
                     })
             }
             console.log("Vstavljanje neuspešno");
@@ -327,16 +329,16 @@ app.post('/urediProfil', async(req, res, next) => {
 app.post('/dodajPot', async(req, res, next) => {
     try {
         console.log(req.body)
-        /*let nov = {
-            zacetnaTocka: req.body.zacetnaTocka,
-            koncnaTocka: req.body.koncnaTocka,
-            tip: req.body.tip,
-            profil: req.body.profil,
-            razdalja: req.body.razdalja,
-            vzpon: req.body.vzpon,
-            spust: req.body.spust,
-            tezavnost: req.body.tezavnost
-        };*/
+            /*let nov = {
+                zacetnaTocka: req.body.zacetnaTocka,
+                koncnaTocka: req.body.koncnaTocka,
+                tip: req.body.tip,
+                profil: req.body.profil,
+                razdalja: req.body.razdalja,
+                vzpon: req.body.vzpon,
+                spust: req.body.spust,
+                tezavnost: req.body.tezavnost
+            };*/
         let pot = await new Poti().save(req.body);
         res.json(await new Poti().fetchAll().toJSON());
     } catch (error) {
@@ -346,7 +348,7 @@ app.post('/dodajPot', async(req, res, next) => {
 
 app.get('/urediPot/:id', async(req, res, next) => {
     try {
-        let pot = await knex('poti').where({id: req.params.id}).select();
+        let pot = await knex('poti').where({ id: req.params.id }).select();
         console.log(pot);
         res.json(pot);
     } catch (err) {
@@ -357,12 +359,12 @@ app.get('/urediPot/:id', async(req, res, next) => {
 app.post('/urediPotSpremeni/:id', async(req, res, next) => {
     try {
         console.log("heh");
-        await knex('poti').where({id: req.params.id})
+        await knex('poti').where({ id: req.params.id })
             .update(req.body);
-        res.json({"sporocilo": "Pot spremenjena uspešno"})
+        res.json({ "sporocilo": "Pot spremenjena uspešno" })
     } catch (err) {
         console.log(err);
-        res.json({"sporocilo": "Nekaj je šlo narobe"})
+        res.json({ "sporocilo": "Nekaj je šlo narobe" })
     }
 })
 
@@ -376,7 +378,7 @@ app.post('/dodajKomentar', async(req, res, next) => {
         };
         console.log(nov);
         let pot = await new Komentarji().save(nov);
-        res.json({"sporocilo": "pot dodana"});
+        res.json({ "sporocilo": "pot dodana" });
     } catch (error) {
         /*res.status(500).json(error);*/
     }
@@ -395,9 +397,9 @@ app.post('/brisiKomentar/:idKomentar', async(req, res, next) => {
 });
 
 //GET QUESTIONS FROM DB
-con.query("SELECT * FROM vprasanja", function (err, result, fields) {
+con.query("SELECT * FROM vprasanja", function(err, result, fields) {
     if (err) throw err;
-    app.get('/questions', async (req, res, next) => {
+    app.get('/questions', async(req, res, next) => {
         try {
             res.json(result);
         } catch (err) {
@@ -408,9 +410,9 @@ con.query("SELECT * FROM vprasanja", function (err, result, fields) {
 
 //GET ANSWERS FROM DB
 //con.query("SELECT odgovori.odgovor, odgovori.ID_TK_vprasanja FROM odgovori INNER JOIN vprasanja ON odgovori.ID_TK_vprasanja = vprasanja.ID_vprasanja", function(err, result, fields) {
-con.query("SELECT * FROM odgovori", function (err, result, fields) {
+con.query("SELECT * FROM odgovori", function(err, result, fields) {
     if (err) throw err;
-    app.get('/answers', async (req, res, next) => {
+    app.get('/answers', async(req, res, next) => {
         try {
             res.json(result);
         } catch (err) {
@@ -419,9 +421,9 @@ con.query("SELECT * FROM odgovori", function (err, result, fields) {
     })
 });
 
-con.query("SELECT * FROM nasveti", function (err, result, fields) {
+con.query("SELECT * FROM nasveti", function(err, result, fields) {
     if (err) throw err;
-    app.get('/nasveti', async (req, res, next) => {
+    app.get('/nasveti', async(req, res, next) => {
         try {
             console.log(result);
             res.json(result);
@@ -432,7 +434,7 @@ con.query("SELECT * FROM nasveti", function (err, result, fields) {
 });
 
 //INSERT QUESTIONS INTO DB
-app.post('/questions', async (req, res, next) => {
+app.post('/questions', async(req, res, next) => {
     if (!req.body.title) {
         res.status(400);
         res.json({ message: "Bad Request" });
@@ -440,8 +442,8 @@ app.post('/questions', async (req, res, next) => {
         console.log(req.body.title);
         var siteResponse = req.body.title;
         var user = req.body.username;
-        var sql = "INSERT INTO vprasanja (ID_vprasanja, vprasanje, username) VALUES (default,'" + siteResponse + "', '"+user+"')";
-        con.query(sql, function (err, result) {
+        var sql = "INSERT INTO vprasanja (ID_vprasanja, vprasanje, username) VALUES (default,'" + siteResponse + "', '" + user + "')";
+        con.query(sql, function(err, result) {
             if (err) throw err;
             console.log("1 record inserted");
         });
@@ -449,7 +451,7 @@ app.post('/questions', async (req, res, next) => {
 })
 
 //INSERT ANSWERS INTO DB
-app.post('/answers', async (req, res, next) => {
+app.post('/answers', async(req, res, next) => {
     if (!req.body.title && !req.body.foreignID) {
         res.status(400);
         res.json({ message: "Bad Request" });
@@ -458,8 +460,8 @@ app.post('/answers', async (req, res, next) => {
         var siteResponse = req.body.title;
         var siteResponseID = req.body.foreignID;
         var user = req.body.username;
-        var sql = "INSERT INTO odgovori (ID_odgovori, odgovor, ID_TK_vprasanja, username) VALUES (default,'" + siteResponse + "', " + siteResponseID + ", '"+user+"')";
-        con.query(sql, function (err, result) {
+        var sql = "INSERT INTO odgovori (ID_odgovori, odgovor, ID_TK_vprasanja, username) VALUES (default,'" + siteResponse + "', " + siteResponseID + ", '" + user + "')";
+        con.query(sql, function(err, result) {
             if (err) throw err;
             console.log("1 record inserted");
         });
@@ -467,15 +469,15 @@ app.post('/answers', async (req, res, next) => {
 })
 
 //DODAJANJE NASVETOV V BAZO
-app.post('/nasveti', async (req, res, next) => {
+app.post('/nasveti', async(req, res, next) => {
     if (!req.body.naslovNasveta) {
         res.status(400);
         res.json({ message: "Bad Request" });
     } else {
         var desc = req.body.desc;
         let siteResponse = req.body.naslovNasveta;
-        var sql = "INSERT INTO nasveti (ID_nasvet, naslovNasveta, nasvet) VALUES (default,'" + siteResponse + "', '"+ desc +"')";
-        con.query(sql, function (err, result) {
+        var sql = "INSERT INTO nasveti (ID_nasvet, naslovNasveta, nasvet) VALUES (default,'" + siteResponse + "', '" + desc + "')";
+        con.query(sql, function(err, result) {
             if (err) throw err;
             console.log("1 record inserted");
         });
@@ -483,7 +485,7 @@ app.post('/nasveti', async (req, res, next) => {
 })
 
 //CHECK CREDS
-app.post('/checkCreds', async (req, res, next) => {
+app.post('/checkCreds', async(req, res, next) => {
     if (!req.body.username && !req.body.password) {
         res.status(400);
         res.json({ message: "Bad Request" });
@@ -491,9 +493,9 @@ app.post('/checkCreds', async (req, res, next) => {
         let username = req.body.username;
         let password = req.body.password;
         var sql = "SELECT id, uporabnisko_ime, geslo, tip FROM uporabnik WHERE uporabnisko_ime='" + username + "' AND geslo='" + password + "'";
-        con.query(sql, function (err, result) {
+        con.query(sql, function(err, result) {
             if (err) throw err;
-            if(result.length>0)
+            if (result.length > 0)
                 res.json(result);
             else {
                 var invalidCreds = new Object();
@@ -505,15 +507,15 @@ app.post('/checkCreds', async (req, res, next) => {
 })
 
 //SET POTRJEVANJE
-app.post('/potrjevanje', async (req, res, next) => {
+app.post('/potrjevanje', async(req, res, next) => {
     if (!req.body.id) {
         res.status(400);
         res.json({ message: "Bad Request" });
     } else {
         console.log(req.body.id);
         var siteResponse = req.body.id;
-        var sql = "UPDATE poti SET potrjeno=1 WHERE id="+siteResponse;
-        con.query(sql, function (err, result) {
+        var sql = "UPDATE poti SET potrjeno=1 WHERE id=" + siteResponse;
+        con.query(sql, function(err, result) {
             if (err) throw err;
             console.log("1 record updated");
         });
@@ -521,9 +523,9 @@ app.post('/potrjevanje', async (req, res, next) => {
 })
 
 //GET POTRJEVANJE
-app.get('/potrjevanje', async (req, res, next) => {
+app.get('/potrjevanje', async(req, res, next) => {
     try {
-        let result = await knex('poti').where({'potrjeno': 0});
+        let result = await knex('poti').where({ 'potrjeno': 0 });
         res.json(result);
     } catch (err) {
         res.status(500).json(err);
@@ -535,7 +537,7 @@ app.get("/pridobiEnoPot/:id", async(req, res, next) => {
         res.status(400);
         res.json({ message: "Bad Request" });
     } else {
-        let pot = await knex('poti').select().where({ 'id': req.params.id});
+        let pot = await knex('poti').select().where({ 'id': req.params.id });
         console.log(pot);
         res.json(pot);
     }

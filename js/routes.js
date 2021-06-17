@@ -140,6 +140,88 @@ function prikazJson(poti) {
     //access end
 }
 
+function prikazJsonPriljubljeni(poti) {
+    var telo = document.getElementById("routesContainer");
+    var tezavnost = 'težavnost: ';
+
+    for (let i = 1; i <= 5; i++) {
+        if (i <= parseInt(poti.tezavnost)) {
+            tezavnost += '<li class="list-inline-item m-0"><i class="fa fa-star fa-lg text-success"></i></li>'
+        } else {
+            tezavnost += '<li class="list-inline-item m-0"><i class="fa fa-star fa-lg text-light"></i></li>'
+        }
+    }
+
+    potElement = `
+<div style="color:#fff" class="rateClass">Oceni pot :) </div>
+                <div id="${poti.id}" class="stars">
+                    <span class="fa fa-star-o star"></span>
+                    <span class="fa fa-star-o star"></span>
+                    <span class="fa fa-star-o star"></span>
+                    <span class="fa fa-star-o star"></span>
+                    <span class="fa fa-star-o star"></span>
+                    <span class="fa fa-star-o star"></span>
+                    <span class="fa fa-star-o star"></span>
+                    <span class="fa fa-star-o star"></span>
+                    <span class="fa fa-star-o star"></span>
+                    <span class="fa fa-star-o star"></span>
+                </div>
+<div class="potMain media align-items-lg-center flex-column flex-lg-row pr-3 border-bottom roundedt" style="background-color: rgba(255, 255, 255, 0.7)">
+            <div class="media-body order-2 order-lg-1">
+            <div style="display: flex; justify-content: space-between;">
+               
+                <h3 class="mt-0 font-weight-bold mb-2">${poti.zacetnaTocka} - ${poti.koncnaTocka}</h3>
+                <div class="fav-btn"  style="margin: 0 0px 10px 10px; padding-bottom: 30px;">
+                <button class="btn btn-success preglej-pot" id="preglej${poti.id}" onclick="preglejPot(this.id)">Preglej pot</button>   
+                <i class="i2" id="priljubljena${poti.id}" onclick="dodajPriljubljene(this.id)"></i>
+                 <span id="liked">liked!</span>
+                </div>  
+            </div>
+              <h6>Profil: <b>${poti.profil}</b> &nbsp;&nbsp;&nbsp; Tip: <b>${poti.tip}</b></h6>   
+              <div class="d-flex align-items-center justify-content-between mt-1">
+                <h6 class="font-weight-bold my-2">Razdalja: ${poti.razdalja}km</h6>
+                <h6 class="font-weight-bold my-2">Vzpon: ${poti.vzpon}m</h6>
+                <h6 class="font-weight-bold my-2">Spust: ${poti.spust}m</h6>
+                <ul class="list-inline small">
+                    ${tezavnost}
+                </ul>
+               
+              </div>
+            </div>
+            <div class="fill" style="width: 30%; height: 200px;"> 
+                <img src="${poti.img}">
+            
+            </iframe>              
+            </div><!--TU SLIKA-->
+          </div>
+        <div class="potBrisi media align-items-lg-center flex-column flex-lg-row pr-3 border-bottom roundedt" style="background-color: rgba(255, 255, 255, 0.7)">
+            <button class="btn btn-danger brisiPotGumb" id="brisiPot${poti.id}" onclick="brisiPot(this.id)">Izbriši</button>
+            <a class="btn btn-success urediPotGumb" id="urediPot${poti.id}" target="__blank" href="urejanje_poti.html" onclick="shraniPot(this.id)">Uredi</a>
+        </div>
+        <hr class="lineBreak" style="background-color: white">
+    `
+    $(telo).append(potElement);
+    //access
+    if (sessionStorage.getItem("loggedIn") === null) {
+        var x = document.getElementsByClassName('stars').length;
+        for (let i = 0; i < x; i++) {
+            document.getElementsByClassName('stars')[i].innerHTML = "";
+            document.getElementsByClassName('rateClass')[i].innerHTML = "";
+            document.getElementsByClassName('potBrisi')[i].innerHTML = "";
+            var l = i + 1;
+            var tmp = "priljubljena" + l;
+            document.getElementById(tmp).style.display = "none";
+        }
+    } else {
+        if (sessionStorage.getItem("loggedIn") !== null && JSON.parse(sessionStorage.getItem("loggedIn")).tip != 3) {
+            var x = document.getElementsByClassName('potBrisi').length;
+            for (let i = 0; i < x; i++)
+                document.getElementsByClassName('potBrisi')[i].innerHTML = "";
+        }
+    }
+    //access end
+}
+
 function dodajPriljubljene(idPriljubljena) {
     let id = idPriljubljena.slice(idPriljubljena.length - 1);
 
@@ -300,7 +382,7 @@ $(document).ready(() => {
 });
 
 
-function prikazPriljubljenih() {
+function prikazPriljubljenih(bolean) {
     //Dodaj ID uporabnika iz sessionStorage-a
 
     $.ajax({
@@ -308,8 +390,10 @@ function prikazPriljubljenih() {
         type: 'GET',
         url: "http://localhost:3000/priljubljeni/" + 1,
         success: function(data) {
+
             for (let i = 0; i < data.length; i++) {
-                prikazJson(data[i]);
+                prikazJsonPriljubljeni(data[i]);
+
             }
         }
     });
@@ -391,14 +475,13 @@ function izpisiUporabnika(izpisiIme) {
                 mail.innerHTML = `${data.email}`;
             }
 
-            console.log(data);
-
-            document.getElementById("spremeniIme").value = data.ime;
-            document.getElementById("spremeniPriimek").value = data.priimek;
-            document.getElementById("spremeniMail").value = data.email;
-            document.getElementById("spremeniUime").value = data.uporabnisko_ime;
-            document.getElementById("spremeniGeslo").value = data.ime;
-
+            if (izpisiIme == 0) {
+                document.getElementById("spremeniIme").value = data.ime;
+                document.getElementById("spremeniPriimek").value = data.priimek;
+                document.getElementById("spremeniMail").value = data.email;
+                document.getElementById("spremeniUime").value = data.uporabnisko_ime;
+                document.getElementById("spremeniGeslo").value = data.ime;
+            }
         },
         error: function(err) {
             console.log(err);
@@ -413,9 +496,10 @@ function dodajKomentar(komentar, id) {
         dataType: 'application/json',
         type: 'POST',
         url: 'http://localhost:3000/dodajKomentar',
-        data: { 'komentar': komentar,
-                'id': id,
-                'uporabnik': uporabnik
+        data: {
+            'komentar': komentar,
+            'id': id,
+            'uporabnik': uporabnik
         },
         success: function(data) {
             console.log(data);
