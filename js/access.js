@@ -1,5 +1,9 @@
 if (sessionStorage.getItem("loggedIn") !== null) {
-
+    if (window.location.href.indexOf("potrjevanje.html") != -1) {
+        if(JSON.parse(sessionStorage.getItem("loggedIn")).tip != 3) {
+            document.getElementById("pott").innerHTML = "<h2>Ta funkcionalnost je na voljo samo za administratorji</h2>";
+        }
+    }
 } else {
     if (window.location.href.indexOf("dodajanje_poti.html") != -1)
         document.getElementById("dodajPot").innerHTML = "<h2>Ta funkcionalnost ni na voljo za gostujoči uporabniki</h2>";
