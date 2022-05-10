@@ -2,13 +2,10 @@
 var knex = require('knex')({
     client: 'mysql',
     connection: {
-        //host: '192.168.0.1',
-        host: '5.153.252.199',
-        port: 3306,
-        user: 'bicyclist_user',
-        password: '*yO4p,R;-;1y',
-        database: 'bicyclist_db',
-        charset  : 'utf8'
+        host: '192.168.1.65',
+        user: 'root',
+        port: 8080,
+        database: 'saas'
     }
 });
 
@@ -57,10 +54,10 @@ async function napolniBazo() {
 
     //TIP_UPORABNIK
     await knex.schema.createTable('tip_uporabnika', (table) => {
-            table.increments('id');
-            table.enu('tip_uporabnika', ['Registriran uporabnik', 'Strokovnjak', 'Administrator']).notNullable();
-        }).then(() =>
-            console.log("Tabela 'tip_uporabnika' ustvarjena."))
+        table.increments('id');
+        table.enu('tip_uporabnika', ['Registriran uporabnik', 'Strokovnjak', 'Administrator']).notNullable();
+    }).then(() =>
+        console.log("Tabela 'tip_uporabnika' ustvarjena."))
         .catch((err) => {
             console.log(err);
             throw err
@@ -68,51 +65,50 @@ async function napolniBazo() {
 
     //UPORABNIK
     await knex.schema.createTable('uporabnik', (table) => {
-            table.increments('id');
-            table.string('uporabnisko_ime').notNullable();
-            table.string('geslo').notNullable();
-            table.integer('tip').notNullable();
-            table.string('ime').notNullable();
-            table.string('priimek').notNullable();
-            table.string('email').notNullable();
-            /* table.date('datum_rojstva').notNullable();
-             table.integer('spol').notNullable();
-             table.integer('visina');
-             table.integer('teza');
-             //table.integer('tip_uporabnika_id').references('id').inTable('tip_uporabnika');
-             */
-        }).then(() =>
-            console.log("Tabela 'uporabnik' ustvarjena."))
+        table.increments('id');
+        table.string('uporabnisko_ime').notNullable();
+        table.string('geslo').notNullable();
+        table.integer('tip').notNullable();
+        table.string('ime').notNullable();
+        table.string('priimek').notNullable();
+        table.string('email').notNullable();
+        /* table.date('datum_rojstva').notNullable();
+         table.integer('spol').notNullable();
+         table.integer('visina');
+         table.integer('teza');
+         //table.integer('tip_uporabnika_id').references('id').inTable('tip_uporabnika');
+         */
+    }).then(() =>
+        console.log("Tabela 'uporabnik' ustvarjena."))
         .catch((err) => {
             console.log(err);
             throw err
         });
 
-    let uporabniki = [
-        {
-            'uporabnisko_ime': 'kolesar1',
-            'geslo': 'kolesar1',
-            'ime': 'Kolesar',
-            'priimek': 'Ena',
-            'email': 'kolesar@ena.com',
-            'tip': 1
-        },
-        {
-            'uporabnisko_ime': 'strokovnjak',
-            'geslo': 'strokovnjak',
-            'ime': 'Strokovnjak',
-            'priimek': 'Majstor',
-            'email': 'strokovnjak@majstor.si',
-            'tip': 2
-        },
-        {
-            'uporabnisko_ime': 'admin',
-            'geslo': 'admin',
-            'ime': 'Admin',
-            'priimek': 'Strani',
-            'email': 'admin@strani.com',
-            'tip': 3
-        }
+    let uporabniki = [{
+        'uporabnisko_ime': 'kolesar1',
+        'geslo': 'kolesar1',
+        'ime': 'Kolesar',
+        'priimek': 'Ena',
+        'email': 'kolesar@ena.com',
+        'tip': 1
+    },
+    {
+        'uporabnisko_ime': 'strokovnjak',
+        'geslo': 'strokovnjak',
+        'ime': 'Strokovnjak',
+        'priimek': 'Majstor',
+        'email': 'strokovnjak@majstor.si',
+        'tip': 2
+    },
+    {
+        'uporabnisko_ime': 'admin',
+        'geslo': 'admin',
+        'ime': 'Admin',
+        'priimek': 'Strani',
+        'email': 'admin@strani.com',
+        'tip': 3
+    }
     ]
     await knex('uporabnik').insert(uporabniki)
         .then(() => {
@@ -123,37 +119,25 @@ async function napolniBazo() {
             throw err
         });
 
-    //PRILJUBLJENI
-    await knex.schema.createTable('priljubljeni', (table) => {
-            table.increments('ID_priljubljeni');
-            table.integer('TK_ID_poti').unsigned().references('id').inTable('poti');
-            table.integer('TK_ID_uporabnik').unsigned().references('id').inTable('uporabnik');
-        }).then(() =>
-            console.log("Tabela 'priljubljeni' ustvarjena."))
-        .catch((err) => {
-            console.log(err);
-            throw err
-        });
-
     //POTI
     await knex.schema.createTable('poti', (table) => {
-            table.increments('id');
-            table.string('zacetnaTocka').notNullable();
-            table.string('koncnaTocka').notNullable();
-            table.enu('tip', ['Cestno kolo', 'Gorsko kolo', 'Downhill kolo']).notNullable();
-            table.enu('profil', ['Ravninski', 'Gričevnat', 'Hribovit', 'Gorski']).notNullable();
-            table.integer('razdalja').notNullable();
-            table.integer('vzpon').notNullable();
-            table.integer('spust').notNullable();
-            table.enu('tezavnost', ['1', '2', '3', '4', '5']).notNullable();
-            table.string('mapa', [1000]);
-            table.float('povprecnaOcena');
-            table.integer('stOcenov');
-            table.string('img');
-            table.integer('fk_uporabnik').unsigned().references('id').inTable('uporabnik');
-            table.boolean('potrjeno').defaultTo(true);
-        }).then(() =>
-            console.log("Tabela 'poti' ustvarjena."))
+        table.increments('id');
+        table.string('zacetnaTocka').notNullable();
+        table.string('koncnaTocka').notNullable();
+        table.enu('tip', ['Cestno kolo', 'Gorsko kolo', 'Downhill kolo']).notNullable();
+        table.enu('profil', ['Ravninski', 'Gričevnat', 'Hribovit', 'Gorski']).notNullable();
+        table.integer('razdalja').notNullable();
+        table.integer('vzpon').notNullable();
+        table.integer('spust').notNullable();
+        table.enu('tezavnost', ['1', '2', '3', '4', '5']).notNullable();
+        table.string('mapa', [1000]);
+        table.float('povprecnaOcena');
+        table.integer('stOcenov');
+        table.string('img');
+        table.integer('fk_uporabnik').unsigned().references('id').inTable('uporabnik');
+        table.boolean('potrjeno').defaultTo(true);
+    }).then(() =>
+        console.log("Tabela 'poti' ustvarjena."))
         .catch((err) => {
             console.log(err);
             throw err
@@ -170,13 +154,26 @@ async function napolniBazo() {
             throw err
         });
 
+
+    //PRILJUBLJENI
+    await knex.schema.createTable('priljubljeni', (table) => {
+        table.increments('ID_priljubljeni');
+        table.integer('TK_ID_poti').unsigned().references('id').inTable('poti');
+        table.integer('TK_ID_uporabnik').unsigned().references('id').inTable('uporabnik');
+    }).then(() =>
+        console.log("Tabela 'priljubljeni' ustvarjena."))
+        .catch((err) => {
+            console.log(err);
+            throw err
+        });
+
     //VPRASANJA
     await knex.schema.createTable('vprasanja', (table) => {
-            table.increments('ID_vprasanja');
-            table.string('vprasanje').notNullable();
-            table.string('username');
-        }).then(() =>
-            console.log("Tabela 'vprasanja' ustvarjena."))
+        table.increments('ID_vprasanja');
+        table.string('vprasanje').notNullable();
+        table.string('username');
+    }).then(() =>
+        console.log("Tabela 'vprasanja' ustvarjena."))
         .catch((err) => {
             console.log(err);
             throw err
@@ -195,12 +192,12 @@ async function napolniBazo() {
 
     // ODGOVORI
     await knex.schema.createTable('odgovori', (table) => {
-            table.increments('ID_odgovori');
-            table.string('odgovor').notNullable();
-            table.integer('ID_TK_vprasanja').unsigned().references('ID_vprasanja').inTable('vprasanja');
-            table.string('username');
-        }).then(() =>
-            console.log("Tabela 'odgovori' ustvarjena."))
+        table.increments('ID_odgovori');
+        table.string('odgovor').notNullable();
+        table.integer('ID_TK_vprasanja').unsigned().references('ID_vprasanja').inTable('vprasanja');
+        table.string('username');
+    }).then(() =>
+        console.log("Tabela 'odgovori' ustvarjena."))
         .catch((err) => {
             console.log(err);
             throw err
@@ -219,11 +216,11 @@ async function napolniBazo() {
 
     // NASVETI
     await knex.schema.createTable('nasveti', (table) => {
-            table.increments('ID_nasvet');
-            table.string('naslovNasveta').notNullable();
-            table.string('nasvet', [1000]);
-        }).then(() =>
-            console.log("Tabela 'nasveti' ustvarjena."))
+        table.increments('ID_nasvet');
+        table.string('naslovNasveta').notNullable();
+        table.string('nasvet', [1000]);
+    }).then(() =>
+        console.log("Tabela 'nasveti' ustvarjena."))
         .catch((err) => {
             console.log(err);
             throw err
@@ -243,13 +240,13 @@ async function napolniBazo() {
 
     // KOMENTARJI
     await knex.schema.createTable('komentarji', (table) => {
-            table.increments('ID_komentarji');
-            table.string('komentar');
-            table.integer('fk_poti').unsigned().references('id').inTable('poti');
-            table.string('uporabnik');
+        table.increments('ID_komentarji');
+        table.string('komentar');
+        table.integer('fk_poti').unsigned().references('id').inTable('poti');
+        table.string('uporabnik');
 
-        }).then(() =>
-            console.log("Tabela 'komentarji' ustvarjena."))
+    }).then(() =>
+        console.log("Tabela 'komentarji' ustvarjena."))
         .catch((err) => {
             console.log(err);
             throw err
@@ -268,13 +265,13 @@ async function napolniBazo() {
 
     //HOTELI
     await knex.schema.createTable('hoteli', (table) => {
-            table.increments('id');
-            table.string('naziv').notNullable();
-            table.string('naslov').notNullable();
-            table.string('email').notNullable();
-            table.string('telefon').notNullable();
-        }).then(() =>
-            console.log("Tabela hoteli ustvarjena."))
+        table.increments('id');
+        table.string('naziv').notNullable();
+        table.string('naslov').notNullable();
+        table.string('email').notNullable();
+        table.string('telefon').notNullable();
+    }).then(() =>
+        console.log("Tabela hoteli ustvarjena."))
         .catch((err) => {
             console.log(err);
             throw err
@@ -282,10 +279,10 @@ async function napolniBazo() {
 
     //HOTELI_NA_POTI
     await knex.schema.createTable('hoteli_na_poti', (table) => {
-            table.integer('fk_poti').unsigned().references('id').inTable('poti');
-            table.integer('fk_hoteli').unsigned().references('id').inTable('hoteli');
-        }).then(() =>
-            console.log("Tabela hoteli_na_poti ustvarjena."))
+        table.integer('fk_poti').unsigned().references('id').inTable('poti');
+        table.integer('fk_hoteli').unsigned().references('id').inTable('hoteli');
+    }).then(() =>
+        console.log("Tabela hoteli_na_poti ustvarjena."))
         .catch((err) => {
             console.log(err);
             throw err

@@ -1,13 +1,7 @@
-/*!
-* Start Bootstrap - Grayscale v6.0.4 (https://startbootstrap.com/theme/grayscale)
-* Copyright 2013-2021 Start Bootstrap
-* Licensed under MIT (https://github.com/StartBootstrap/startbootstrap-grayscale/blob/master/LICENSE)
-*/
-(function ($) {
-    "use strict"; // Start of use strict
+(function($) {
+    "use strict";
 
-    // Smooth scrolling using anime.js
-    $('a.js-scroll-trigger[href*="#"]:not([href="#"])').on('click', function () {
+    $('a.js-scroll-trigger[href*="#"]:not([href="#"])').on('click', function() {
         if (
             location.pathname.replace(/^\//, "") ==
             this.pathname.replace(/^\//, "") &&
@@ -30,7 +24,7 @@
     });
 
     // Closes responsive menu when a scroll trigger link is clicked
-    $(".js-scroll-trigger").click(function () {
+    $(".js-scroll-trigger").click(function() {
         $(".navbar-collapse").collapse("hide");
     });
 
@@ -41,7 +35,7 @@
     });
 
     // Collapse Navbar
-    var navbarCollapse = function () {
+    var navbarCollapse = function() {
         if ($("#mainNav").offset().top > 100) {
             $("#mainNav").addClass("navbar-shrink");
         } else {
@@ -96,7 +90,7 @@ function potrdiPot(id) {
         url: url2,
         data: data,
         type: 'POST',
-        success: function (data) {
+        success: function(data) {
             console.log(JSON.stringify(data));
         }
     });
